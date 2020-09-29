@@ -1,4 +1,4 @@
-// Generated from LexicalAnalysis.g4 by ANTLR 4.8
+// Generated from Question2.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -9,14 +9,14 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class LexicalAnalysisLexer extends Lexer {
+public class Question2Lexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ManyLetter=1;
+		ID=1, WS=2;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -27,7 +27,7 @@ public class LexicalAnalysisLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"Letter", "Number", "ManyLetter"
+			"LOWERCASE_LETTER", "NUMBER", "ID", "WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -39,7 +39,7 @@ public class LexicalAnalysisLexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "ManyLetter"
+			null, "ID", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -77,13 +77,13 @@ public class LexicalAnalysisLexer extends Lexer {
 	}
 
 
-	public LexicalAnalysisLexer(CharStream input) {
+	public Question2Lexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "LexicalAnalysis.g4"; }
+	public String getGrammarFileName() { return "Question2.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -101,12 +101,16 @@ public class LexicalAnalysisLexer extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\3\22\b\1\4\2\t\2"+
-		"\4\3\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\4\6\4\17\n\4\r\4\16\4\20\2\2\5\3\2"+
-		"\5\2\7\3\3\2\4\3\2c|\3\2\62;\2\20\2\7\3\2\2\2\3\t\3\2\2\2\5\13\3\2\2\2"+
-		"\7\16\3\2\2\2\t\n\t\2\2\2\n\4\3\2\2\2\13\f\t\3\2\2\f\6\3\2\2\2\r\17\5"+
-		"\3\2\2\16\r\3\2\2\2\17\20\3\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\b\3\2"+
-		"\2\2\4\2\20\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\4\35\b\1\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\3\3\3\4\3\4\3\4\6\4\23\n\4\r\4\16"+
+		"\4\24\3\5\6\5\30\n\5\r\5\16\5\31\3\5\3\5\2\2\6\3\2\5\2\7\3\t\4\3\2\5\3"+
+		"\2c|\3\2\62;\5\2\13\f\17\17\"\"\2\35\2\7\3\2\2\2\2\t\3\2\2\2\3\13\3\2"+
+		"\2\2\5\r\3\2\2\2\7\17\3\2\2\2\t\27\3\2\2\2\13\f\t\2\2\2\f\4\3\2\2\2\r"+
+		"\16\t\3\2\2\16\6\3\2\2\2\17\22\5\3\2\2\20\23\5\3\2\2\21\23\5\5\3\2\22"+
+		"\20\3\2\2\2\22\21\3\2\2\2\23\24\3\2\2\2\24\22\3\2\2\2\24\25\3\2\2\2\25"+
+		"\b\3\2\2\2\26\30\t\4\2\2\27\26\3\2\2\2\30\31\3\2\2\2\31\27\3\2\2\2\31"+
+		"\32\3\2\2\2\32\33\3\2\2\2\33\34\b\5\2\2\34\n\3\2\2\2\6\2\22\24\31\3\b"+
+		"\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
