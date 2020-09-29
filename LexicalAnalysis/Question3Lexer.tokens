@@ -1,0 +1,12 @@
+T__0=1
+Real_number=2
+Integer_number=3
+String=4
+HEXADECIMAL=5
+DECIMAL=6
+OCTAL=7
+LETTER=8
+PUNCTUATION=9
+ID=10
+WS=11
+'"'=1
