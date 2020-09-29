@@ -1,9 +1,9 @@
 # Principle of Programming Language
 ## With Lab
-Modified your grammer in file\_name.g4.
+Modified your grammer in ``file_name.g4``.
 Run:
 ```bash
-./gen.sh file\_name
+./gen.sh file_name
 ```
 To clean your ``work_dir``:
 ```bash
