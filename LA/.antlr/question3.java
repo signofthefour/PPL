@@ -15,8 +15,6 @@ public class question3 extends Lexer {
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
-	public static final int
-		REAL=1;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -27,7 +25,7 @@ public class question3 extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"REAL"
+			"NUMBER", "DOT", "EXPO"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -39,7 +37,6 @@ public class question3 extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "REAL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -101,10 +98,10 @@ public class question3 extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\3\r\b\1\4\2\t\2\3"+
-		"\2\6\2\7\n\2\r\2\16\2\b\3\2\3\2\3\2\2\2\3\3\3\3\2\3\3\2\62;\2\r\2\3\3"+
-		"\2\2\2\3\6\3\2\2\2\5\7\t\2\2\2\6\5\3\2\2\2\7\b\3\2\2\2\b\6\3\2\2\2\b\t"+
-		"\3\2\2\2\t\n\3\2\2\2\n\13\13\2\2\2\13\f\t\2\2\2\f\4\3\2\2\2\4\2\b\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\2\17\b\1\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\4\3\4\2\2\5\3\2\5\2\7\2\3\2\3\3\2\62"+
+		";\2\13\3\t\3\2\2\2\5\13\3\2\2\2\7\r\3\2\2\2\t\n\t\2\2\2\n\4\3\2\2\2\13"+
+		"\f\7\60\2\2\f\6\3\2\2\2\r\16\7g\2\2\16\b\3\2\2\2\3\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -1,15 +1,15 @@
 // Generated from /home/khanh/Documents/schoolLife/201/PPL/LA/question2.g4 by ANTLR 4.8
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class question2 extends Lexer {
+public class question2Parser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -17,17 +17,11 @@ public class question2 extends Lexer {
 		new PredictionContextCache();
 	public static final int
 		IDENTIFIER=1, WS=2;
-	public static String[] channelNames = {
-		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
-	};
-
-	public static String[] modeNames = {
-		"DEFAULT_MODE"
-	};
-
+	public static final int
+		RULE_id = 0;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"LETTER", "NUMBER", "IDENTIFIER", "WS"
+			"id"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -76,12 +70,6 @@ public class question2 extends Lexer {
 		return VOCABULARY;
 	}
 
-
-	public question2(CharStream input) {
-		super(input);
-		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
-	}
-
 	@Override
 	public String getGrammarFileName() { return "question2.g4"; }
 
@@ -92,23 +80,45 @@ public class question2 extends Lexer {
 	public String getSerializedATN() { return _serializedATN; }
 
 	@Override
-	public String[] getChannelNames() { return channelNames; }
-
-	@Override
-	public String[] getModeNames() { return modeNames; }
-
-	@Override
 	public ATN getATN() { return _ATN; }
 
+	public question2Parser(TokenStream input) {
+		super(input);
+		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
+	}
+
+	public static class IdContext extends ParserRuleContext {
+		public TerminalNode IDENTIFIER() { return getToken(question2Parser.IDENTIFIER, 0); }
+		public IdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_id; }
+	}
+
+	public final IdContext id() throws RecognitionException {
+		IdContext _localctx = new IdContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_id);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(2);
+			match(IDENTIFIER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\4\32\b\1\4\2\t\2"+
-		"\4\3\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\3\3\3\4\3\4\3\4\6\4\23\n\4\r\4\16"+
-		"\4\24\3\5\3\5\3\5\3\5\2\2\6\3\2\5\2\7\3\t\4\3\2\5\3\2c|\3\2\62;\5\2\13"+
-		"\f\17\17\"\"\2\31\2\7\3\2\2\2\2\t\3\2\2\2\3\13\3\2\2\2\5\r\3\2\2\2\7\17"+
-		"\3\2\2\2\t\26\3\2\2\2\13\f\t\2\2\2\f\4\3\2\2\2\r\16\t\3\2\2\16\6\3\2\2"+
-		"\2\17\22\5\3\2\2\20\23\5\3\2\2\21\23\5\5\3\2\22\20\3\2\2\2\22\21\3\2\2"+
-		"\2\23\24\3\2\2\2\24\22\3\2\2\2\24\25\3\2\2\2\25\b\3\2\2\2\26\27\t\4\2"+
-		"\2\27\30\3\2\2\2\30\31\b\5\2\2\31\n\3\2\2\2\5\2\22\24\3\b\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\4\7\4\2\t\2\3\2\3"+
+		"\2\3\2\2\2\3\2\2\2\2\5\2\4\3\2\2\2\4\5\7\3\2\2\5\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
