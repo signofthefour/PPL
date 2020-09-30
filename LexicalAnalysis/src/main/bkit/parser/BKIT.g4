@@ -19,6 +19,8 @@ def emit(self):
         raise UnterminatedComment()
     else:
         return result;
+
+num_tokens = 0
 }
 
 options{
@@ -27,11 +29,11 @@ options{
 
 program  : VAR  EOF ;
 
-VAR: 'Var' + ID + ';';
+var_declaration: 'Var' Ids_list SEMI; 
 
 number: (Real_number | Integer_number)+;
 
-string: '"' + (String) + '"';
+STRING: '"' + (STRING_CHAR*) + '"';
 
 Real_number: SIGN FLOATING_POINT_NUM;
 
@@ -41,8 +43,7 @@ Integer_number: SIGN (
 		| OCTAL)
 		; 
 
-String:	STRING_CHAR*
-	;
+Ids_list: ID (COMMA ID)*;
 
 fragment LOWERCASE_LETTER: [a-z];
 
@@ -56,7 +57,7 @@ fragment SPACE: [ ];
 
 fragment ESCAPE_SEQUENCE: '\\' [btrnf'\\];
 
-fragment ILLEGEL_ESC: '\\' ~[btrnf"'] | ~'\\';
+fragment ESCAPE_ILLEGAL: '\\' ~[btrnf'\\] | ~'\\';
 
 fragment SCIENTIFIC: [e](SIGN)(DIGIT)+;
 
@@ -74,24 +75,27 @@ fragment HEXADECIMALDIGIT: [0-9a-fA-F];
 
 fragment OCTALDIGIT: [0-7];
 
-fragment COLON: ':';
+COLON: ':';
 
-fragment SEMI: ';';
 
-fragment DOT: '.';
+SEMI: ';';
 
-fragment COMMA: ',';
+DOT: '.';
+
+COMMA: ',';
+
+VAR: 'Var';
 
 //Define sequence
-HEXADECIMAL: ('0x' | '0X') HEXADECIMALDIGIT+; 
+fragment HEXADECIMAL: ('0x' | '0X') HEXADECIMALDIGIT+; 
 
-DECIMAL: DIGIT+;
+fragment DECIMAL: DIGIT+;
 
-OCTAL: ('0o' | '0O') OCTALDIGIT+;
+fragment OCTAL: ('0o' | '0O') OCTALDIGIT+;
 
-LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
+fragment LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
 
-fragment STRING_CHAR: ~ [\b\t\n\f\r'\\] | ESCAPE_SEQUENCE;
+fragment STRING_CHAR: ~ [\b\t\n\f\r\\"] | ESCAPE_SEQUENCE | SING_QUOTE DOUBLE_QUOTE | EOF;
 
 fragment PUNCTUATION: 	COLON
 		| SEMI
@@ -99,17 +103,16 @@ fragment PUNCTUATION: 	COLON
 		| COMMA
 		;
 
-ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)+;
+fragment ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)*;
 
-ILLEGAL_ESCAPE: '"' STRING_CHAR* ILLEGEL_ESC;
+ILLEGAL_ESCAPE: '"' STRING_CHAR* ESCAPE_ILLEGAL;
 
 WS: [ \t\r\n]+ -> skip;
 
-UNCLOSE_STRING: '"' STRING_CHAR* ([\b\t\r\f\\] | EOF);
+UNCLOSE_STRING: '"' STRING_CHAR* ([\b\t\r\f\n] | EOF);
 
 ERROR_CHAR: .;
 
 BLOCK_COMMENT: '**' .*? '**' -> channel(HIDDEN);
 
 UNTERMINATED_COMMENT: '**' .*? EOF;  	
-
