@@ -4,7 +4,7 @@ program :;
 
 number: (Real_number | Integer_number)+;
 
-string: '"' + (String) + '"';
+string: '\''  STRING '\'';
 
 Real_number: SIGN FLOATING_POINT_NUM;
 
@@ -13,16 +13,6 @@ Integer_number: SIGN (
 		| HEXADECIMAL
 		| OCTAL)
 		; 
-
-String:	(LETTER+
-	| ESCAPE_SEQUENCE
-	| SING_QUOTE DOUBLE_QUOTE
-	| DIGIT	
-	| PUNCTUATION
-	| SING_QUOTE SING_QUOTE
-	| SPACE
-	)+ 
-	;
 
 fragment LOWERCASE_LETTER: [a-z];
 
@@ -33,15 +23,6 @@ fragment DIGIT: [0-9];
 fragment SIGN: [+-]?;
 
 fragment SPACE: [ ];
-
-fragment ESCAPE_SEQUENCE:
-	'\\\''
-	| '\\b'
-	| '\\f'
-	| '\\n'
-	| '\\r'
-	| '\\t'
-	;
 
 fragment SCIENTIFIC: [e](SIGN)(DIGIT)+;
 
@@ -61,11 +42,11 @@ fragment OCTALDIGIT: [0-7];
 
 fragment COLON: ':';
 
-fragment SEMI: ';';
+SEMI: ';';
 
 fragment DOT: '.';
 
-fragment COMMA: ',';
+COMMA: ',';
 
 //Define sequence
 HEXADECIMAL: ('0x' | '0X') HEXADECIMALDIGIT+; 
@@ -74,14 +55,14 @@ DECIMAL: DIGIT+;
 
 OCTAL: ('0o' | '0O') OCTALDIGIT+;
 
-LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
+fragment LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
 
-PUNCTUATION: 	COLON
-		| SEMI
-		| DOT
-		| COMMA
-		;
+ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)*;
 
-ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)+;
+fragment SING_QUOTE_IN_STRING: SING_QUOTE SING_QUOTE;
+
+fragment STRING_CHAR: SING_QUOTE_IN_STRING | ~['\b\r\n\f\t];
+
+STRING: STRING_CHAR*; 
 
 WS: [ \t\r\n]+ -> skip;

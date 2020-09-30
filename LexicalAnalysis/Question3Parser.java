@@ -16,8 +16,8 @@ public class Question3Parser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, Real_number=2, Integer_number=3, String=4, HEXADECIMAL=5, DECIMAL=6, 
-		OCTAL=7, LETTER=8, PUNCTUATION=9, ID=10, WS=11;
+		T__0=1, Real_number=2, Integer_number=3, SEMI=4, COMMA=5, HEXADECIMAL=6, 
+		DECIMAL=7, OCTAL=8, STRING=9, WS=10;
 	public static final int
 		RULE_program = 0, RULE_number = 1, RULE_string = 2;
 	private static String[] makeRuleNames() {
@@ -29,14 +29,14 @@ public class Question3Parser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'\"'"
+			null, "'''", null, null, "';'", "','"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "Real_number", "Integer_number", "String", "HEXADECIMAL", 
-			"DECIMAL", "OCTAL", "LETTER", "PUNCTUATION", "ID", "WS"
+			null, null, "Real_number", "Integer_number", "SEMI", "COMMA", "HEXADECIMAL", 
+			"DECIMAL", "OCTAL", "STRING", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -190,10 +190,7 @@ public class Question3Parser extends Parser {
 	}
 
 	public static class StringContext extends ParserRuleContext {
-		public List<TerminalNode> String() { return getTokens(Question3Parser.String); }
-		public TerminalNode String(int i) {
-			return getToken(Question3Parser.String, i);
-		}
+		public TerminalNode STRING() { return getToken(Question3Parser.STRING, 0); }
 		public StringContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -211,39 +208,14 @@ public class Question3Parser extends Parser {
 	public final StringContext string() throws RecognitionException {
 		StringContext _localctx = new StringContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_string);
-		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(13);
-				match(T__0);
-				}
-				}
-				setState(16); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==T__0 );
-			setState(19); 
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			do {
-				{
-				{
-				setState(18);
-				match(String);
-				}
-				}
-				setState(21); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			} while ( _la==String );
-			setState(23);
+			setState(13);
+			match(T__0);
+			setState(14);
+			match(STRING);
+			setState(15);
 			match(T__0);
 			}
 		}
@@ -259,14 +231,12 @@ public class Question3Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r\34\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\3\2\3\2\3\3\6\3\f\n\3\r\3\16\3\r\3\4\6\4\21\n\4\r\4\16\4"+
-		"\22\3\4\6\4\26\n\4\r\4\16\4\27\3\4\3\4\3\4\2\2\5\2\4\6\2\3\3\2\4\5\2\33"+
-		"\2\b\3\2\2\2\4\13\3\2\2\2\6\20\3\2\2\2\b\t\3\2\2\2\t\3\3\2\2\2\n\f\t\2"+
-		"\2\2\13\n\3\2\2\2\f\r\3\2\2\2\r\13\3\2\2\2\r\16\3\2\2\2\16\5\3\2\2\2\17"+
-		"\21\7\3\2\2\20\17\3\2\2\2\21\22\3\2\2\2\22\20\3\2\2\2\22\23\3\2\2\2\23"+
-		"\25\3\2\2\2\24\26\7\6\2\2\25\24\3\2\2\2\26\27\3\2\2\2\27\25\3\2\2\2\27"+
-		"\30\3\2\2\2\30\31\3\2\2\2\31\32\7\3\2\2\32\7\3\2\2\2\5\r\22\27";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f\24\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\3\2\3\2\3\3\6\3\f\n\3\r\3\16\3\r\3\4\3\4\3\4\3\4\3\4\2\2"+
+		"\5\2\4\6\2\3\3\2\4\5\2\21\2\b\3\2\2\2\4\13\3\2\2\2\6\17\3\2\2\2\b\t\3"+
+		"\2\2\2\t\3\3\2\2\2\n\f\t\2\2\2\13\n\3\2\2\2\f\r\3\2\2\2\r\13\3\2\2\2\r"+
+		"\16\3\2\2\2\16\5\3\2\2\2\17\20\7\3\2\2\20\21\7\13\2\2\21\22\7\3\2\2\22"+
+		"\7\3\2\2\2\3\r";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
