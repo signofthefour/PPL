@@ -1,3 +1,4 @@
+//1810700
 grammar BKIT;
 
 @lexer::header {
@@ -26,7 +27,7 @@ options{
 
 program  : VAR  EOF ;
 
-VAR: 'Var' + ID;
+VAR: 'Var' + ID + ';';
 
 number: (Real_number | Integer_number)+;
 
@@ -40,14 +41,7 @@ Integer_number: SIGN (
 		| OCTAL)
 		; 
 
-String:	(LETTER+
-	| ESCAPE_SEQUENCE
-	| SING_QUOTE DOUBLE_QUOTE
-	| DIGIT	
-	| PUNCTUATION
-	| SING_QUOTE SING_QUOTE
-	| SPACE
-	)+ 
+String:	STRING_CHAR*
 	;
 
 fragment LOWERCASE_LETTER: [a-z];
@@ -60,14 +54,9 @@ fragment SIGN: [+-]?;
 
 fragment SPACE: [ ];
 
-fragment ESCAPE_SEQUENCE:
-	SING_QUOTE
-	| '\\b'
-	| '\\f'
-	| '\\n'
-	| '\\r'
-	| '\\t'
-	;
+fragment ESCAPE_SEQUENCE: '\\' [btrnf'\\];
+
+fragment ILLEGEL_ESC: '\\' ~[btrnf"'] | ~'\\';
 
 fragment SCIENTIFIC: [e](SIGN)(DIGIT)+;
 
@@ -93,8 +82,6 @@ fragment DOT: '.';
 
 fragment COMMA: ',';
 
-fragment STR_CHAR: 
-
 //Define sequence
 HEXADECIMAL: ('0x' | '0X') HEXADECIMALDIGIT+; 
 
@@ -104,7 +91,9 @@ OCTAL: ('0o' | '0O') OCTALDIGIT+;
 
 LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
 
-PUNCTUATION: 	COLON
+fragment STRING_CHAR: ~ [\b\t\n\f\r'\\] | ESCAPE_SEQUENCE;
+
+fragment PUNCTUATION: 	COLON
 		| SEMI
 		| DOT
 		| COMMA
@@ -112,7 +101,15 @@ PUNCTUATION: 	COLON
 
 ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)+;
 
-ILLEGAL_ESCAPE: '"' ('\\' ~[btnfr"'\\] | ~'\\')*;
+ILLEGAL_ESCAPE: '"' STRING_CHAR* ILLEGEL_ESC;
 
 WS: [ \t\r\n]+ -> skip;
+
+UNCLOSE_STRING: '"' STRING_CHAR* ([\b\t\r\f\\] | EOF);
+
+ERROR_CHAR: .;
+
+BLOCK_COMMENT: '**' .*? '**' -> channel(HIDDEN);
+
+UNTERMINATED_COMMENT: '**' .*? EOF;  	
 
