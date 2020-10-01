@@ -7,7 +7,7 @@ fragment NUMBER: [0-9];
 fragment DOT: '.';
 fragment EXPO: 'e'SIGN;
 fragment SIGN: [-|+]?;
-fragment SCIEN: EXPO SIGN (NUMBER)+;
+fragment SCIEN: EXPO (NUMBER)+;
 
 fragment SING_QUO: ['];
 fragment DOU_QUO: SING_QUO SING_QUO;

@@ -1,4 +1,4 @@
-// Generated from /home/khanh/Documents/schoolLife/201/PPL/LA/question3.g4 by ANTLR 4.8
+// Generated from question1.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -9,14 +9,14 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class question3Lexer extends Lexer {
+public class question1Lexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		REAL=1, STRING=2, QUOTE=3, WS=4;
+		IDENTIFIER=1, WS=2;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -27,8 +27,7 @@ public class question3Lexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"NUMBER", "DOT", "EXPO", "SIGN", "SCIEN", "SING_QUO", "DOU_QUO", "REAL", 
-			"STRING", "QUOTE", "WS"
+			"IDENTIFIER", "WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -40,7 +39,7 @@ public class question3Lexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "REAL", "STRING", "QUOTE", "WS"
+			null, "IDENTIFIER", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -78,13 +77,13 @@ public class question3Lexer extends Lexer {
 	}
 
 
-	public question3Lexer(CharStream input) {
+	public question1Lexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
 	@Override
-	public String getGrammarFileName() { return "question3.g4"; }
+	public String getGrammarFileName() { return "question1.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -102,27 +101,13 @@ public class question3Lexer extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\6P\b\1\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\5\5\5\"\n\5\3\6\3\6\6\6&\n\6"+
-		"\r\6\16\6\'\3\7\3\7\3\b\3\b\3\b\3\t\3\t\6\t\61\n\t\r\t\16\t\62\3\t\3\t"+
-		"\6\t\67\n\t\r\t\16\t8\3\t\5\t<\n\t\3\t\5\t?\n\t\3\n\3\n\3\n\6\nD\n\n\r"+
-		"\n\16\nE\3\13\3\13\3\f\6\fK\n\f\r\f\16\fL\3\f\3\f\2\2\r\3\2\5\2\7\2\t"+
-		"\2\13\2\r\2\17\2\21\3\23\4\25\5\27\6\3\2\7\3\2\62;\5\2--//~~\3\2))\3\2"+
-		"\f\f\5\2\13\f\17\17\"\"\2Q\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27"+
-		"\3\2\2\2\3\31\3\2\2\2\5\33\3\2\2\2\7\35\3\2\2\2\t!\3\2\2\2\13#\3\2\2\2"+
-		"\r)\3\2\2\2\17+\3\2\2\2\21.\3\2\2\2\23C\3\2\2\2\25G\3\2\2\2\27J\3\2\2"+
-		"\2\31\32\t\2\2\2\32\4\3\2\2\2\33\34\7\60\2\2\34\6\3\2\2\2\35\36\7g\2\2"+
-		"\36\37\5\t\5\2\37\b\3\2\2\2 \"\t\3\2\2! \3\2\2\2!\"\3\2\2\2\"\n\3\2\2"+
-		"\2#%\5\7\4\2$&\5\3\2\2%$\3\2\2\2&\'\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2(\f\3"+
-		"\2\2\2)*\t\4\2\2*\16\3\2\2\2+,\5\r\7\2,-\5\r\7\2-\20\3\2\2\2.\60\5\t\5"+
-		"\2/\61\5\3\2\2\60/\3\2\2\2\61\62\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63"+
-		">\3\2\2\2\64\66\5\5\3\2\65\67\5\3\2\2\66\65\3\2\2\2\678\3\2\2\28\66\3"+
-		"\2\2\289\3\2\2\29;\3\2\2\2:<\5\13\6\2;:\3\2\2\2;<\3\2\2\2<?\3\2\2\2=?"+
-		"\5\13\6\2>\64\3\2\2\2>=\3\2\2\2?\22\3\2\2\2@A\n\4\2\2AD\n\5\2\2BD\5\17"+
-		"\b\2C@\3\2\2\2CB\3\2\2\2DE\3\2\2\2EC\3\2\2\2EF\3\2\2\2F\24\3\2\2\2GH\t"+
-		"\4\2\2H\26\3\2\2\2IK\t\6\2\2JI\3\2\2\2KL\3\2\2\2LJ\3\2\2\2LM\3\2\2\2M"+
-		"N\3\2\2\2NO\b\f\2\2O\30\3\2\2\2\f\2!\'\628;>CEL\3\b\2\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\4\25\b\1\4\2\t\2"+
+		"\4\3\t\3\3\2\3\2\7\2\n\n\2\f\2\16\2\r\13\2\3\3\6\3\20\n\3\r\3\16\3\21"+
+		"\3\3\3\3\2\2\4\3\3\5\4\3\2\5\3\2c|\4\2\62;c|\5\2\13\f\17\17\"\"\2\26\2"+
+		"\3\3\2\2\2\2\5\3\2\2\2\3\7\3\2\2\2\5\17\3\2\2\2\7\13\t\2\2\2\b\n\t\3\2"+
+		"\2\t\b\3\2\2\2\n\r\3\2\2\2\13\t\3\2\2\2\13\f\3\2\2\2\f\4\3\2\2\2\r\13"+
+		"\3\2\2\2\16\20\t\4\2\2\17\16\3\2\2\2\20\21\3\2\2\2\21\17\3\2\2\2\21\22"+
+		"\3\2\2\2\22\23\3\2\2\2\23\24\b\3\2\2\24\6\3\2\2\2\5\2\13\21\3\b\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
