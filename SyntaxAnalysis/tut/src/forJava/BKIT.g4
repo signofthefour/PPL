@@ -35,11 +35,15 @@ call_stmt: ID LEFT_PAREN ids_list* RIGHT_PAREN;
 ret_stmt: RETURN expr;  // add SEMI to assignment 
 
 // expression
-expr: expr1 PLUS_INT expr | expr1;
+expr: expr0;
+
+expr0: expr1 PLUS_INT expr0 | expr1;
 
 expr1: expr2 (<assoc=right>MINUS_INT | <assoc=left>STAR_INT) expr1 | expr2;
 
-expr2: expr2 DIV_INT expr2 | operand;
+expr2: expr2 DIV_INT expr2 | subexpr;
+
+subexpr: operand | LEFT_PAREN expr RIGHT_PAREN;
 
 operand: Integer_literal | Float_literal | ID | call_stmt;
 

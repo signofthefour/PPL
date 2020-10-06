@@ -107,6 +107,16 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitExpr(BKITParser.ExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BKITParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr0(BKITParser.Expr0Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr0(BKITParser.Expr0Context ctx);
+	/**
 	 * Enter a parse tree produced by {@link BKITParser#expr1}.
 	 * @param ctx the parse tree
 	 */
@@ -126,6 +136,16 @@ public interface BKITListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr2(BKITParser.Expr2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#subexpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubexpr(BKITParser.SubexprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#subexpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubexpr(BKITParser.SubexprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BKITParser#operand}.
 	 * @param ctx the parse tree
