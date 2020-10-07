@@ -8,10 +8,10 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.checkLexeme("abc","abc,<EOF>",101))
 
     def test_lower_upper_id(self):
-        self.assertTrue(TestLexer.checkLexeme("Var","Var,<EOF>",102))
+        self.assertTrue(TestLexer.checkLexeme("nar","nar,<EOF>",102))
 
     def test_wrong_token(self):
-        self.assertTrue(TestLexer.checkLexeme("ab?svn","ab,Error Token ?",103))
+        self.assertTrue(TestLexer.checkLexeme("ab71236","ab,Error Token ?",103))
 
     def test_integer(self):
         """test integers"""

@@ -1,0 +1,6 @@
+int main(int a; float b,c) {
+    int e, d;
+    e = a + b * foo(c);
+    d = a + b * c - d / e;
+    return e + d;
+}
