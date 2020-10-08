@@ -1,0 +1,46 @@
+program ->   declaration  | declaration program
+
+declaration ->   function_declare | var_declare
+
+var_declare ->   ids_list_with_type ";"
+
+ids_list_with_type ->   type ids_list
+
+ids_list ->    id | ids_list "," id
+
+id ->   ID
+
+function_declare ->    type ID "(" params_list ")" "{" function_body "}"
+
+params_list ->   ids_list_with_type | ids_list_with_type ";" params_list | NULL
+
+function_body   -> stmts_list | NULL
+
+stmts_list   -> stmt ";"|  stmt   ";"  stmts_list  
+
+ stmt     ->  assign_stmt   |  call_stmt   |  ret_stmt  
+
+ assign_stmt     -> ID "="  expr  
+
+ call_stmt     -> ID "("  exprs_list   ")"
+
+ ret_stmt     -> "r" "e" "t" "u" "r" "n"  expr  ;
+
+ exprs_list     ->  expr   |  exprs_list   ";"  expr   |  NULL  
+
+
+ expr     ->  expr1   "+"  expr   |  expr1  
+
+ expr1     ->  expr1   "-"  expr1   |  expr2  
+
+ expr2     ->  expr2   "*"  operand   |  expr2   "/"  operand   |  operand  
+
+ operand     -> INT_LIT | FLOAT_LIT |  call_stmt   |  sub_expr  
+
+ sub_expr     -> "("  expr   ")"
+
+
+ type     -> "int" | "float"
+ 
+
+ NULL    ->
