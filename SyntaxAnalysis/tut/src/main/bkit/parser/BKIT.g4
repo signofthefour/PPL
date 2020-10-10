@@ -24,77 +24,53 @@ def emit(self):
 options{
 	language=Python3;
 }
-
 program: (var_declare | function_declare)+ EOF;
 
 // 1. program structure
 
-var_declare: VAR 
-            // id_list = id | id with initial
-                SEMI;
-
-function_declare: FUNCTION COLON ID
-                    PARAMETER //param_list
-                    BODY COLON
-                    // statements_list
-                    ENDBODY DOT;
-
 // 4. Datatypes and values
-primitive_type: Integer_literal | Float_literal | String_literal | Boolean_literal;
-composite_type: array;
-
-array: ;
-INT_ARRAY: LEFT_BRACE ()RIGHT_BRACE;
-// 4.1 boolean op
-bool_op: NOT | AND | OR;
-
-// 4.2 integer op
-int_op: PLUS_INT
-        | MINUS_INT
-        | STAR_INT
-        | DIV_INT
-        | MOD
-        | EQUAL
-        | NOT_EQUAL_INT
-        | LESS_INT
-        | GREATER_INT
-        | LESS_OR_EQUAL_INT
-        | GREATER_OR_EQUAL_INT;
-
-// 4.3 float op
-float_op: PLUS_FLOAT
-            | MINUS_FLOAT
-            | STAR_FLOAT
-            | DIV_FLOAT
-//            | EQUAL
-            | NOT_EQUAL_FLOAT
-            | LESS_FLOAT
-            | GREATER_FLOAT
-            | LESS_OR_EQUAL_FLOAT
-            | GREATER_OR_EQUAL_FLOAT
-            ;
-
-// 4.4 string op: No string op
-
 
 // 5. Statements
-if_stmt: ;
-while_stmt: ;
-dowhile_stmt: ;
 
-ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)*; // must begin with lowercase, case-sensitive
+var_declare:  ids_list_with_type SEMI;
 
-ILLEGAL_ESCAPE: '"' STRING_CHAR* ILL_ESC_SEQUENCE;
-UNCLOSE_STRING: '"' STRING_CHAR* ([\b\t\r\n\f] | EOF) 
-    {
-        y = str(self.text);
-        self.text = y[1:]
-    };
-COMMENT: '**' .*? '**' -> skip;
-UNTERMINATED_COMMENT: '**' .*? EOF; 
-ERROR_CHAR: [.?];
+function_declare: primitive_type ID LEFT_PAREN (ids_list_with_type (SEMI ids_list_with_type)*)? RIGHT_PAREN
+                    LEFT_BRACE
+                    function_body
+                    RIGHT_BRACE;
 
-WS: [ \t\f\r\n]+ -> skip;
+function_body: (var_declare | stmt)*; // nullable-list
+
+// statement: assignment, call, return
+
+ids_list_with_type: primitive_type ids_list;
+
+stmt: (assign_stmt | call_stmt | ret_stmt) SEMI; // only SEMI in stmt def
+
+assign_stmt: ID ASSIGN expr;
+
+call_stmt: ID LEFT_PAREN (exprs_list)* RIGHT_PAREN;
+
+ret_stmt: RETURN expr;  // add SEMI to assignment 
+
+exprs_list: expr | exprs_list COMMA expr;
+
+// expression
+expr: expr0;
+
+expr0: expr1 PLUS_INT expr0 | expr1;
+
+expr1: expr1 MINUS_INT expr1 | expr2;
+
+expr2: expr2 DIV_INT operand | expr2 STAR_INT operand | operand;
+
+subexpr: LEFT_PAREN expr RIGHT_PAREN;
+
+operand: Integer_literal | Float_literal | ID | call_stmt | subexpr;
+
+ids_list: ID (COMMA ID)*;
+
+primitive_type: INT | FLOAT;
 
 // letter
 fragment LOWERCASE_LETTER: [a-z];
@@ -103,7 +79,7 @@ fragment DIGIT: [0-9];
 fragment LETTER: (LOWERCASE_LETTER | UPPERCASE_LETTER); 
 
 //float
-fragment SCIENTIFIC: [Ee](SUB)?(DIGIT)+;
+fragment SCIENTIFIC: [Ee](MINUS_INT)?(DIGIT)+;
 fragment DECIMAL_POINT: [.](DIGIT)*;
 fragment FLOATING_POINT_NUM:  (DIGIT+) (DECIMAL_POINT(SCIENTIFIC)? | SCIENTIFIC);
 
@@ -126,65 +102,21 @@ Integer_literal: DECIMAL
 
 Float_literal: FLOATING_POINT_NUM;
 
-Boolean_literal: TRUE | FALSE;
 
-String_literal: '"' STRING_CHAR* '"'
-    {
-        y = str(self.text)
-        self.text = y[1:-1]
-    };
-
+String_literal: '"' STRING_CHAR* '"';
 // Keywords
-BODY :     'Body';
-BREAK:     'Break';
-CONTINUE:  'Continue';
-DO:        'Do';
-ELSE:      'Else';
-ELSELF:    'ElSelf';
-ELSEIF:    'ElseIf';
-ENDBODY:   'EndIf';
-ENDFOR:    'EndFor';
-ENDWHILE:  'EndWhile';
-FOR:       'For';
-FUNCTION:  'Function';
-IF:        'If';
-PARAMETER: 'Parameter';
-RETURN:    'Return';
-THEN:      'Then';
-VAR:       'Var';
-WHILE:     'While';
-TRUE:      'True';
-FALSE:     'False';
-ENDDO:     'EndDo';
-
+RETURN:    'r' 'e' 't' 'u' 'r' 'n';
+INT: 'i''n' 't';
+FLOAT: 'f' 'l' 'o' 'a' 't';
 // Operators
 PLUS_INT:       '+';
-PLUS_FLOAT:     '+.';
 MINUS_INT:      '-';
-MINUS_FLOAT:    '-.';
 STAR_INT:       '*';
-STAR_FLOAT:     '*.';
-DIV_INT:        '\\';
-DIV_FLOAT:      '\\.';
-MOD:            '%';
-NOT:            '!';
-AND:            '&&';
-OR:             '||';
-EQUAL:          '==';
-NOT_EQUAL_INT:  '!=';
-LESS_INT:           '<';
-GREATER_INT:        '>';
-LESS_OR_EQUAL_INT:  '<=';
-GREATER_OR_EQUAL_INT:'>=';
-NOT_EQUAL_FLOAT:'=\\=';
-LESS_FLOAT:     '<.';
-GREATER_FLOAT:  '>.';
-LESS_OR_EQUAL_FLOAT: '<=.';
-GREATER_OR_EQUAL_FLOAT: '>=.';
+DIV_INT:        '/';
 
 // Seperators
 LEFT_PAREN:     '(';
-RIGHT_PARENT:   ')';
+RIGHT_PAREN:   ')';
 LEFT_BRACKET:   '[';
 RIGHT_BRACKET:  ']';
 LEFT_BRACE:     '{';
@@ -194,3 +126,13 @@ DOT:            '.';
 SEMI:           ';';
 COMMA:          ',';
 ASSIGN:         '=';
+
+ID: LOWERCASE_LETTER (LOWERCASE_LETTER | DIGIT)*; // must begin with lowercase, case-sensitive
+
+ILLEGAL_ESCAPE: '"' STRING_CHAR* ILL_ESC_SEQUENCE;
+UNCLOSE_STRING: '"' STRING_CHAR* EOF;
+COMMENT: '**' .*? '**' -> skip;
+UNTERMINATED_COMMENT: '**' .*? EOF; 
+ERROR_CHAR: [.?];
+
+WS: [ \t\f\r\n]+ -> skip;

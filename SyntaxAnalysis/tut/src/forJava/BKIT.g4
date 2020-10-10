@@ -13,6 +13,8 @@ program: (var_declare | function_declare)+ EOF;
 
 // 5. Statements
 
+primitive_type: INT | FLOAT;
+
 var_declare:  ids_list_with_type SEMI;
 
 function_declare: primitive_type ID LEFT_PAREN (ids_list_with_type (SEMI ids_list_with_type)*)? RIGHT_PAREN
@@ -51,7 +53,6 @@ operand: Integer_literal | Float_literal | ID | call_stmt | subexpr;
 
 ids_list: ID (COMMA ID)*;
 
-primitive_type: INT | FLOAT;
 
 // letter
 fragment LOWERCASE_LETTER: [a-z];

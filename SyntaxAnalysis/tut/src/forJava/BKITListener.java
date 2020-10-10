@@ -17,6 +17,16 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitProgram(BKITParser.ProgramContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BKITParser#primitive_type}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimitive_type(BKITParser.Primitive_typeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#primitive_type}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimitive_type(BKITParser.Primitive_typeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BKITParser#var_declare}.
 	 * @param ctx the parse tree
 	 */
@@ -176,14 +186,4 @@ public interface BKITListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIds_list(BKITParser.Ids_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#primitive_type}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrimitive_type(BKITParser.Primitive_typeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#primitive_type}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrimitive_type(BKITParser.Primitive_typeContext ctx);
 }

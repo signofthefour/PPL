@@ -27,6 +27,18 @@ public class BKITBaseListener implements BKITListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPrimitive_type(BKITParser.Primitive_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrimitive_type(BKITParser.Primitive_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVar_declare(BKITParser.Var_declareContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -214,18 +226,6 @@ public class BKITBaseListener implements BKITListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIds_list(BKITParser.Ids_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrimitive_type(BKITParser.Primitive_typeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrimitive_type(BKITParser.Primitive_typeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
