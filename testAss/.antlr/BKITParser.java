@@ -20,18 +20,23 @@ public class BKITParser extends Parser {
 		ENDWHILE=10, PARAMETER=11, WHILE=12, CONTINUE=13, ENDBODY=14, FOR=15, 
 		RETURN=16, TRUE=17, DO=18, ENDIF=19, THEN=20, FALSE=21, WS=22, IDENTIFIER=23, 
 		LB=24, RB=25, LK=26, RK=27, LP=28, RP=29, SEMI=30, COLON=31, CM=32, DOT=33, 
-		INTEGER=34, FLOAT=35, BOLEAN=36, ADDOP=37, SUBOP=38, MULOP=39, DIVOP=40, 
-		AS=41, ERROR_CHAR=42, UNCLOSE_STRING=43, ILLEGAL_ESCAPE=44, UNTERMINATED_COMMENT=45;
+		INTEGER=34, FLOAT=35, BOLEAN=36, FADDOP=37, IADDOP=38, FSUBOP=39, ISUBOP=40, 
+		FMULOP=41, IMULOP=42, FDIVOP=43, IDIVOP=44, IREMAIN=45, EQUAL=46, FNEQUAL=47, 
+		FLESSOE=48, FGROE=49, FLESS=50, FGR=51, INEQUAL=52, ILESSOE=53, IGROE=54, 
+		ILESS=55, IGR=56, BNEG=57, BAND=58, BOR=59, AS=60;
 	public static final int
-		RULE_program = 0, RULE_var_declare = 1, RULE_var_list = 2, RULE_non_initted_var = 3, 
-		RULE_initted_var = 4, RULE_scalar_init = 5, RULE_composite_init = 6, RULE_scalar_var = 7, 
-		RULE_composite_var = 8, RULE_literals = 9, RULE_int_array = 10, RULE_float_array = 11, 
-		RULE_array_list = 12;
+		RULE_program = 0, RULE_var_declare = 1, RULE_var_list = 2, RULE_func_declare = 3, 
+		RULE_func_body = 4, RULE_stm_list = 5, RULE_stm = 6, RULE_non_initted_var = 7, 
+		RULE_initted_var = 8, RULE_scalar_init = 9, RULE_composite_init = 10, 
+		RULE_scalar_var = 11, RULE_composite_var = 12, RULE_para_list = 13, RULE_assign_stm = 14, 
+		RULE_expression = 15, RULE_literals = 16, RULE_int_array = 17, RULE_float_array = 18, 
+		RULE_array_list = 19;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "var_declare", "var_list", "non_initted_var", "initted_var", 
-			"scalar_init", "composite_init", "scalar_var", "composite_var", "literals", 
-			"int_array", "float_array", "array_list"
+			"program", "var_declare", "var_list", "func_declare", "func_body", "stm_list", 
+			"stm", "non_initted_var", "initted_var", "scalar_init", "composite_init", 
+			"scalar_var", "composite_var", "para_list", "assign_stm", "expression", 
+			"literals", "int_array", "float_array", "array_list"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -40,10 +45,12 @@ public class BKITParser extends Parser {
 		return new String[] {
 			null, "'Var'", "'Function:'", "'Body'", "'Else'", "'EndFor'", "'If'", 
 			"'EndDo'", "'Break'", "'ElseIf'", "'EndWhile'", "'Parameter'", "'While'", 
-			"'Continue'", "'EndBody'", "'For'", "'Return'", "'True'", "'Do'", "'EndIf'", 
+			"'Continue'", "'EndBody.'", "'For'", "'Return'", "'True'", "'Do'", "'EndIf'", 
 			"'Then'", "'False'", null, null, "'{'", "'}'", "'['", "']'", "'('", "')'", 
-			"';'", "':'", "','", "'.'", null, null, null, "'+'", "'-'", "'*'", "'/'", 
-			"'='"
+			"';'", "':'", "','", "'.'", null, null, null, "'+.'", "'+'", "'-.'", 
+			"'-'", "'*.'", "'*'", "'\\.'", "'\\'", "'%'", "'=='", "'=/='", "'<=.'", 
+			"'>=.'", "'<.'", "'>.'", "'!='", "'<='", "'>='", "'<'", "'>'", "'!'", 
+			"'&&'", "'||'", "'='"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -53,8 +60,10 @@ public class BKITParser extends Parser {
 			"ELSEIF", "ENDWHILE", "PARAMETER", "WHILE", "CONTINUE", "ENDBODY", "FOR", 
 			"RETURN", "TRUE", "DO", "ENDIF", "THEN", "FALSE", "WS", "IDENTIFIER", 
 			"LB", "RB", "LK", "RK", "LP", "RP", "SEMI", "COLON", "CM", "DOT", "INTEGER", 
-			"FLOAT", "BOLEAN", "ADDOP", "SUBOP", "MULOP", "DIVOP", "AS", "ERROR_CHAR", 
-			"UNCLOSE_STRING", "ILLEGAL_ESCAPE", "UNTERMINATED_COMMENT"
+			"FLOAT", "BOLEAN", "FADDOP", "IADDOP", "FSUBOP", "ISUBOP", "FMULOP", 
+			"IMULOP", "FDIVOP", "IDIVOP", "IREMAIN", "EQUAL", "FNEQUAL", "FLESSOE", 
+			"FGROE", "FLESS", "FGR", "INEQUAL", "ILESSOE", "IGROE", "ILESS", "IGR", 
+			"BNEG", "BAND", "BOR", "AS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -124,7 +133,7 @@ public class BKITParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
+			setState(40);
 			var_declare();
 			}
 		}
@@ -160,23 +169,23 @@ public class BKITParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(28);
+			setState(42);
 			match(VAR);
-			setState(29);
+			setState(43);
 			match(COLON);
-			setState(30);
+			setState(44);
 			var_list();
-			setState(32);
+			setState(46);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==AS) {
 				{
-				setState(31);
+				setState(45);
 				match(AS);
 				}
 			}
 
-			setState(34);
+			setState(48);
 			match(SEMI);
 			}
 		}
@@ -221,52 +230,226 @@ public class BKITParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(38);
+			setState(52);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				{
-				setState(36);
+				setState(50);
 				initted_var();
 				}
 				break;
 			case 2:
 				{
-				setState(37);
+				setState(51);
 				non_initted_var();
 				}
 				break;
 			}
-			setState(47);
+			setState(61);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==CM) {
 				{
 				{
-				setState(40);
+				setState(54);
 				match(CM);
-				setState(43);
+				setState(57);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 				case 1:
 					{
-					setState(41);
+					setState(55);
 					initted_var();
 					}
 					break;
 				case 2:
 					{
-					setState(42);
+					setState(56);
 					non_initted_var();
 					}
 					break;
 				}
 				}
 				}
-				setState(49);
+				setState(63);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Func_declareContext extends ParserRuleContext {
+		public TerminalNode FUNCTION() { return getToken(BKITParser.FUNCTION, 0); }
+		public List<TerminalNode> COLON() { return getTokens(BKITParser.COLON); }
+		public TerminalNode COLON(int i) {
+			return getToken(BKITParser.COLON, i);
+		}
+		public TerminalNode BODY() { return getToken(BKITParser.BODY, 0); }
+		public Func_bodyContext func_body() {
+			return getRuleContext(Func_bodyContext.class,0);
+		}
+		public TerminalNode ENDBODY() { return getToken(BKITParser.ENDBODY, 0); }
+		public TerminalNode PARAMETER() { return getToken(BKITParser.PARAMETER, 0); }
+		public Para_listContext para_list() {
+			return getRuleContext(Para_listContext.class,0);
+		}
+		public Func_declareContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_func_declare; }
+	}
+
+	public final Func_declareContext func_declare() throws RecognitionException {
+		Func_declareContext _localctx = new Func_declareContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_func_declare);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(64);
+			match(FUNCTION);
+			setState(65);
+			match(COLON);
+			setState(69);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==PARAMETER) {
+				{
+				setState(66);
+				match(PARAMETER);
+				setState(67);
+				match(COLON);
+				setState(68);
+				para_list();
+				}
+			}
+
+			setState(71);
+			match(BODY);
+			setState(72);
+			func_body();
+			setState(73);
+			match(ENDBODY);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Func_bodyContext extends ParserRuleContext {
+		public Stm_listContext stm_list() {
+			return getRuleContext(Stm_listContext.class,0);
+		}
+		public Func_bodyContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_func_body; }
+	}
+
+	public final Func_bodyContext func_body() throws RecognitionException {
+		Func_bodyContext _localctx = new Func_bodyContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_func_body);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(75);
+			stm_list();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Stm_listContext extends ParserRuleContext {
+		public List<StmContext> stm() {
+			return getRuleContexts(StmContext.class);
+		}
+		public StmContext stm(int i) {
+			return getRuleContext(StmContext.class,i);
+		}
+		public Stm_listContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_stm_list; }
+	}
+
+	public final Stm_listContext stm_list() throws RecognitionException {
+		Stm_listContext _localctx = new Stm_listContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_stm_list);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(78); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(77);
+				stm();
+				}
+				}
+				setState(80); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==VAR );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class StmContext extends ParserRuleContext {
+		public Var_declareContext var_declare() {
+			return getRuleContext(Var_declareContext.class,0);
+		}
+		public StmContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_stm; }
+	}
+
+	public final StmContext stm() throws RecognitionException {
+		StmContext _localctx = new StmContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_stm);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(82);
+			var_declare();
 			}
 		}
 		catch (RecognitionException re) {
@@ -295,22 +478,22 @@ public class BKITParser extends Parser {
 
 	public final Non_initted_varContext non_initted_var() throws RecognitionException {
 		Non_initted_varContext _localctx = new Non_initted_varContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_non_initted_var);
+		enterRule(_localctx, 14, RULE_non_initted_var);
 		try {
-			setState(52);
+			setState(86);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(50);
+				setState(84);
 				scalar_var();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(51);
+				setState(85);
 				composite_var();
 				}
 				break;
@@ -342,22 +525,22 @@ public class BKITParser extends Parser {
 
 	public final Initted_varContext initted_var() throws RecognitionException {
 		Initted_varContext _localctx = new Initted_varContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_initted_var);
+		enterRule(_localctx, 16, RULE_initted_var);
 		try {
-			setState(56);
+			setState(90);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(54);
+				setState(88);
 				scalar_init();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(55);
+				setState(89);
 				composite_init();
 				}
 				break;
@@ -390,15 +573,15 @@ public class BKITParser extends Parser {
 
 	public final Scalar_initContext scalar_init() throws RecognitionException {
 		Scalar_initContext _localctx = new Scalar_initContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_scalar_init);
+		enterRule(_localctx, 18, RULE_scalar_init);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
+			setState(92);
 			scalar_var();
-			setState(59);
+			setState(93);
 			match(AS);
-			setState(60);
+			setState(94);
 			literals();
 			}
 		}
@@ -429,15 +612,15 @@ public class BKITParser extends Parser {
 
 	public final Composite_initContext composite_init() throws RecognitionException {
 		Composite_initContext _localctx = new Composite_initContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_composite_init);
+		enterRule(_localctx, 20, RULE_composite_init);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62);
+			setState(96);
 			composite_var();
-			setState(63);
+			setState(97);
 			match(AS);
-			setState(64);
+			setState(98);
 			literals();
 			}
 		}
@@ -462,11 +645,11 @@ public class BKITParser extends Parser {
 
 	public final Scalar_varContext scalar_var() throws RecognitionException {
 		Scalar_varContext _localctx = new Scalar_varContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_scalar_var);
+		enterRule(_localctx, 22, RULE_scalar_var);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(66);
+			setState(100);
 			match(IDENTIFIER);
 			}
 		}
@@ -503,31 +686,152 @@ public class BKITParser extends Parser {
 
 	public final Composite_varContext composite_var() throws RecognitionException {
 		Composite_varContext _localctx = new Composite_varContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_composite_var);
+		enterRule(_localctx, 24, RULE_composite_var);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68);
+			setState(102);
 			match(IDENTIFIER);
-			setState(72); 
+			setState(106); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(69);
+				setState(103);
 				match(LK);
-				setState(70);
+				setState(104);
 				match(INTEGER);
-				setState(71);
+				setState(105);
 				match(RK);
 				}
 				}
-				setState(74); 
+				setState(108); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==LK );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Para_listContext extends ParserRuleContext {
+		public List<TerminalNode> IDENTIFIER() { return getTokens(BKITParser.IDENTIFIER); }
+		public TerminalNode IDENTIFIER(int i) {
+			return getToken(BKITParser.IDENTIFIER, i);
+		}
+		public TerminalNode CM() { return getToken(BKITParser.CM, 0); }
+		public Para_listContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_para_list; }
+	}
+
+	public final Para_listContext para_list() throws RecognitionException {
+		Para_listContext _localctx = new Para_listContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_para_list);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(110);
+			match(IDENTIFIER);
+			{
+			setState(111);
+			match(CM);
+			setState(112);
+			match(IDENTIFIER);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Assign_stmContext extends ParserRuleContext {
+		public TerminalNode AS() { return getToken(BKITParser.AS, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public Scalar_varContext scalar_var() {
+			return getRuleContext(Scalar_varContext.class,0);
+		}
+		public Composite_varContext composite_var() {
+			return getRuleContext(Composite_varContext.class,0);
+		}
+		public Assign_stmContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assign_stm; }
+	}
+
+	public final Assign_stmContext assign_stm() throws RecognitionException {
+		Assign_stmContext _localctx = new Assign_stmContext(_ctx, getState());
+		enterRule(_localctx, 28, RULE_assign_stm);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(116);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
+			case 1:
+				{
+				setState(114);
+				scalar_var();
+				}
+				break;
+			case 2:
+				{
+				setState(115);
+				composite_var();
+				}
+				break;
+			}
+			setState(118);
+			match(AS);
+			setState(119);
+			expression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ExpressionContext extends ParserRuleContext {
+		public ExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expression; }
+	}
+
+	public final ExpressionContext expression() throws RecognitionException {
+		ExpressionContext _localctx = new ExpressionContext(_ctx, getState());
+		enterRule(_localctx, 30, RULE_expression);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
 			}
 		}
 		catch (RecognitionException re) {
@@ -556,36 +860,36 @@ public class BKITParser extends Parser {
 
 	public final LiteralsContext literals() throws RecognitionException {
 		LiteralsContext _localctx = new LiteralsContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_literals);
+		enterRule(_localctx, 32, RULE_literals);
 		try {
-			setState(80);
+			setState(127);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case INTEGER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(76);
+				setState(123);
 				match(INTEGER);
 				}
 				break;
 			case FLOAT:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(77);
+				setState(124);
 				match(FLOAT);
 				}
 				break;
 			case BOLEAN:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(78);
+				setState(125);
 				match(BOLEAN);
 				}
 				break;
 			case LB:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(79);
+				setState(126);
 				array_list();
 				}
 				break;
@@ -621,30 +925,30 @@ public class BKITParser extends Parser {
 
 	public final Int_arrayContext int_array() throws RecognitionException {
 		Int_arrayContext _localctx = new Int_arrayContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_int_array);
+		enterRule(_localctx, 34, RULE_int_array);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(82);
+			setState(129);
 			match(INTEGER);
-			setState(87);
+			setState(134);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(83);
+					setState(130);
 					match(CM);
-					setState(84);
+					setState(131);
 					match(INTEGER);
 					}
 					} 
 				}
-				setState(89);
+				setState(136);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			}
 			}
 		}
@@ -676,30 +980,30 @@ public class BKITParser extends Parser {
 
 	public final Float_arrayContext float_array() throws RecognitionException {
 		Float_arrayContext _localctx = new Float_arrayContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_float_array);
+		enterRule(_localctx, 36, RULE_float_array);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(90);
+			setState(137);
 			match(FLOAT);
-			setState(95);
+			setState(142);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(91);
+					setState(138);
 					match(CM);
-					setState(92);
+					setState(139);
 					match(FLOAT);
 					}
 					} 
 				}
-				setState(97);
+				setState(144);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			}
 			}
 		}
@@ -741,54 +1045,54 @@ public class BKITParser extends Parser {
 
 	public final Array_listContext array_list() throws RecognitionException {
 		Array_listContext _localctx = new Array_listContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_array_list);
+		enterRule(_localctx, 38, RULE_array_list);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98);
+			setState(145);
 			match(LB);
-			setState(102);
+			setState(149);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LB:
 				{
-				setState(99);
+				setState(146);
 				array_list();
 				}
 				break;
 			case INTEGER:
 				{
-				setState(100);
+				setState(147);
 				int_array();
 				}
 				break;
 			case FLOAT:
 				{
-				setState(101);
+				setState(148);
 				float_array();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(108);
+			setState(155);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==CM) {
 				{
 				{
-				setState(104);
+				setState(151);
 				match(CM);
-				setState(105);
+				setState(152);
 				array_list();
 				}
 				}
-				setState(110);
+				setState(157);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(111);
+			setState(158);
 			match(RB);
 			}
 		}
@@ -804,34 +1108,50 @@ public class BKITParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3/t\4\2\t\2\4\3\t\3"+
-		"\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f"+
-		"\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\3\3\3\3\3\3\3\5\3#\n\3\3\3\3\3\3\4\3"+
-		"\4\5\4)\n\4\3\4\3\4\3\4\5\4.\n\4\7\4\60\n\4\f\4\16\4\63\13\4\3\5\3\5\5"+
-		"\5\67\n\5\3\6\3\6\5\6;\n\6\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\n"+
-		"\3\n\3\n\3\n\6\nK\n\n\r\n\16\nL\3\13\3\13\3\13\3\13\5\13S\n\13\3\f\3\f"+
-		"\3\f\7\fX\n\f\f\f\16\f[\13\f\3\r\3\r\3\r\7\r`\n\r\f\r\16\rc\13\r\3\16"+
-		"\3\16\3\16\3\16\5\16i\n\16\3\16\3\16\7\16m\n\16\f\16\16\16p\13\16\3\16"+
-		"\3\16\3\16\2\2\17\2\4\6\b\n\f\16\20\22\24\26\30\32\2\2\2u\2\34\3\2\2\2"+
-		"\4\36\3\2\2\2\6(\3\2\2\2\b\66\3\2\2\2\n:\3\2\2\2\f<\3\2\2\2\16@\3\2\2"+
-		"\2\20D\3\2\2\2\22F\3\2\2\2\24R\3\2\2\2\26T\3\2\2\2\30\\\3\2\2\2\32d\3"+
-		"\2\2\2\34\35\5\4\3\2\35\3\3\2\2\2\36\37\7\3\2\2\37 \7!\2\2 \"\5\6\4\2"+
-		"!#\7+\2\2\"!\3\2\2\2\"#\3\2\2\2#$\3\2\2\2$%\7 \2\2%\5\3\2\2\2&)\5\n\6"+
-		"\2\')\5\b\5\2(&\3\2\2\2(\'\3\2\2\2)\61\3\2\2\2*-\7\"\2\2+.\5\n\6\2,.\5"+
-		"\b\5\2-+\3\2\2\2-,\3\2\2\2.\60\3\2\2\2/*\3\2\2\2\60\63\3\2\2\2\61/\3\2"+
-		"\2\2\61\62\3\2\2\2\62\7\3\2\2\2\63\61\3\2\2\2\64\67\5\20\t\2\65\67\5\22"+
-		"\n\2\66\64\3\2\2\2\66\65\3\2\2\2\67\t\3\2\2\28;\5\f\7\29;\5\16\b\2:8\3"+
-		"\2\2\2:9\3\2\2\2;\13\3\2\2\2<=\5\20\t\2=>\7+\2\2>?\5\24\13\2?\r\3\2\2"+
-		"\2@A\5\22\n\2AB\7+\2\2BC\5\24\13\2C\17\3\2\2\2DE\7\31\2\2E\21\3\2\2\2"+
-		"FJ\7\31\2\2GH\7\34\2\2HI\7$\2\2IK\7\35\2\2JG\3\2\2\2KL\3\2\2\2LJ\3\2\2"+
-		"\2LM\3\2\2\2M\23\3\2\2\2NS\7$\2\2OS\7%\2\2PS\7&\2\2QS\5\32\16\2RN\3\2"+
-		"\2\2RO\3\2\2\2RP\3\2\2\2RQ\3\2\2\2S\25\3\2\2\2TY\7$\2\2UV\7\"\2\2VX\7"+
-		"$\2\2WU\3\2\2\2X[\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z\27\3\2\2\2[Y\3\2\2\2\\"+
-		"a\7%\2\2]^\7\"\2\2^`\7%\2\2_]\3\2\2\2`c\3\2\2\2a_\3\2\2\2ab\3\2\2\2b\31"+
-		"\3\2\2\2ca\3\2\2\2dh\7\32\2\2ei\5\32\16\2fi\5\26\f\2gi\5\30\r\2he\3\2"+
-		"\2\2hf\3\2\2\2hg\3\2\2\2in\3\2\2\2jk\7\"\2\2km\5\32\16\2lj\3\2\2\2mp\3"+
-		"\2\2\2nl\3\2\2\2no\3\2\2\2oq\3\2\2\2pn\3\2\2\2qr\7\33\2\2r\33\3\2\2\2"+
-		"\16\"(-\61\66:LRYahn";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3>\u00a3\4\2\t\2\4"+
+		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
+		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\4\23\t\23\4\24\t\24\4\25\t\25\3\2\3\2\3\3\3\3\3\3\3\3\5\3\61\n\3\3\3"+
+		"\3\3\3\4\3\4\5\4\67\n\4\3\4\3\4\3\4\5\4<\n\4\7\4>\n\4\f\4\16\4A\13\4\3"+
+		"\5\3\5\3\5\3\5\3\5\5\5H\n\5\3\5\3\5\3\5\3\5\3\6\3\6\3\7\6\7Q\n\7\r\7\16"+
+		"\7R\3\b\3\b\3\t\3\t\5\tY\n\t\3\n\3\n\5\n]\n\n\3\13\3\13\3\13\3\13\3\f"+
+		"\3\f\3\f\3\f\3\r\3\r\3\16\3\16\3\16\3\16\6\16m\n\16\r\16\16\16n\3\17\3"+
+		"\17\3\17\3\17\3\20\3\20\5\20w\n\20\3\20\3\20\3\20\3\21\3\21\3\22\3\22"+
+		"\3\22\3\22\5\22\u0082\n\22\3\23\3\23\3\23\7\23\u0087\n\23\f\23\16\23\u008a"+
+		"\13\23\3\24\3\24\3\24\7\24\u008f\n\24\f\24\16\24\u0092\13\24\3\25\3\25"+
+		"\3\25\3\25\5\25\u0098\n\25\3\25\3\25\7\25\u009c\n\25\f\25\16\25\u009f"+
+		"\13\25\3\25\3\25\3\25\2\2\26\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \""+
+		"$&(\2\2\2\u00a0\2*\3\2\2\2\4,\3\2\2\2\6\66\3\2\2\2\bB\3\2\2\2\nM\3\2\2"+
+		"\2\fP\3\2\2\2\16T\3\2\2\2\20X\3\2\2\2\22\\\3\2\2\2\24^\3\2\2\2\26b\3\2"+
+		"\2\2\30f\3\2\2\2\32h\3\2\2\2\34p\3\2\2\2\36v\3\2\2\2 {\3\2\2\2\"\u0081"+
+		"\3\2\2\2$\u0083\3\2\2\2&\u008b\3\2\2\2(\u0093\3\2\2\2*+\5\4\3\2+\3\3\2"+
+		"\2\2,-\7\3\2\2-.\7!\2\2.\60\5\6\4\2/\61\7>\2\2\60/\3\2\2\2\60\61\3\2\2"+
+		"\2\61\62\3\2\2\2\62\63\7 \2\2\63\5\3\2\2\2\64\67\5\22\n\2\65\67\5\20\t"+
+		"\2\66\64\3\2\2\2\66\65\3\2\2\2\67?\3\2\2\28;\7\"\2\29<\5\22\n\2:<\5\20"+
+		"\t\2;9\3\2\2\2;:\3\2\2\2<>\3\2\2\2=8\3\2\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2"+
+		"\2\2@\7\3\2\2\2A?\3\2\2\2BC\7\4\2\2CG\7!\2\2DE\7\r\2\2EF\7!\2\2FH\5\34"+
+		"\17\2GD\3\2\2\2GH\3\2\2\2HI\3\2\2\2IJ\7\5\2\2JK\5\n\6\2KL\7\20\2\2L\t"+
+		"\3\2\2\2MN\5\f\7\2N\13\3\2\2\2OQ\5\16\b\2PO\3\2\2\2QR\3\2\2\2RP\3\2\2"+
+		"\2RS\3\2\2\2S\r\3\2\2\2TU\5\4\3\2U\17\3\2\2\2VY\5\30\r\2WY\5\32\16\2X"+
+		"V\3\2\2\2XW\3\2\2\2Y\21\3\2\2\2Z]\5\24\13\2[]\5\26\f\2\\Z\3\2\2\2\\[\3"+
+		"\2\2\2]\23\3\2\2\2^_\5\30\r\2_`\7>\2\2`a\5\"\22\2a\25\3\2\2\2bc\5\32\16"+
+		"\2cd\7>\2\2de\5\"\22\2e\27\3\2\2\2fg\7\31\2\2g\31\3\2\2\2hl\7\31\2\2i"+
+		"j\7\34\2\2jk\7$\2\2km\7\35\2\2li\3\2\2\2mn\3\2\2\2nl\3\2\2\2no\3\2\2\2"+
+		"o\33\3\2\2\2pq\7\31\2\2qr\7\"\2\2rs\7\31\2\2s\35\3\2\2\2tw\5\30\r\2uw"+
+		"\5\32\16\2vt\3\2\2\2vu\3\2\2\2wx\3\2\2\2xy\7>\2\2yz\5 \21\2z\37\3\2\2"+
+		"\2{|\3\2\2\2|!\3\2\2\2}\u0082\7$\2\2~\u0082\7%\2\2\177\u0082\7&\2\2\u0080"+
+		"\u0082\5(\25\2\u0081}\3\2\2\2\u0081~\3\2\2\2\u0081\177\3\2\2\2\u0081\u0080"+
+		"\3\2\2\2\u0082#\3\2\2\2\u0083\u0088\7$\2\2\u0084\u0085\7\"\2\2\u0085\u0087"+
+		"\7$\2\2\u0086\u0084\3\2\2\2\u0087\u008a\3\2\2\2\u0088\u0086\3\2\2\2\u0088"+
+		"\u0089\3\2\2\2\u0089%\3\2\2\2\u008a\u0088\3\2\2\2\u008b\u0090\7%\2\2\u008c"+
+		"\u008d\7\"\2\2\u008d\u008f\7%\2\2\u008e\u008c\3\2\2\2\u008f\u0092\3\2"+
+		"\2\2\u0090\u008e\3\2\2\2\u0090\u0091\3\2\2\2\u0091\'\3\2\2\2\u0092\u0090"+
+		"\3\2\2\2\u0093\u0097\7\32\2\2\u0094\u0098\5(\25\2\u0095\u0098\5$\23\2"+
+		"\u0096\u0098\5&\24\2\u0097\u0094\3\2\2\2\u0097\u0095\3\2\2\2\u0097\u0096"+
+		"\3\2\2\2\u0098\u009d\3\2\2\2\u0099\u009a\7\"\2\2\u009a\u009c\5(\25\2\u009b"+
+		"\u0099\3\2\2\2\u009c\u009f\3\2\2\2\u009d\u009b\3\2\2\2\u009d\u009e\3\2"+
+		"\2\2\u009e\u00a0\3\2\2\2\u009f\u009d\3\2\2\2\u00a0\u00a1\7\33\2\2\u00a1"+
+		")\3\2\2\2\21\60\66;?GRX\\nv\u0081\u0088\u0090\u0097\u009d";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
