@@ -60,15 +60,20 @@ FALSE:      'False';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-//some others rules
-non_initted_var: IDENTIFIER (LK NUM RK)* ;
-initted_var: IDENTIFIER (LK NUM RK)* AS literals;
+//
+non_initted_var: scalar_var | composite_var;
+initted_var: scalar_init | composite_init;
+
+//init rules:
+scalar_init: scalar_var AS literals;
+composite_init: composite_var AS literals;
+
+//var type:
+scalar_var: IDENTIFIER;
+composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 
 //Identifiers
 IDENTIFIER: LETTER(LETTER|UPCASE_LETTER|NUMBER|'_')*;
-
-
-
 
 
 //seprators
@@ -83,10 +88,13 @@ COLON:  ':';
 CM:     ',';
 DOT:    '.';
 
+
+
 //Literals
-literals: INTERGER | FLOAT | BOLEAN | array_list;
+literals: INTEGER | FLOAT | BOLEAN | array_list;
+
 //Integer
-INTERGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+;
+INTEGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+;
 //Float
 FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN)?;
 //Bolean
@@ -96,15 +104,9 @@ BOLEAN: TRUE | FALSE;
 
 //Array:
 
-
-array_list: LB array_list | int_array | float_array ( ',' array_list)* RB;
-int_array: LB INTERGER (',' INTERGER)* RB;
-float_array: LB FLOAT (',' FLOAT)* RB;
-
-
-
-
-
+int_array: INTEGER (',' INTEGER)* ;
+float_array: FLOAT (',' FLOAT)*;
+array_list: LB ( array_list | int_array | float_array)  ( ',' array_list)* RB;
 
 //operators
 
@@ -131,5 +133,5 @@ fragment SCIEN:         EXPO (NUMBER)+;
 fragment HEX:           '0x' | '0X';
 fragment OCTA:          '0o' | '0O';
 
-NUM: NUMBER+;
+
 
