@@ -44,6 +44,26 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#array_lit.
+    def visitArray_lit(self, ctx:BKITParser.Array_litContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#int_array.
+    def visitInt_array(self, ctx:BKITParser.Int_arrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#float_array.
+    def visitFloat_array(self, ctx:BKITParser.Float_arrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#string_array.
+    def visitString_array(self, ctx:BKITParser.String_arrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BKITParser#var_list.
     def visitVar_list(self, ctx:BKITParser.Var_listContext):
         return self.visitChildren(ctx)
