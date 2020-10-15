@@ -32,10 +32,13 @@ var_declare: VAR COLON var_list (AS )? SEMI;
 var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
 
 //func_declare ()
-func_declare: FUNCTION COLON (PARAMETER COLON para_list)? BODY func_body ENDBODY;
+func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY func_body ENDBODY;
 func_body: stm_list;
 stm_list: stm+;
 stm: var_declare   ;
+
+//func_call:
+func_call: IDENTIFIER LP para_list RP SEMI;
 
 // List of Tokens
 //List of keywowrds (Note: endbody have a dot)
@@ -62,6 +65,7 @@ THEN:       'Then';
 FALSE:      'False';
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+COMMENT: ('**' .*? '**') -> skip;
 
 //init type
 non_initted_var: scalar_var | composite_var;
@@ -80,14 +84,31 @@ para_list: IDENTIFIER (CM IDENTIFIER);
 
 //listof stament:
 //if stament:
-
+if_stmt: IF ;
 //assignment stament:
 assign_stm: (scalar_var | composite_var) AS expression ;
 
 
+//relation operator
+RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR;
+ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
+MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP;
+NEGSIGN: ISUBOP | FSUBOP;
+index_op: (LK expression RP)+;
 
 //expression
-expression: ;
+expression: exp0 RELATION_OP exp0 | exp1;
+exp1: exp1 (AND | OR) exp2 | exp2;
+exp2: exp2 (ADDSUB) exp3 | exp3;
+exp3: exp3 (MULDIV) exp4 | exp4;
+exp4: BNEG exp4 | exp5;
+exp5: SIGN exp5 | exp6;
+exp6: exp6 index_op | exp7;
+exp7: func_call |exp8;
+exp8: LP (expression) RP | operand;
+operand: literals | IDENTIFIER;
+
+
 
 
 //Identifiers
@@ -105,11 +126,12 @@ SEMI:   ';';
 COLON:  ':';
 CM:     ',';
 DOT:    '.';
+DOUQUO: '"';
 
 
 
 //Literals
-literals: INTEGER | FLOAT | BOLEAN | array_list;
+literals: array_list | INTEGER | FLOAT | BOLEAN | LSTRING ;
 
 //Integer
 INTEGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+;
@@ -117,11 +139,8 @@ INTEGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+;
 FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN)?;
 //Bolean
 BOLEAN: TRUE | FALSE;
-//String
-
 
 //Array:
-
 int_array: INTEGER (',' INTEGER)* ;
 float_array: FLOAT (',' FLOAT)*;
 array_list: LB ( array_list | int_array | float_array)  ( ',' array_list)* RB;
@@ -154,7 +173,6 @@ IGROE:      '>=';
 ILESS:      '<';
 IGR:        '>';
 
-
 // Boolean operators
 BNEG:       '!';
 BAND:       '&&';
@@ -162,7 +180,6 @@ BOR:        '||';
 
 //assign op
 AS:     '=';
-
 
 // ERROR_CHAR: ;
 // UNCLOSE_STRING: ;
@@ -179,6 +196,11 @@ fragment SIGN:          ('-' | '+')?;
 fragment SCIEN:         EXPO (NUMBER)+;
 fragment HEX:           '0x' | '0X';
 fragment OCTA:          '0o' | '0O';
+fragment SDOUQUO:       SINGQUO DOUQUO;
+fragment SINGQUO:       '\'';
 
 
 
+//String
+LSTRING: DOUQUO STRING DOUQUO;
+STRING: (SDOUQUO | ~["])*? ;
