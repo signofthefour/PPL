@@ -1,6 +1,4 @@
 Var: x, y[1][3]={{{12}, {12}},{23}, {13,32}};
-
-
 Function: fact
 Parameter: n
 Body:

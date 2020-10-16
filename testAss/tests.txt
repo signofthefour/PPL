@@ -1,1 +1,11 @@
-"{{1, 2}, {4, 5}, {3, 5}}"
+Var : c, d = 6, e, f;
+Function: foo
+Parameter: a[5], b
+Body:
+Var: i = 0;
+While (i < 5) Do
+a[i] = b +. 1.0;
+a[3 + foo(asddasa)] = a[b[2][3]] + 4;
+i = i + 1;
+EndWhile.
+EndBody.

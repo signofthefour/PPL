@@ -25,25 +25,34 @@ grammar BKIT;
 // }
 
 //programstructure
-program  : var_declare ;
+program  : (var_declare | func_declare)* EOF;
 
 //var declare
 var_declare: VAR COLON var_list (AS )? SEMI;
 var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
 
 //func_declare ()
-func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY func_body ENDBODY;
+main_func: ;
+func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON func_body  ENDBODY;
 func_body: stm_list;
 stm_list: stm+;
-stm: var_declare   ;
+stm: var_declare
+    | assign_stmt
+    | if_stmt
+    | for_stmt
+    | while_stmt
+    | do_while_stmt
+    | break_stmt
+    | continue_stmt
+    | call_stmt
+    | return_stmt ;
 
-//func_call:
-func_call: IDENTIFIER LP para_list RP SEMI;
+
 
 // List of Tokens
 //List of keywowrds (Note: endbody have a dot)
 VAR:        'Var';
-FUNCTION:   'Function:';
+FUNCTION:   'Function';
 BODY:       'Body';
 ELSE:       'Else';
 ENDFOR:     'EndFor';
@@ -80,40 +89,74 @@ scalar_var: IDENTIFIER;
 composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 
 //para_list:
-para_list: IDENTIFIER (CM IDENTIFIER);
+para_list: scalar_var | composite_var  (',' (scalar_var | composite_var))*;
 
-//listof stament:
+
+
+// ===================================== STATMENT ====================================
 //if stament:
-if_stmt: IF ;
+if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
+
 //assignment stament:
-assign_stm: (scalar_var | composite_var) AS expression ;
+assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
+composite_ass: IDENTIFIER index_op;  
+
+//for statement:
+for_stmt: FOR LP scalar_init CM expression CM expression RP DO stm_list ENDFOR DOT ;
+
+//while stament 
+while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
+
+//do-while statement:
+do_while_stmt: DO stm_list WHILE expression ENDDO DOT ;
+
+//break stament:
+break_stmt: BREAK SEMI;
+
+//continue statement:
+continue_stmt: COMMENT SEMI;
+
+//return statement:
+return_stmt: RETURN  (expression (',' expression)*)? SEMI;
+
+//func_call statement:
+func_call: IDENTIFIER LP (expression (',' expression)*)?  RP ;
+call_stmt: func_call SEMI;
 
 
+// ===================================== STATMENT ====================================
+
+
+// ===================================== EXPRESSON ===================================
 //relation operator
 RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR;
 ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
 MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP;
 NEGSIGN: ISUBOP | FSUBOP;
-index_op: (LK expression RP)+;
+index_op: (LK expression RK)+;
 
 //expression
-expression: exp0 RELATION_OP exp0 | exp1;
-exp1: exp1 (AND | OR) exp2 | exp2;
+expression: exp0;
+exp0: exp0 RELATION_OP exp0 | exp1;
+exp1: exp1 (BAND | BOR) exp2 | exp2;
 exp2: exp2 (ADDSUB) exp3 | exp3;
 exp3: exp3 (MULDIV) exp4 | exp4;
 exp4: BNEG exp4 | exp5;
-exp5: SIGN exp5 | exp6;
+exp5: NSIGN exp5 | exp6;
 exp6: exp6 index_op | exp7;
 exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
-operand: literals | IDENTIFIER;
+operand: IDENTIFIER | literals;
 
 
+// ===================================== EXPRESSON ===================================s
 
 
 //Identifiers
 IDENTIFIER: LETTER(LETTER|UPCASE_LETTER|NUMBER|'_')*;
 
+//array:
+ARRAY: LB NUMBER (',' NUMBER)* RB;
 
 //seprators
 LB:     '{';
@@ -134,9 +177,9 @@ DOUQUO: '"';
 literals: array_list | INTEGER | FLOAT | BOLEAN | LSTRING ;
 
 //Integer
-INTEGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+;
+INTEGER: NUMBER+ | HEX[0-9A-F]+ | OCTA[0-7]+; // 
 //Float
-FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN)?;
+FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN); // Error, contain 0;
 //Bolean
 BOLEAN: TRUE | FALSE;
 
@@ -204,3 +247,4 @@ fragment SINGQUO:       '\'';
 //String
 LSTRING: DOUQUO STRING DOUQUO;
 STRING: (SDOUQUO | ~["])*? ;
+NSIGN: SIGN;
