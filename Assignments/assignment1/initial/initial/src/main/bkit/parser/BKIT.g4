@@ -242,10 +242,9 @@ fragment HEX:           '0x' | '0X';
 fragment OCTA:          '0o' | '0O';
 fragment SDOUQUO:       SINGQUO DOUQUO;
 fragment SINGQUO:       '\'';
-
+fragment CHARSTRING: (SDOUQUO | ~['\n"])*? ;
 
 
 //String
-LSTRING: DOUQUO STRING DOUQUO;
-STRING: (SDOUQUO | ~["])*? ;
+LSTRING: DOUQUO CHARSTRING DOUQUO { self.text = self.text[1;-1] };
 NSIGN: SIGN;

@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3L")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3K")
         buf.write("\u019e\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
@@ -161,7 +161,7 @@ def serializedATN():
         buf.write("\u0151\u0152\3\2\2\2\u0152A\3\2\2\2\u0153\u0151\3\2\2")
         buf.write("\2\u0154\u0155\7B\2\2\u0155\u0158\5B\"\2\u0156\u0158\5")
         buf.write("D#\2\u0157\u0154\3\2\2\2\u0157\u0156\3\2\2\2\u0158C\3")
-        buf.write("\2\2\2\u0159\u015a\7L\2\2\u015a\u015d\5D#\2\u015b\u015d")
+        buf.write("\2\2\2\u0159\u015a\7K\2\2\u015a\u015d\5D#\2\u015b\u015d")
         buf.write("\5F$\2\u015c\u0159\3\2\2\2\u015c\u015b\3\2\2\2\u015dE")
         buf.write("\3\2\2\2\u015e\u015f\b$\1\2\u015f\u0160\5H%\2\u0160\u0165")
         buf.write("\3\2\2\2\u0161\u0162\f\4\2\2\u0162\u0164\5\66\34\2\u0163")
@@ -231,7 +231,7 @@ class BKITParser ( Parser ):
                       "FNEQUAL", "FLESSOE", "FGROE", "FLESS", "FGR", "INEQUAL", 
                       "ILESSOE", "IGROE", "ILESS", "IGR", "BNEG", "BAND", 
                       "BOR", "AS", "ERROR_CHAR", "UNCLOSE_STRING", "ILLEGAL_ESCAPE", 
-                      "UNTERMINATED_COMMENT", "LSTRING", "STRING", "NSIGN" ]
+                      "UNTERMINATED_COMMENT", "LSTRING", "NSIGN" ]
 
     RULE_program = 0
     RULE_var_declare = 1
@@ -359,8 +359,7 @@ class BKITParser ( Parser ):
     ILLEGAL_ESCAPE=70
     UNTERMINATED_COMMENT=71
     LSTRING=72
-    STRING=73
-    NSIGN=74
+    NSIGN=73
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
