@@ -1,11 +1,11 @@
-Var : c, d = 6, e, f;
+Var : c = "dsa", d = 6, e, f;
 Function: foo
 Parameter: a[5], b
 Body:
 Var: i = 0;
 While (i < 5) Do
 a[i] = b +. 1.0;
-a[3 + foo(asddasa)] = a[b[2][3]] + 4;
+a[3 + foo(2)] = a[b[2][3]] + 4;
 i = i + 1;
 EndWhile.
 EndBody.

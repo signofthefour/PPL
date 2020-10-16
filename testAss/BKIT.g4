@@ -123,8 +123,9 @@ return_stmt: RETURN  (expression (',' expression)*)? SEMI;
 func_call: IDENTIFIER LP (expression (',' expression)*)?  RP ;
 call_stmt: func_call SEMI;
 
-
 // ===================================== STATMENT ====================================
+
+
 
 
 // ===================================== EXPRESSON ===================================
@@ -235,7 +236,7 @@ fragment LETTER:        [a-z];
 fragment UPCASE_LETTER: [A-Z];
 fragment NUMBER:        [0-9];
 fragment EXPO:          ('e'|'E')SIGN;
-fragment SIGN:          ('-' | '+')?;
+fragment SIGN:          ('-' | '+');
 fragment SCIEN:         EXPO (NUMBER)+;
 fragment HEX:           '0x' | '0X';
 fragment OCTA:          '0o' | '0O';
