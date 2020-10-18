@@ -19,11 +19,6 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#main_function_declare.
-    def visitMain_function_declare(self, ctx:BKITParser.Main_function_declareContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BKITParser#function_declare.
     def visitFunction_declare(self, ctx:BKITParser.Function_declareContext):
         return self.visitChildren(ctx)
@@ -59,13 +54,13 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#composite_var.
-    def visitComposite_var(self, ctx:BKITParser.Composite_varContext):
+    # Visit a parse tree produced by BKITParser#var_non_init.
+    def visitVar_non_init(self, ctx:BKITParser.Var_non_initContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#var_non_init.
-    def visitVar_non_init(self, ctx:BKITParser.Var_non_initContext):
+    # Visit a parse tree produced by BKITParser#composite_var.
+    def visitComposite_var(self, ctx:BKITParser.Composite_varContext):
         return self.visitChildren(ctx)
 
 
@@ -274,6 +269,16 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#boolean_operand.
+    def visitBoolean_operand(self, ctx:BKITParser.Boolean_operandContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#string_expr.
+    def visitString_expr(self, ctx:BKITParser.String_exprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BKITParser#int_func_call.
     def visitInt_func_call(self, ctx:BKITParser.Int_func_callContext):
         return self.visitChildren(ctx)
@@ -286,6 +291,11 @@ class BKITVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKITParser#boolean_func_call.
     def visitBoolean_func_call(self, ctx:BKITParser.Boolean_func_callContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#string_func_call.
+    def visitString_func_call(self, ctx:BKITParser.String_func_callContext):
         return self.visitChildren(ctx)
 
 
