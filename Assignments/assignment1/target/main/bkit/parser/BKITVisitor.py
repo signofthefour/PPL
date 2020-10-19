@@ -164,138 +164,53 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#boolean_type_expr.
-    def visitBoolean_type_expr(self, ctx:BKITParser.Boolean_type_exprContext):
+    # Visit a parse tree produced by BKITParser#expr1.
+    def visitExpr1(self, ctx:BKITParser.Expr1Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr1.
-    def visitInt_expr1(self, ctx:BKITParser.Int_expr1Context):
+    # Visit a parse tree produced by BKITParser#expr2.
+    def visitExpr2(self, ctx:BKITParser.Expr2Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr2.
-    def visitInt_expr2(self, ctx:BKITParser.Int_expr2Context):
+    # Visit a parse tree produced by BKITParser#expr3.
+    def visitExpr3(self, ctx:BKITParser.Expr3Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr3.
-    def visitInt_expr3(self, ctx:BKITParser.Int_expr3Context):
+    # Visit a parse tree produced by BKITParser#expr4.
+    def visitExpr4(self, ctx:BKITParser.Expr4Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr4.
-    def visitInt_expr4(self, ctx:BKITParser.Int_expr4Context):
+    # Visit a parse tree produced by BKITParser#expr5.
+    def visitExpr5(self, ctx:BKITParser.Expr5Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr5.
-    def visitInt_expr5(self, ctx:BKITParser.Int_expr5Context):
+    # Visit a parse tree produced by BKITParser#expr6.
+    def visitExpr6(self, ctx:BKITParser.Expr6Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_expr6.
-    def visitInt_expr6(self, ctx:BKITParser.Int_expr6Context):
+    # Visit a parse tree produced by BKITParser#expr7.
+    def visitExpr7(self, ctx:BKITParser.Expr7Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#int_operand.
-    def visitInt_operand(self, ctx:BKITParser.Int_operandContext):
+    # Visit a parse tree produced by BKITParser#expr8.
+    def visitExpr8(self, ctx:BKITParser.Expr8Context):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#float_expr1.
-    def visitFloat_expr1(self, ctx:BKITParser.Float_expr1Context):
+    # Visit a parse tree produced by BKITParser#operand.
+    def visitOperand(self, ctx:BKITParser.OperandContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#float_expr2.
-    def visitFloat_expr2(self, ctx:BKITParser.Float_expr2Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_expr3.
-    def visitFloat_expr3(self, ctx:BKITParser.Float_expr3Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_expr4.
-    def visitFloat_expr4(self, ctx:BKITParser.Float_expr4Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_expr5.
-    def visitFloat_expr5(self, ctx:BKITParser.Float_expr5Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_expr6.
-    def visitFloat_expr6(self, ctx:BKITParser.Float_expr6Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_operand.
-    def visitFloat_operand(self, ctx:BKITParser.Float_operandContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#constant.
-    def visitConstant(self, ctx:BKITParser.ConstantContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_expr.
-    def visitBoolean_expr(self, ctx:BKITParser.Boolean_exprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_expr1.
-    def visitBoolean_expr1(self, ctx:BKITParser.Boolean_expr1Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_expr2.
-    def visitBoolean_expr2(self, ctx:BKITParser.Boolean_expr2Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_expr3.
-    def visitBoolean_expr3(self, ctx:BKITParser.Boolean_expr3Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_expr4.
-    def visitBoolean_expr4(self, ctx:BKITParser.Boolean_expr4Context):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_operand.
-    def visitBoolean_operand(self, ctx:BKITParser.Boolean_operandContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#string_expr.
-    def visitString_expr(self, ctx:BKITParser.String_exprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#int_func_call.
-    def visitInt_func_call(self, ctx:BKITParser.Int_func_callContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#float_func_call.
-    def visitFloat_func_call(self, ctx:BKITParser.Float_func_callContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#boolean_func_call.
-    def visitBoolean_func_call(self, ctx:BKITParser.Boolean_func_callContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#string_func_call.
-    def visitString_func_call(self, ctx:BKITParser.String_func_callContext):
+    # Visit a parse tree produced by BKITParser#function_call.
+    def visitFunction_call(self, ctx:BKITParser.Function_callContext):
         return self.visitChildren(ctx)
 
 
