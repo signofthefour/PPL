@@ -1,0 +1,2 @@
+**"This"+is\nmulti
+" ****"('"line/2-1'")"**"zzz" 

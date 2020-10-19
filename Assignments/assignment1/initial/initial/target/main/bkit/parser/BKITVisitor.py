@@ -214,6 +214,16 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#string_array.
+    def visitString_array(self, ctx:BKITParser.String_arrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#array_index.
+    def visitArray_index(self, ctx:BKITParser.Array_indexContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BKITParser#array_list.
     def visitArray_list(self, ctx:BKITParser.Array_listContext):
         return self.visitChildren(ctx)
