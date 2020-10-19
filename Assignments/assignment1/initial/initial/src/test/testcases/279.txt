@@ -1,5 +1,14 @@
-Function: foo 
+
+        Function: test
         Parameter: n
-        Body: 
-            foo(2.34,"string",-9.2e11);
+        Body:
+            Var: flag = 0;
+            Do
+                If (n!=2) && (n%i==0) Then
+                    flag=1;
+                EndIf.
+                i = i + 1;
+            While i<=sqrt(n) EndDo.
+            print(i);
         EndBody.
+        

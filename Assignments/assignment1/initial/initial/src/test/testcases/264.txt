@@ -1,8 +1,10 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            Do
-                x = a + b;
-                writeln(x);
-            While(True || False || True || (a > b))
+
+        Function: test
+        Body:
+            Var: a = 2;
+            For (i = 10 - a*a\2, a < 100, a = a + 1) Do
+                writeln(a*a - i*i);
+                i = i + 1;
+            EndFor.
         EndBody.
+        

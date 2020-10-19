@@ -1,5 +1,9 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            a[12] = { 1 ,2 , 3};
+
+        Function: test
+        Body:
+            Var: x = 1;
+            Do 
+                Continue;
+            While !x EndDo.
         EndBody.
+        

@@ -35,9 +35,10 @@ var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
 //func_declare ()
 main_func: ;
 func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON func_body  ENDBODY DOT;
-func_body: var_declare* stm_list;
+func_body: stm_list;
 stm_list: stm*;
-stm: assign_stmt
+stm: var_declare
+    | assign_stmt
     | if_stmt
     | for_stmt
     | while_stmt

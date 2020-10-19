@@ -1,6 +1,11 @@
 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            For (i == 0, i != 5, i*1) Do x=6; EndFor.
+        Function: test
+        Body:
+            Var: time, greeting;
+            time = date();
+            If time < 10 Then greeting = "Good morning";
+            ElseIf time < 20 Then greeting = "Good day";
+            Else greeting = "Good evening";
+            EndIf.
         EndBody.
+        

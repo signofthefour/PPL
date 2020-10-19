@@ -1,9 +1,7 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            If n == 0 Then
-                Return 1;
-            Else
-                Return n * fact (n - 1);
-            EndIf.
+
+        Function: test___
+        Parameter: x[10], a[2][3][2][9]
+        Body:
+            Return test___(12.,{2,{{2.e5},"hi"},4.});
         EndBody.
+        

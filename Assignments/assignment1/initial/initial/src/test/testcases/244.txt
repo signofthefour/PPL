@@ -1,9 +1,10 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            While x>1 Do
-                If x==1 Then Return;
-                Else Break abc;
-                EndIf.
-            EndWhile.
+
+        Function: test
+        Body:
+            Var: s1, s2, s3;
+            s1 = "Sk%%w7?1kYbOVV2s";
+            s2 = "?m4W1##AiNGv&sqg";
+            s3 = "oaD0W?@V2WjsFzFU";
+            s3 = s1 + s2 - s3*s1;
         EndBody.
+        

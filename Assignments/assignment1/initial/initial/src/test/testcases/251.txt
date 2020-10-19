@@ -1,6 +1,12 @@
 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            For (, i != 5, i*1) Do x=6; EndFor.
+        Function: test
+        Body:
+            Var: num = 10;
+            If num > 0 Then print("Positive number");
+            Else 
+                If num == 0 Then print("Zero");
+                Else print("Negative number");
+                EndIf.
+            EndIf.
         EndBody.
+        

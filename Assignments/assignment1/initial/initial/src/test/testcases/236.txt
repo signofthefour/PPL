@@ -1,6 +1,6 @@
 
-        Var: x, y[1][3]={{{12,1}, {12., 12e3}},{23}, {13,32}};
-        Function: foo 
-        Parameter: n
-        Body: 
+        Function: test
+        Body:
+            Var: x = 43.9e10, y = 542, z = 0xFF2, t = 0O221, s="ThisIsString", w = False, arr[2][1] = {{2e5},{2}}; 
         EndBody.
+        

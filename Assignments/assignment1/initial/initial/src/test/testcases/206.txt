@@ -1,7 +1,1 @@
- 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            c =a * 5; 
-        EndBody.
-        
+Var: s_1="'"superMan is'".", s_2="happyBirthDay";

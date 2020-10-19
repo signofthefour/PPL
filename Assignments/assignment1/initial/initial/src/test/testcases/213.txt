@@ -1,9 +1,7 @@
- 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            If a==5 Then b = 5;
-            ElseIf a==6 Then c=6; 
-            EndIf.
+
+        Function: test 
+        Body:
+            Var: x = 10, a[10]; 
+            x = x + 1;
         EndBody.
         

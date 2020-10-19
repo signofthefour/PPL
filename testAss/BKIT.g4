@@ -34,9 +34,10 @@ var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
 //func_declare ()
 main_func: ;
 func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON func_body  ENDBODY DOT;
-func_body: var_declare* stm_list;
+func_body: stm_list;
 stm_list: stm*;
-stm: assign_stmt
+stm: var_declare
+    | assign_stmt SEMI
     | if_stmt
     | for_stmt
     | while_stmt
@@ -77,11 +78,11 @@ composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
+assign_stmt: (scalar_var | composite_ass) AS expression;
 composite_ass: IDENTIFIER index_op;  
 
 //for statement:
-for_stmt: FOR LP scalar_init CM expression CM expression RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP assign_stmt CM expression CM (assign_stmt | literals) RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;

@@ -1,6 +1,9 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            Var: r = 10., v;
-            v = (4. \. 3.) *. 3.14 *. r *. r *. r;
+
+        Var: simp_l_3;
+        Function: test
+        Parameter: a, b
+        Body:
+            print(a);
+            print(b);
         EndBody.
+        

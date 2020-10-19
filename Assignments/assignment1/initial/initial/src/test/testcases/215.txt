@@ -1,6 +1,7 @@
 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            For (i = 0, i != 5, i*1) Do x=6; EndFor.
+        Function:  
+        Body:
+            Var s = "hi_hi";
+            s = "nice";
         EndBody.
+        

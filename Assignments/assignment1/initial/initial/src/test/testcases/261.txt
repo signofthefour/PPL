@@ -1,7 +1,10 @@
-Function: foo
-                        Parameter: x
-                        Body:
-                            For (i = 1, i <= x*x*x,i + x ) Do
-                                writeln(i);
-                            EndFor.
-                        EndBody.
+
+        Function: test
+        Body:
+            Var: flag = False, c;
+            c = !False;
+            For (i = 0, flag == c, 1) Do
+                flag = True;
+            EndFor.
+        EndBody.
+        

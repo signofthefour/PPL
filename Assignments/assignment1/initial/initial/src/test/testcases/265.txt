@@ -1,7 +1,7 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            Do
-            While();
-            EndDo.
+
+        Function: test
+        Body:
+            While True Do
+            EndWhile.
         EndBody.
+        

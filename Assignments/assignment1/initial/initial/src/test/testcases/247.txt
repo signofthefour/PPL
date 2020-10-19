@@ -1,10 +1,8 @@
-Function: test
-        Parameter: n
+
+        Function: test
         Body:
-            If n > 10 Then
-                Return 
-                If n > 10 Then Return x=3;
-                EndIf.
-                ;
+            Var: x;
+            If 2<=3 Then x = 3;
             EndIf.
         EndBody.
+        

@@ -1,5 +1,11 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            Break;
+
+        Function: test
+        Parameter: t
+        Body:
+            While t < 10 Do
+                If t%2 Then t = t + 1;
+                Else t = t + 2; 
+                EndIf.
+            EndWhile.
         EndBody.
+        

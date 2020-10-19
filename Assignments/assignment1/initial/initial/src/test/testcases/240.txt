@@ -1,11 +1,11 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            If n == 0 Then
-                If n!=0 Then
-                    Return 1;
-                Else 
-                    Return 2;
-                EndIf.
-            EndIf.
+
+        Function: test
+        Body:
+            Var: r, d, t;
+            r = 3.14;
+            s = r*r + 2;
+            t = s && !foo(2) || r =/= 9. && (2+3)*.5.;
+            t = t \. 3.;
+            Return True;
         EndBody.
+        

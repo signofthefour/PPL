@@ -1,3 +1,9 @@
 
-        Var: x[]=1;
+        Function: sum
+        Parameter: n
+        Body:
+            If (n == 0) Then Return 0;
+            EndIf.
+            Return n + sum(n - 1);
+        EndBody.
         

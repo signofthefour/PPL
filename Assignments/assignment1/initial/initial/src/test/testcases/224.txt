@@ -1,5 +1,9 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            a[3+foo(3)] = a[b[2][3]] + 4;
+
+        Var: atn_2 = 2.e65;
+        Var: a[10], b[10][2], c[10];
+        Function: main
+        Body:
+        atn_2 = 1 + 2;
+        c[9] = a[9] + b[9][1];
         EndBody.
+        

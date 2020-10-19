@@ -1,7 +1,1 @@
- 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            c = -.a;
-        EndBody.
-        
+Var: m, n[10];

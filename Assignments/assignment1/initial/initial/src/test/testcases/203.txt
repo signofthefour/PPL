@@ -1,7 +1,1 @@
-
-        Function: foo 
-        Parameter: n 
-        Body: 
-            c = [a+3];
-        EndBody.
-        
+Var: c, d = 6, e, f;

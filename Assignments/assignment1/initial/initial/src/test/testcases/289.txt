@@ -1,5 +1,9 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            array[12]={a,b,c};
+
+        Function: test
+        Body:
+            foo();
         EndBody.
+        Function: foo
+        Body:
+        EndBody.
+        

@@ -1,6 +1,8 @@
 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            For (,,) Do x=6; EndFor.
+        Function: test
+        Body:
+            Var: abc = 1, cde = 2, efg = 3;
+            If abc + cde == efg Then Else efg = 3;
+            EndIf.
         EndBody.
+        

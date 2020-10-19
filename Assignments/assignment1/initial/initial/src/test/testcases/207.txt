@@ -1,7 +1,2 @@
- 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            c =a + 5; 
-        EndBody.
-        
+Var: arr[10], c[99][3][2], arr2[];
+                

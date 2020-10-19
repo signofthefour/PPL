@@ -1,5 +1,12 @@
-Function: foo 
+
+        Function: lcd **LCD of n**
         Parameter: n
-        Body: 
-            x= (y+3)+. 0.e3 - (z -. -9);
+        Body:
+            Var: i;
+            i = n - 1;
+            While (n % i != 0) Do
+                i = i - 1;
+            EndWhile.
+            writeln(i);
         EndBody.
+        

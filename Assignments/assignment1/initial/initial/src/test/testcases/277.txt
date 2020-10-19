@@ -1,5 +1,15 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            a[a[3 + foo(2)][b||True]][b[b[1+0x369]]] = a[b[2][b[12E-9]*3]] + 4;
+
+        Function: test
+        Body:
+            Var: n = 0, s = 0;
+            Do 
+                n = n + 1;
+                Do 
+                    If n%2 == 0 Then s = s + 1;
+                    EndIf.
+                While (s < 1000) EndDo.
+                s = s + n;
+            While (s + n + 1 < max) EndDo.
+            writeln(n);
         EndBody.
+        

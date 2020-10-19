@@ -1,5 +1,12 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            fact (x) + 3;
+
+        Function: test
+        Body:
+            Var: a, b, t;
+            a = "RiaoKL#A8ip28Xqk";
+            b = 12e5;
+            t = a;
+            a = b;
+            b = t;
+            t = !(a=="RiaoKL#A8ip28Xqk") && (b == 12e5);
         EndBody.
+        

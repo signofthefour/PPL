@@ -1,8 +1,7 @@
 
-        Function: foo 
-        Parameter: n 
-        Body: 
-            foo(2 + x, 4. \. y); 
-            goo ();
+        Function:  test
+        Parameter: Var x = 2;
+        Body:
+            x = (x - 1)\2;
         EndBody.
         

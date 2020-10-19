@@ -1,10 +1,9 @@
 
-        Function: test
-        Parameter: n
+        Function: hello
+        Parameter: str
         Body:
-            If n > 10 Then
-                Return 5;
-            Else
-                Return True;
-            EndIf.
+            Var: x = 2;
+            hello(str);
+            hello(x);
         EndBody.
+        
