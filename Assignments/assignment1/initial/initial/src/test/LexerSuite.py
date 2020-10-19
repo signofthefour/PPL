@@ -83,78 +83,66 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.checkLexeme("""** Multi_+\*line %^&%!\n Com==ment ****"('"'")"**zzz ""","zzz,<EOF>",120))
 
     def test_operator_1(self):
-        """ Test operator """
+        """ Test operators """
         self.assertTrue(TestLexer.checkLexeme("+-Var*%ab\.","+,-,Var,*,%,ab,\.,<EOF>",121))
-    def test_operator2(self):  
-        self.assertTrue(TestLexer.checkLexeme("x*2\\3-4+.z\\.9.0-.y*.2%10","x,*,2,\\,3,-,4,+.,z,\\.,9.0,-.,y,*.,2,%,10,<EOF>",124))
-    def test_operator3(self):
-        self.assertTrue(TestLexer.checkLexeme("!x == id && True || y!=z || y >=.9.5 && id>=1 && z<=2","!,x,==,id,&&,True,||,y,!=,z,||,y,>=.,9.5,&&,id,>=,1,&&,z,<=,2,<EOF>",125))
-    def test_operator4(self):
-        self.assertTrue(TestLexer.checkLexeme("x>.2.0 && z<=.1.0 || e<2 && c<.1.8 || e =/= z && z > c","x,>.,2.0,&&,z,<=.,1.0,||,e,<,2,&&,c,<.,1.8,||,e,=/=,z,&&,z,>,c,<EOF>",126))
-    def test_operator5(self):
-        self.assertTrue(TestLexer.checkLexeme("s*2*\\2\\\\++-.-*.*(4. \. 3.) *. 3.14 *. r *. r *. r","s,*,2,*,\,2,\,\,+,+,-.,-,*.,*,(,4.,\.,3.,),*.,3.14,*.,r,*.,r,*.,r,<EOF>",127))
-    def test_operator6(self):
-        self.assertTrue(TestLexer.checkLexeme("(2*3)\\0xAF21 && 9.*.x+ 29-.12%2-0O1234567","(,2,*,3,),\\,0xAF21,&&,9.,*.,x,+,29,-.,12,%,2,-,0O1234567,<EOF>",128))
-    def test_operator7(self):
-        self.assertTrue(TestLexer.checkLexeme("(foo(2+x,4.\\.y)-.a[21412\\2]||!True&&False&&!!c","(,foo,(,2,+,x,,,4.,\\.,y,),-.,a,[,21412,\\,2,],||,!,True,&&,False,&&,!,!,c,<EOF>",129))
-    def test_operator8(self):
-        self.assertTrue(TestLexer.checkLexeme("-112*e+6091\\!<=42%12\\0xA9<=5%2&&102.!>=.12.","-,112,*,e,+,6091,\\,!,<=,42,%,12,\\,0xA9,<=,5,%,2,&&,102.,!,>=.,12.,<EOF>",130))
-    def test_operator9(self):
-        self.assertTrue(TestLexer.checkLexeme("57e9 - 3*a+.5*x\\y!==/=98129>.1<.2020952.<=17","57e9,-,3,*,a,+.,5,*,x,\,y,!=,=/=,98129,>.,1,<.,2020952.,<=,17,<EOF>",131))
-    def test_operator10(self):
-        self.assertTrue(TestLexer.checkLexeme("--0xF---++12%43%b%c == 21\\2\\2\\2\\7.*.2*.7*.2.","-,-,0xF,-,-,-,+,+,12,%,43,%,b,%,c,==,21,\,2,\,2,\,2,\,7.,*.,2,*.,7,*.,2.,<EOF>",132))
-    
-    
+    def test_operator_2(self):  
+        self.assertTrue(TestLexer.checkLexeme("+ - * \\ *. = =/= < = <= <=.","+,-,*,\,*.,=,=/=,<,=,<=,<=.,<EOF>",122))
+    def test_operator_3(self):
+        self.assertTrue(TestLexer.checkLexeme("!||&&=+==+-*+.","!,||,&&,=,+,==,+,-,*,+.,<EOF>",123))
+    def test_operator_4(self):
+        self.assertTrue(TestLexer.checkLexeme("23!=21+===+.\\.12..\\=/=123%&&*21==||1%","23,!=,21,+,==,=,+.,\.,12.,.,\,=/=,123,%,&&,*,21,==,||,1,%,<EOF>",124))
+    def test_operator_5(self):
+        self.assertTrue(TestLexer.checkLexeme("+ - * =/= := <= >= <> = < >( ) [ ] ; , : , ..","+,-,*,=/=,:,=,<=,>=,<,>,=,<,>,(,),[,],;,,,:,,,.,.,<EOF>",125))
+    def test_operator_6(self):
+        self.assertTrue(TestLexer.checkLexeme("as=/=+==..=/.=","as,=/=,+,==,.,.,=,Error Token /",126))
 
-    def test_separator1(self):
-        self.assertTrue(TestLexer.checkLexeme(":)abc)}.[].;,",":,),abc,),},.,[,],.,;,,,<EOF>",133))
-    def test_separator2(self):
-        self.assertTrue(TestLexer.checkLexeme("foo(a[12]) = c };","foo,(,a,[,12,],),=,c,},;,<EOF>",134))
-    def test_separator3(self):
-        self.assertTrue(TestLexer.checkLexeme("Body::::::{[","Body,:,:,:,:,:,:,{,[,<EOF>",135))
-    def test_separator4(self):
-        self.assertTrue(TestLexer.checkLexeme("Parameter:,Body:][}.}[}{(EndIfIf.);;","Parameter,:,,,Body,:,],[,},.,},[,},{,(,EndIf,If,.,),;,;,<EOF>",136))
-    def test_separator5(self):
-        self.assertTrue(TestLexer.checkLexeme("(({:([[[]))jaNhu@Em_Nhi_nLai)];","(,(,{,:,(,[,[,[,],),),jaNhu,Error Token @",137))
 
-    def test_integer1(self):
+    def test_separator_1(self):
+        """ Test separators"""
+        self.assertTrue(TestLexer.checkLexeme("{{{{}.]1:;","{,{,{,{,},.,],1,:,;,<EOF>",127))
+    def test_separator_2(self):
+        self.assertTrue(TestLexer.checkLexeme("a[a{{13},5}+1]:;","a,[,a,{,{,13,},,,5,},+,1,],:,;,<EOF>",128))
+    def test_separator_3(self):
+        self.assertTrue(TestLexer.checkLexeme(".[])){'""'1728397.[)}}""\\.",".,[,],),),{,Error Token '",129))
+
+
+    def test_integer_1(self):
         """test integers"""
-        self.assertTrue(TestLexer.checkLexeme("01990XABC","0,1990,Error Token X",138))
-    def test_integer2(self):
-        self.assertTrue(TestLexer.checkLexeme("0x0 0o0F9","0,x0,0,o0F9,<EOF>",139))
-    def test_integer3(self):
-        self.assertTrue(TestLexer.checkLexeme("0 199 0xFF 0XABC 0o567 0O77","0,199,0xFF,0XABC,0o567,0O77,<EOF>",140))
-    def test_integer4(self):
-        self.assertTrue(TestLexer.checkLexeme("20398723819290132 0942112212","20398723819290132,0,942112212,<EOF>",141))
-    def test_integer5(self):
-        self.assertTrue(TestLexer.checkLexeme("0x0123456789ABCDEF","0,x0123456789ABCDEF,<EOF>",142))
-    def test_integer6(self):
-        self.assertTrue(TestLexer.checkLexeme("0x9876543210ABCDEF 0X9876543210abcdef","0x9876543210ABCDEF,0X9876543210,abcdef,<EOF>",143))       
-    def test_integer7(self):
-        self.assertTrue(TestLexer.checkLexeme("0X112FACDB","0X112FACDB,<EOF>",144))
-    def test_integer8(self):
-        self.assertTrue(TestLexer.checkLexeme("0o01234567 0O012","0,o01234567,0,Error Token O",145))
-    def test_integer9(self):
-        self.assertTrue(TestLexer.checkLexeme("0o12345670abcdef","0o12345670,abcdef,<EOF>",146))
-    def test_integer10(self):
-        self.assertTrue(TestLexer.checkLexeme("0o1234567891011 0O1234567","0o1234567,891011,0O1234567,<EOF>",147))
-    def test_integer11(self):
-        self.assertTrue(TestLexer.checkLexeme("2519489+5202056 000 5240492	3511181\\3367084	4688584	1797485	8139282	7132125	1614874","2519489,+,5202056,0,0,0,5240492,3511181,\\,3367084,4688584,1797485,8139282,7132125,1614874,<EOF>",148))
-    def test_integer12(self):
-        self.assertTrue(TestLexer.checkLexeme("c0001 = e000012\\0O12412 + 0xfF912 || x0AF1221","c0001,=,e000012,\\,0O12412,+,0,xfF912,||,x0AF1221,<EOF>",149))
+        self.assertTrue(TestLexer.checkLexeme("012320","0,12320,<EOF>",130))
+    def test_integer_2(self):
+        self.assertTrue(TestLexer.checkLexeme("0x1132 0XF9A0 ","0x1132,0XF9A0,<EOF>",131))
+    def test_integer_3(self):
+        self.assertTrue(TestLexer.checkLexeme("0o1391 0O1123","0o13,91,0O1123,<EOF>",132))
+    def test_integer_4(self):
+        self.assertTrue(TestLexer.checkLexeme("0000X12031ABC","0,0,0,0X12031ABC,<EOF>",133))
+    def test_integer_5(self):
+        self.assertTrue(TestLexer.checkLexeme("0x0112ABC","0,x0112ABC,<EOF>",134))
+    def test_integer_6(self):
+        self.assertTrue(TestLexer.checkLexeme("0xabc123 0XABC123","0,xabc123,0XABC123,<EOF>",135))       
+    def test_integer_7(self):
+        self.assertTrue(TestLexer.checkLexeme("0x00123ABCd 0X00123ABCd","0,x00123ABCd,0,Error Token X",136))
+    def test_integer_8(self):
+        self.assertTrue(TestLexer.checkLexeme("0o7631 0O012","0o7631,0,Error Token O",137))
+    def test_integer_9(self):
+        self.assertTrue(TestLexer.checkLexeme("0o123412ack","0o123412,ack,<EOF>",138))
+    def test_integer_10(self):
+        self.assertTrue(TestLexer.checkLexeme("0o1230o123 0O1230O123","0o1230,o123,0O1230,Error Token O",139))
+    def test_integer_11(self):
+        self.assertTrue(TestLexer.checkLexeme("-1233 +13289 --0x112FD","-,1233,+,13289,-,-,0x112FD,<EOF>",140))
 
     def test_float1(self):
-        self.assertTrue(TestLexer.checkLexeme("12.0e309121","12.0e309121,<EOF>",150))
+        """ Test floats """
+        self.assertTrue(TestLexer.checkLexeme("12.12231 100.","12.12231,100.,<EOF>",141))
     def test_float2(self):
-        self.assertTrue(TestLexer.checkLexeme("11212e3099","11212e3099,<EOF>",151))
+        self.assertTrue(TestLexer.checkLexeme("112e322 112E332 112e-332 112e+332  112E-332  112e+332","112e322,112E332,112e-332,112e+332,112E-332,112e+332,<EOF>",142))
     def test_float3(self):
-        self.assertTrue(TestLexer.checkLexeme("9876.e5","9876.e5,<EOF>",152))
+        self.assertTrue(TestLexer.checkLexeme("12.0e3 12.0E3 12.0e-3 12.0e+3 12.0E-3","12.0e3,12.0E3,12.0e-3,12.0e+3,12.0E-3,<EOF>",143))
     def test_float4(self):
-        self.assertTrue(TestLexer.checkLexeme("1269.0e4", "1269.0e4,<EOF>",153))
+        self.assertTrue(TestLexer.checkLexeme("00.00000000005", "00.00000000005,<EOF>",144))
     def test_float5(self):
-        self.assertTrue(TestLexer.checkLexeme("12345.","12345.,<EOF>",154))
+        self.assertTrue(TestLexer.checkLexeme(".1231",".1231,<EOF>",145))
     def test_float6(self):
-        self.assertTrue(TestLexer.checkLexeme("120000e-1","120000e-1,<EOF>",155))
+        self.assertTrue(TestLexer.checkLexeme(".22380e3",".,22380e3,<EOF>",146))
     def test_float7(self):
         self.assertTrue(TestLexer.checkLexeme("0e05 0x00.12e5 100e-10","0e05,0,x00,.,12e5,100e-10,<EOF>",156))
     def test_float8(self):
