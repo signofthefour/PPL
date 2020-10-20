@@ -1,8 +1,11 @@
 
         Function: test
         Body:
-            Var: a[100], x[3][4];
-            a[3 + foo(2)] = a[b[2][3]] + 4;
-            x = {{{12,1}, {12., 12e3}},{23}, {13,32}};
+            If avg < 3 Then raise = "Fail";
+            ElseIf avg <=. 4 Then raise = "Y";
+            ElseIf avg <=. 6.5 Then raise = "TB";
+            ElseIf avg <=. 8. Then raise = "K";
+            ElseIf avg <=. 9. Then raise =  "G";
         EndBody.
+        EndIf.
         

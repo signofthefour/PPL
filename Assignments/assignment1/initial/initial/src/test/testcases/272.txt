@@ -1,12 +1,16 @@
 
-        Function: lcd **LCD of n**
-        Parameter: n
+        Function: test
+        Parameter: foo
         Body:
-            Var: i;
-            i = n - 1;
-            While (n % i != 0) Do
-                i = i - 1;
-            EndWhile.
-            writeln(i);
+            For (i = 0, i < 10, 2) Do
+                Break;
+                If (True) Then
+                Break;
+                a[1][2][3][4] = 2.E-59;
+                Break;
+                EndIf.
+                Break;
+            EndFor.
+            
         EndBody.
         

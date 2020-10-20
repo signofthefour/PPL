@@ -1,11 +1,7 @@
 
+        Var: x;
         Function: test
         Body:
-            foo (2 + x, 4. \. y);
-        EndBody.
-        Function: foo
-        Parameter: a, b
-        Body:
-            writeln(a+.b);
+            a = index[a3[function(12233+3])];
         EndBody.
         

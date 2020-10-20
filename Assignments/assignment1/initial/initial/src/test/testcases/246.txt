@@ -1,12 +1,7 @@
 
         Function: test
-        Body:
-            Var: a, b, t;
-            a = "RiaoKL#A8ip28Xqk";
-            b = 12e5;
-            t = a;
-            a = b;
-            b = t;
-            t = !(a=="RiaoKL#A8ip28Xqk") && (b == 12e5);
+        Body:   
+            For (i = 0, i < 10, 1) Do
+            EndFor.
         EndBody.
         

@@ -111,18 +111,6 @@ public class BKITBaseListener implements BKITListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPara_list(BKITParser.Para_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPara_list(BKITParser.Para_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNon_initted_var(BKITParser.Non_initted_varContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -190,6 +178,18 @@ public class BKITBaseListener implements BKITListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitComposite_var(BKITParser.Composite_varContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPara_list(BKITParser.Para_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPara_list(BKITParser.Para_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

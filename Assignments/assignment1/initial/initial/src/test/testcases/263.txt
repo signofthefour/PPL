@@ -1,7 +1,14 @@
 
         Function: test
         Body:
-            For (i = 0, True, 1) Do
-            EndFor.
+            Var: x = 1;
+            While (x <= 5) Do
+                While (x) Do
+                    While x Do
+                        While (!(!(x))) Do
+                        EndWhile.
+                    EndWhile.
+                EndWhile.
+            EndWhile.
         EndBody.
         

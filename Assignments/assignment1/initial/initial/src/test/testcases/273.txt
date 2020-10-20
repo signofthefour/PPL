@@ -1,14 +1,12 @@
 
-        Function: sNum **square number**
-        Parameter: n
+        Function: test
         Body:
-            Var: i = 0;
-            While (i*i <= n) Do
-                If (i*i == n) Then
-                    writeln(n);
-                    Return;
-                EndIf.
-                i = i + 1;
-            EndWhile.
+            While True Do
+            For (i = 0, i < 10, 2) Do
+                someStament(); 
+                Break;        
+            EndFor.
+            Break;
+            EndWhile.        
         EndBody.
         

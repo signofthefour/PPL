@@ -1,17 +1,7 @@
+ Var: x = "where is DOT";
+        Function: func_NAME
+        Parameter: x[10], a[2][3][2][9]
+        Body:
 
-        Var: x;
-        Function: fact
-        Parameter: n
-        Body:
-        If n == 0 Then
-        Return 1;
-        Else
-        Return n * fact (n - 1);
-        EndIf.
-        EndBody.
-        Function: main
-        Body:
-        x = 10;
-        fact (x);
-        EndBody.
+        EndBody
         

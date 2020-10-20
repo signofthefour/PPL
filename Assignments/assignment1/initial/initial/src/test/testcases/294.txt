@@ -1,9 +1,9 @@
 
-        Function: sum
-        Parameter: n
+        Function: test
+        Parameter: a, a[1][2]
         Body:
-            If (n == 0) Then Return 0;
-            EndIf.
-            Return n + sum(n - 1);
+        For(i=expr, a =/= {{{},{}}} + a - b, "bruhhhhhh" + 1) Do
+            Return "bruhhhhhh";
+        EndFor.
         EndBody.
         

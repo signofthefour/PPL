@@ -1,10 +1,13 @@
 
         Function: test
+        Parameter: t
         Body:
-            Var: flag = False, c;
-            c = !False;
-            For (i = 0, flag == c, 1) Do
-                flag = True;
-            EndFor.
+            While (a*a==b*b+c*c) **|| (b*b==a*a+c*c)** || (c*c== a*a+b*b) Do
+                Var: a = 2;
+                For (i = 10 - a*a%2, a < 100 * iuuw,  a + 1) Do
+                writeln(a*a - i*i);
+                i = i + 1;
+                EndFor.
+            EndWhile.
         EndBody.
         

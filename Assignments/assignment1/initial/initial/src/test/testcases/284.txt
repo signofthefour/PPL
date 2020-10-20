@@ -1,11 +1,11 @@
 
-        Function: test
+        Function: sum
+        Parameter: n
         Body:
-            Var: a[2][3][4][5];
-            Do 
-                a[1][2][3][4] = 2.e59;
-                Break;
-            While True EndDo.
-            writeln(a[1][2][3][4]);
+            While True Do
+                If a==10 Then 
+                    Return a > 12 || b[12][1] + {12};
+                EndIf.
+            EndWhile.
         EndBody.
         

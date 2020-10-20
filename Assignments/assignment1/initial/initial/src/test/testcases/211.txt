@@ -1,7 +1,1 @@
-
-        Function: test
-        Parameter: n
-        Body: 
-            n = n+1;
-        EndBody.
-        
+Var: a, b, k f=20;

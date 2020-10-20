@@ -1,7 +1,6 @@
-
-        Function:  test
-        Parameter: Var x = 2;
+ Var: x;
+        Function:  
         Body:
-            x = (x - 1)\2;
+            Var s = "Name missing";
         EndBody.
         

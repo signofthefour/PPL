@@ -1,9 +1,8 @@
 
         Function: test
         Body:
-            Var: r = 3.14, t;
-            r = r*r == (2*3);
-            t =  True;
-            t = !t == !(r && False || 2-2); 
+            Var: abc = 1, cde = 2, efg = 3;
+            If abc + cde == efg Then Else efg = 3;
+            EndIf.
         EndBody.
         

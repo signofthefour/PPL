@@ -1,2 +1,1 @@
-Var: s="DaiH0cB4ckHo4", x= 12.2e54, c=0xF212;
-                
+Var: a=True, b=0XAB12, c=0o1127;

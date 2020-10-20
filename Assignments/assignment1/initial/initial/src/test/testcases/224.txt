@@ -1,9 +1,6 @@
 
-        Var: atn_2 = 2.e65;
-        Var: a[10], b[10][2], c[10];
-        Function: main
+        Function: test
         Body:
-        atn_2 = 1 + 2;
-        c[9] = a[9] + b[9][1];
+            Var: v_a_r, x[1][2], kOr0="string";
         EndBody.
         

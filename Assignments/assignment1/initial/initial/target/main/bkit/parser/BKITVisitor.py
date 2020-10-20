@@ -204,6 +204,11 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#bool_array.
+    def visitBool_array(self, ctx:BKITParser.Bool_arrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BKITParser#int_array.
     def visitInt_array(self, ctx:BKITParser.Int_arrayContext):
         return self.visitChildren(ctx)

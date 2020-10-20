@@ -87,16 +87,6 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitStm(BKITParser.StmContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKITParser#para_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterPara_list(BKITParser.Para_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#para_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitPara_list(BKITParser.Para_listContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BKITParser#non_initted_var}.
 	 * @param ctx the parse tree
 	 */
@@ -156,6 +146,16 @@ public interface BKITListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComposite_var(BKITParser.Composite_varContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#para_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterPara_list(BKITParser.Para_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#para_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitPara_list(BKITParser.Para_listContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BKITParser#if_stmt}.
 	 * @param ctx the parse tree

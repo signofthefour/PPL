@@ -1,9 +1,7 @@
 
-        Var: simp_l_3;
+        Var: a;
         Function: test
-        Parameter: a, b
         Body:
-            print(a);
-            print(b);
+            Var: v_a_r={{}, {1,"ac"}};
         EndBody.
         

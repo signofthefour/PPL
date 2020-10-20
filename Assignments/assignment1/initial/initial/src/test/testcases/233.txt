@@ -1,7 +1,10 @@
 
-        Var: a;
         Function: test
         Body:
-            Var: a_ = 10., b = 5., c3 = 9;
+            If (True && False) Then a = 5;
+            ElseIf (as || !foo(2+4) && k == 12) Then dosomething();
+            ElseIf (aFunction(!foo(2+4) )) Then dosomething2();
+            Else a = s || !foo(2+4) && k == 12;
+            EndIf.
         EndBody.
         

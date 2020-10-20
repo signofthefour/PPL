@@ -1,6 +1,8 @@
 
-        Function: test
+        Var: a_e1={{1273,1e12},"string"} , n = 0X12CD, iD= 0XAD;
+        Function: main **entripoint**
+        Parameter: as,sa
         Body:
-            Return 1 +. 4e25 \. 2.;
+            cout("HelloWorld") ;
         EndBody.
         

@@ -1,9 +1,11 @@
 
-        Function: test
+        Function: sum
+        Parameter: n
         Body:
-            Var: x = 1;
-            Do 
-                Continue;
-            While !x EndDo.
+            While True Do
+                If a==10 Then 
+                    Return If a > b Then a;
+                EndIf.
+            EndWhile.
         EndBody.
         

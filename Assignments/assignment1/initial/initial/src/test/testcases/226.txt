@@ -1,10 +1,8 @@
 
-        Var: simp_2_3;
         Function: test
-        Parameter: a, b, d, e, f, g, h, j[1000], k[2000]
         Body:
-            a = b +. d;
-            g = h && f || True;
-            Return a;
+            Var: x = 4, y = 6;
+            Var: c = 2;
+            Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
         EndBody.
         

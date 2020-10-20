@@ -1,2 +1,1 @@
-Var: arr = {1,2}, a[10][22], e=40e5, c, d f=20;
-                
+Var: scalar = {1,"string",5e6,True}, a[10][22], e=40e5, c, f=20;

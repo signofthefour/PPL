@@ -36,9 +36,8 @@ var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
 main_func: ;
 func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON func_body  ENDBODY DOT;
 func_body: stm_list;
-stm_list: stm*;
-stm: var_declare
-    | assign_stmt
+stm_list: var_declare* stm*;
+stm:  assign_stmt
     | if_stmt
     | for_stmt
     | while_stmt
@@ -82,7 +81,7 @@ assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
 composite_ass: IDENTIFIER index_op;  
 
 //for statement:
-for_stmt: FOR LP scalar_init CM expression CM expression RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP scalar_var AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
@@ -99,7 +98,7 @@ continue_stmt: CONTINUE SEMI;
 //return statement:
 return_stmt: RETURN  (expression (',' expression)*)? SEMI;
 
-//func_call statement:
+//func_call statement
 func_call: IDENTIFIER LP (expression (',' expression)*)?  RP ;
 call_stmt: func_call SEMI;
 
@@ -110,7 +109,7 @@ call_stmt: func_call SEMI;
 
 // ===================================== EXPRESSON ===================================
 //relation operator
-RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR;
+RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR ;
 ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
 MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN;
 NEGSIGN: ISUBOP | FSUBOP;
@@ -162,10 +161,11 @@ FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN); // Error, contain 0;
 BOLEAN: TRUE | FALSE;
 
 //Array:
+bool_array: BOLEAN (',' BOLEAN)*;
 int_array: INTEGER (',' INTEGER)* ;
 float_array: FLOAT (',' FLOAT)*;
 string_array: LSTRING (',' LSTRING)*;
-array_index: int_array | float_array | string_array;
+array_index: int_array | float_array | string_array | bool_array;
 array_list: LB ((array_list | array_index)( ',' (array_list | array_index))*)? RB;
 
 //operators

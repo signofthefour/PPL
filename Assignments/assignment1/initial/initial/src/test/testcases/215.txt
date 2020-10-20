@@ -1,7 +1,8 @@
 
-        Function:  
+        Function: fact
+        Parameter: scalar, com[1][23], s_u_Pe
         Body:
-            Var s = "hi_hi";
-            s = "nice";
+            Var: a, arr={1,"abc",{5, 6e3}};
+            a = "String";
         EndBody.
         

@@ -1,9 +1,8 @@
 
-        Var: s;
-        Function: foo
-        Parameter: s
+        Function: test
         Body:
-            s = "hi_1";
-            Return foo("hi");
+            r = a == b + 2;
+            s = r*r + 2;
+            t = s || !foo(2+4) && k == 12 + (8*3e-2)\.math(12+change_R);
         EndBody.
         

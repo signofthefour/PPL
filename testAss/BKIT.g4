@@ -1,31 +1,9 @@
 grammar BKIT;
+//MSSV: 1810992
 
-// @lexer::header {
-// from lexererr import *
-// }
-
-// @lexer::members {
-// def emit(self):
-//     tk = self.type
-//     result = super().emit()
-//     if tk == self.UNCLOSE_STRING:       
-//         raise UncloseString(result.text)
-//     elif tk == self.ILLEGAL_ESCAPE:
-//         raise IllegalEscape(result.text)
-//     elif tk == self.ERROR_CHAR:
-//         raise ErrorToken(result.text)
-//     elif tk == self.UNTERMINATED_COMMENT:
-//         raise UnterminatedComment()
-//     else:
-//         return result;
-// }
-
-// options{
-// 	language=Python3;
-// }
 
 //programstructure
-program  : (var_declare*)(func_declare)* EOF;
+program  : (var_declare*)  (func_declare)* EOF;
 
 //var declare
 var_declare: VAR COLON var_list (AS )? SEMI;
@@ -37,7 +15,7 @@ func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON 
 func_body: stm_list;
 stm_list: stm*;
 stm: var_declare
-    | assign_stmt SEMI
+    | assign_stmt
     | if_stmt
     | for_stmt
     | while_stmt
@@ -49,14 +27,13 @@ stm: var_declare
 
 
 
+// List of Tokens
 
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 COMMENT: ('**' .*? '**') -> skip;
 
 //init type
-para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
-
 non_initted_var: scalar_var | composite_var;
 initted_var: scalar_init | composite_init;
 
@@ -69,7 +46,7 @@ scalar_var: IDENTIFIER;
 composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 
 //para_list:
-
+para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
 
 
 
@@ -78,11 +55,11 @@ composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (scalar_var | composite_ass) AS expression;
+assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
 composite_ass: IDENTIFIER index_op;  
 
 //for statement:
-for_stmt: FOR LP assign_stmt CM expression CM (assign_stmt | literals) RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP scalar_var AS expression CM expression CM expression    RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
@@ -110,7 +87,7 @@ call_stmt: func_call SEMI;
 
 // ===================================== EXPRESSON ===================================
 //relation operator
-RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR;
+RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR ;
 ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
 MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN;
 NEGSIGN: ISUBOP | FSUBOP;
@@ -118,16 +95,16 @@ index_op: (LK expression RK)+;
 
 //expression
 expression: exp0;
-exp0: exp1 RELATION_OP exp1 | exp1;
+exp0: exp0 RELATION_OP exp0 | exp1;
 exp1: exp1 (BAND | BOR) exp2 | exp2;
 exp2: exp2 (ADDSUB) exp3 | exp3;
 exp3: exp3 (MULDIV) exp4 | exp4;
 exp4: BNEG exp4 | exp5;
 exp5: ADDSUB exp5 | exp6;
 exp6: exp6 index_op | exp7;
-exp7: func_call | exp8;
+exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
-operand: IDENTIFIER | literals ;
+operand: IDENTIFIER | literals | BOLEAN;
 
 
 // ===================================== EXPRESSON ===================================s
@@ -166,7 +143,7 @@ int_array: INTEGER (',' INTEGER)* ;
 float_array: FLOAT (',' FLOAT)*;
 string_array: LSTRING (',' LSTRING)*;
 array_index: int_array | float_array | string_array;
-array_list: LB (( array_index | array_list )   ( ',' (array_index | array_list))*)? RB;
+array_list: LB ((array_list | array_index)( ',' (array_list | array_index))*)? RB;
 
 //operators
 // Arithmetic operators
@@ -204,8 +181,6 @@ BOR:        '||';
 //assign op
 AS:     '=';
 
-
-// List of Tokens
 //List of keywowrds (Note: endbody have a dot)
 VAR:        'Var';
 FUNCTION:   'Function';
@@ -230,10 +205,8 @@ THEN:       'Then';
 FALSE:      'False';
 
 ERROR_CHAR: .;
-UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF) ;
-ILLEGAL_ESCAPE: '"' CHAR_STRING* ILLEGAL_CHAR /*{
-    self.text = (self.text)[1:]
-}*/;
+UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF);
+ILLEGAL_ESCAPE: '"' CHAR_STRING* ILLEGAL_CHAR ;
 UNTERMINATED_COMMENT: '**' .*?;
 
 
@@ -255,6 +228,6 @@ fragment ILLEGAL_CHAR: ('\\' ~[bfrnt'\\]) | '\'' ~'"' ;
 fragment CHAR_STRING:   ESCAPE_CHAR | '\'' '"' |~[\n'"\\] ;
 
 //String
-LSTRING: DOUQUO CHAR_STRING* DOUQUO /*{ self.text = self.text[1:-1] }*/;
+LSTRING: DOUQUO CHAR_STRING* DOUQUO ;
 
 

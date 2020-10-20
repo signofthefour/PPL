@@ -1,12 +1,12 @@
 
         Function: test
+        Parameter: n
         Body:
-            Var: num = 10;
-            If num > 0 Then print("Positive number");
-            Else 
-                If num == 0 Then print("Zero");
-                Else print("Negative number");
-                EndIf.
+            If 1 Then 
+                For (i = 3e12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
+                    doSomeThing();
+                EndFor.
             EndIf.
+
         EndBody.
         

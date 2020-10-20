@@ -1,10 +1,19 @@
 
         Function: test
         Body:
-            Var: s1, s2, s3;
-            s1 = "Sk%%w7?1kYbOVV2s";
-            s2 = "?m4W1##AiNGv&sqg";
-            s3 = "oaD0W?@V2WjsFzFU";
-            s3 = s1 + s2 - s3*s1;
+            If 1 Then 
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            ElseIf 2 Then
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            ElseIf 3 Then
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            EndIf.
+            Var a = 10;
         EndBody.
         

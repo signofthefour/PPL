@@ -1,9 +1,7 @@
 
+        Var: x;
         Function: test
         Body:
-            foo();
-        EndBody.
-        Function: foo
-        Body:
+            a = index[a3[function(12233+3) * a(array[13][fun]))];
         EndBody.
         

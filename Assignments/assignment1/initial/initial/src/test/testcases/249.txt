@@ -1,11 +1,10 @@
 
         Function: test
+        Parameter: n
         Body:
-            Var: time, greeting;
-            time = date();
-            If time < 10 Then greeting = "Good morning";
-            ElseIf time < 20 Then greeting = "Good day";
-            Else greeting = "Good evening";
-            EndIf.
+            Var: i = 0;
+            For (i = aFun(-t[2][1]) + 12E-12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
+
+            EndFor.
         EndBody.
         

@@ -1,9 +1,9 @@
 
-        Function: hello
-        Parameter: str
+        Var: x, y = 5e3, z;
+        Function: test
         Body:
-            Var: x = 2;
-            hello(str);
-            hello(x);
+            If a == b Then
+                a = b;
+            EndIf.
         EndBody.
         

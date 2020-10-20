@@ -1,7 +1,9 @@
 
-        Var: a;
         Function: test
-        Parameter a, c
         Body:
+            b[2][3] = {{2,3,4},{4,5,6}};
+            x[1] = 2;
+            d = 1e-12;
+            m = foo(12);
         EndBody.
         

@@ -1,10 +1,6 @@
 
-        Var: s;
-        Function: square
+        Function: test
         Body:
-            Var: h; **height of hcn**
-            **Some 
-            thing**
-            Return h*h; 
+            a = b = c = d;
         EndBody.
         

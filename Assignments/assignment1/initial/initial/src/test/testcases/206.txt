@@ -1,1 +1,1 @@
-Var: s_1="'"superMan is'".", s_2="happyBirthDay";
+Var: a, b, c[10][3][2], aVar, b() ;

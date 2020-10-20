@@ -1,8 +1,8 @@
-
-        Function:  test___1
-        Parameter: n = 2, c, d
+ Var: x;
+        Function:  test
+        Var a,b;
+        Parameter: scalar
         Body:
-            Var: c = 5;
-            
+            h = "Where is var declare?";
         EndBody.
         

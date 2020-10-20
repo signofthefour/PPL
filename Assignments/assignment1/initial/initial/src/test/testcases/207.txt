@@ -1,2 +1,2 @@
-Var: arr[10], c[99][3][2], arr2[];
-                
+Var: array[2][5][3] = 10, scalar_var = {1,2,3};
+                    Var: ace;

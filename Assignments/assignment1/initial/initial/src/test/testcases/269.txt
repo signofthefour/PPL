@@ -1,12 +1,6 @@
 
         Function: test
         Body:
-            Var: x = False, t = 100, a;
-            While (!x || t == 2) Do
-                x = True;
-                a = x;
-                x = a;
-                t = t - 1;
-            EndWhile.
+            Do a = a + 1; While True Do EndWhile.
         EndBody.
         
