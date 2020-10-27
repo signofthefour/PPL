@@ -1,0 +1,10 @@
+
+        Function: nothing
+        Body:
+        Var: a = {1238,32412, 120};
+        EndBody.
+        Function: foo
+        Parameter: a,b,c
+        Body:
+        nothing(a[1][1][b[k]]);
+        EndBody.

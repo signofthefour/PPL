@@ -1,0 +1,7 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a, b[1]
+        Body:
+        Var: x=1,a[1]=1;
+        Var: a,b[1]={"this"};
+        EndBody.

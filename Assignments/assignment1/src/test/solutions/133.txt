@@ -1,0 +1,1 @@
+str with back slash \\ legal,<EOF>

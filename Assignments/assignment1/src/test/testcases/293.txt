@@ -1,0 +1,7 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a, a[1][12]
+        Body:
+        Var: x[1][2] = {ab,da};
+        a[3 + foo(2)] = a[b[2][3]] + 4;
+        EndBody.

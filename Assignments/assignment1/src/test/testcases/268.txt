@@ -1,0 +1,5 @@
+Var: a,b,c;
+        Function: main
+        Body:
+        a = b[something()[a[1]] + 1 ];
+        EndBody.

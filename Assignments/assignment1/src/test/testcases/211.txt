@@ -1,0 +1,5 @@
+Function: main
+Var: a
+Body:Var
+a=1
+EndBody.

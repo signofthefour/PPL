@@ -1,0 +1,9 @@
+For (i=0, i<10, i=i+1) Do
+If i > 10 Then
+ElseIf i < 12 Then
+Var: r = 10., v;
+v = (4. \. 3.) *. 3.14 *. r *. r *. r;
+Else
+a = int_of_float(2.0);
+EndIf.
+EndFor.

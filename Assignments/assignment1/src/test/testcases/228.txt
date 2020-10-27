@@ -1,0 +1,10 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+        If 1 < a Then
+        Var: a;
+        EndIf.
+        Var: a,b[1]={"this"};
+        EndBody.

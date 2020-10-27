@@ -1,0 +1,11 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a, a[1][12]
+        Body:
+        If expr Then 
+        ElseIf expr Then
+        While expr Do EndWhile.
+        Do Return; While {{}} EndDo.
+        Else nothing(); a=1=b+a;
+        EndIf.
+        EndBody.

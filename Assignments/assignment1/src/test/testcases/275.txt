@@ -1,0 +1,6 @@
+Var: a,b,c;
+        Function: main
+        Body:
+        b = {{{}}};
+        a = (a + b) +. (a-a-.a*a*.a\b\.b%!c&&a||a==b);
+        EndBody.

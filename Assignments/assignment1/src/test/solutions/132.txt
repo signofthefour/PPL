@@ -1,0 +1,1 @@
+str with sing quote\',<EOF>

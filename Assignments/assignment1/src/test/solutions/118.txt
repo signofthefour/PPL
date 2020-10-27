@@ -1,0 +1,1 @@
+ILLEGAL_ESCAPE  this is a string with illegal escape \h

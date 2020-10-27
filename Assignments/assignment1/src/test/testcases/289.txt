@@ -1,0 +1,6 @@
+Var: a,b,c;
+        Function: main
+        Parameter: 12e1,0.001
+        Body:
+        While statement  something(); EndWhile.
+        EndBody.
