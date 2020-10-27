@@ -1,6 +1,6 @@
 class Exp:
     def accept(self, func):
-
+        pass
 
 class IntLit(Exp):
     def __init__(self, _val):
@@ -8,18 +8,6 @@ class IntLit(Exp):
     
     def eval(self):
         return self.val
-
-    def __add__(self, op):
-        return self.eval() + op.eval()
-
-    def __sub__(self, op):
-        return self.eval() - op.eval()
-    
-    def __mul__(self, op):
-        return self.eval() * op.eval()
-    
-    def __div__(self, op):
-        return self.eval() / op.eval()
 
     def printPrefix(self):
         return str(self.val)
@@ -32,21 +20,8 @@ class FloatLit(Exp):
     def __init__(self, _num):
         self.val = float(_num)
 
-
     def eval(self):
         return self.val
-
-    def __add__(self, op):
-        return self.eval() + op.eval()
-
-    def __sub__(self, op):
-        return self.eval() - op.eval()
-    
-    def __mul__(self, op):
-        return self.eval() * op.eval()
-    
-    def __div__(self, op):
-        return self.eval() / op.eval()
 
     def printPrefix(self):
         return str(self.val)
@@ -67,14 +42,14 @@ class UnExp(Exp):
             return 0 - self.arg.eval()
     
     def printPrefix(self):
-        return self.operator + ". " + self.arg.printPrefix()
+        return self.operator + '.' + ' ' + self.arg.printPrefix()
 
     def printPostfix(self):
         return self.arg.printPostfix() + " ." + self.operator
     
 
 class BinExp(Exp):
-    def __init__(self, _op, _left, _right):
+    def __init__(self, _left, _op, _right):
         self.operator = _op
         self.left = _left
         self.right = _right
@@ -97,18 +72,16 @@ class BinExp(Exp):
     def printPrefix(self):
         return self.operator + ' ' + self.left.printPrefix() + ' ' + self.right.printPrefix()
 
-class PrintPostfix():
+# class PrintPostfix():
     
-    def printPostfix(self):
-        return self.left.printPostfix() + ' ' + self.right.printPostfix() + ' ' + self.operator
+#     def printPostfix(self):
+#         return self.left.printPostfix() + ' ' + self.right.printPostfix() + ' ' + self.operator
 
 x0 = IntLit(1)
-x1 = UnExp("-", x0)
+x1 = UnExp("+", x0)
 x2 = IntLit(1)
 x3 = IntLit(2)
-x4 = BinExp("*", x2, x3)
-x5 = BinExp('+', x1, x4)
-x6 = BinExp('+', x0, x2)
-print(x5.printPrefix())
-print(x5.printPostfix())
-print(x5.accept(x5.printPostfix))
+x4 = BinExp(x2, "*", x3)
+print(x4.printPrefix())
+# print(x5.printPostfix())
+# print(x5.accept(x5.printPostfix))
