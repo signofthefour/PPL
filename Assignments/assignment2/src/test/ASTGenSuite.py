@@ -67,15 +67,15 @@ class ASTGenSuite(unittest.TestCase):
         expect = None
         self.assertTrue(TestAST.checkASTGen(input,expect,313))
 
-    # def test_if_stmt_1(self):
-    #     input = """Function: main
-    #             Parameter: a
-    #             Body:
-    #                 If 1 + a - b * foo() > 1 Then
-    #                 EndIf.
-    #             EndBody."""
-    #     expect = None
-    #     self.assertTrue(TestAST.checkASTGen(input,expect,321))
+    def test_if_stmt_1(self):
+        input = """Function: main
+                Parameter: a
+                Body:
+                    If 1 + a - b * foo() > 1 Then
+                    EndIf.
+                EndBody."""
+        expect = None
+        self.assertTrue(TestAST.checkASTGen(input,expect,321))
 
 
     def test_if_stmt_2(self):
@@ -97,3 +97,17 @@ class ASTGenSuite(unittest.TestCase):
                 EndBody."""
         expect = None
         self.assertTrue(TestAST.checkASTGen(input,expect,323))
+
+    def test_for_stmt_1(self):
+        input = """Function: main
+                Parameter: a
+                Body:
+                    If 1 + 1 Then
+                    For (i=1,i>1,1+2) Do
+                        Var: a=10,c[1]={1,2};
+                        c[foo() + 1] = a;
+                    EndFor. 
+                    EndIf.
+                EndBody."""
+        expect = None
+        self.assertTrue(TestAST.checkASTGen(input,expect,331))

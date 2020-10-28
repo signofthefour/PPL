@@ -217,7 +217,6 @@ class For(Stmt):
     idx1: Id
     expr1:Expr
     expr2:Expr
-    idx2: Id
     expr3:Expr
     loop: Tuple[List[VarDecl],List[Stmt]]
 

@@ -49,7 +49,7 @@ array_lit: LEFT_BRACE ((primitive_data | array_lit) (COMMA (primitive_data | arr
 // var declare
 var_list: (var_non_init | var_init) (COMMA (var_non_init | var_init))*; //non empty
 var_non_init: ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID;
-composite_var: ID (LEFT_BRACKET (composite_var | expr) RIGHT_BRACKET)+;
+composite_var: ID (LEFT_BRACKET  expr RIGHT_BRACKET)+;
 // var_init: composite_init | primitive_init;
 var_init: ( ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID) ASSIGN (array_lit | primitive_data);
 composite_init: composite_var ASSIGN array_lit;
@@ -79,7 +79,7 @@ if_stmt: IF expr
          ENDIF DOT;
 
 var_declare_stmt: var_declare;
-for_stmt: FOR LEFT_PAREN init_for COMMA con_for COMMA update_for RIGHT_PAREN DO
+for_stmt: FOR LEFT_PAREN ID ASSIGN expr COMMA expr COMMA expr RIGHT_PAREN DO
             stmt_list
             ENDFOR DOT;
 while_stmt: WHILE expr DO stmt_list ENDWHILE DOT;
@@ -90,10 +90,6 @@ continue_stmt: CONTINUE;
 call_stmt: function_call ;
 return_stmt: RETURN expr?;
 
-// 5.1 stmt utils
-init_for: ID ASSIGN expr;
-con_for: expr;
-update_for: expr;
 // 6. expr_utils
 expr: expr1 REL_OP expr1 | expr1;
         
