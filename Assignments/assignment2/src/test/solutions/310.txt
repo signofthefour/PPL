@@ -1,1 +1,1 @@
- Program([VarDecl(Id(x),[1],[IntLiteral(value=1), IntLiteral(value=2), IntLiteral(value=3), IntLiteral(value=4)])])
+Program([VarDecl(Id(x),[1],[IntLiteral(value=1), IntLiteral(value=2), IntLiteral(value=3), IntLiteral(value=4)])])

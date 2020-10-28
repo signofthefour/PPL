@@ -17,7 +17,10 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#function_declare.
     def visitFunction_declare(self, ctx:BKITParser.Function_declareContext):
-        return self.visitChildren(ctx)
+        funcName = Id(ctx.ID().getText())
+        params = self.visitParams_list(ctx.params_list())
+        body = self.visitVar_declare_stmt() + self.visitStmt()
+        return FuncDecl(funcName, params, body)
 
 
     # Visit a parse tree produced by BKITParser#array.
@@ -95,7 +98,8 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#params_list.
     def visitParams_list(self, ctx:BKITParser.Params_listContext):
-        return self.visitChildren(ctx)
+        params_list =  [self.visitVar_non_init(x) for x in ctx.var_non_init()]
+        return params_list
 
 
     # Visit a parse tree produced by BKITParser#stmt_list.
