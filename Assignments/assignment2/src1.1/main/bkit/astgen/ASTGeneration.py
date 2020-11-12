@@ -8,23 +8,23 @@ class ASTGeneration(BKITVisitor):
 
     def visitProgram(self,ctx:BKITParser.ProgramContext):
         var_decls = list(reduce(lambda y,x: y + self.visitVar_declare(x), [item for item in ctx.var_declare()], []))
-        funcs_decls = list(reduce(lambda y,x: y + self.visitFunction_declare(x), [item for item in ctx.function_declare()], []))
+        funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))
         return Program(var_decls + funcs_decls)
 
 
     # Visit a parse tree produced by BKITParser#function_declare.
     def visitFunction_declare(self, ctx:BKITParser.Function_declareContext):
         funcName = Id(ctx.ID().getText())
-        params = self.visitParams_list(ctx.params_list())
+        params = self.visitParams_list(ctx.params_list()) if ctx.params_list() else []
         declare = list(reduce(lambda y, x: y + self.visitVar_declare_stmt(x), ctx.var_declare_stmt(), []))
-        stmt = list(reduce(lambda y, x: y + self.visitStmt(x), ctx.stmt(), []))
-        return [FuncDecl(funcName, params, tuple((declare,stmt)))]
+        stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))
+        return FuncDecl(funcName, params, tuple((declare,stmt)))
 
 
     # Visit a parse tree produced by BKITParser#primitive_data.
     def visitPrimitive_data(self, ctx:BKITParser.Primitive_dataContext):
         if ctx.INT_LIT():
-            return IntLiteral(int(ctx.INT_LIT().getText()))
+            return IntLiteral(int(ctx.INT_LIT().getText().lower(), 0))
         if ctx.FLOAT_LIT():
             return FloatLiteral(float(ctx.FLOAT_LIT().getText()))
         if ctx.STRING_LIT():
@@ -62,8 +62,8 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#var_init.
     def visitVar_init(self, ctx:BKITParser.Var_initContext):
-        if ctx.LEFT_BRACKET():
-            dim = map(lambda x: int(x), [lit.getText() for lit in ctx.INT_LIT()])
+        if ctx.array_lit():
+            dim = list(map(lambda x: int(x), [lit.getText() for lit in ctx.INT_LIT()]))
             decl = VarDecl(Id(ctx.ID().getText()), dim, self.visitArray_lit(ctx.array_lit()))
             if isinstance(decl, VarDecl):
                 return decl
@@ -82,8 +82,8 @@ class ASTGeneration(BKITVisitor):
     # Visit a parse tree produced by BKITParser#stmt_list.
     def visitStmt_list(self, ctx:BKITParser.Stmt_listContext):
         declare = reduce(lambda y, x: y + self.visitVar_declare_stmt(x), ctx.var_declare_stmt(), [])
-        stmt = reduce(lambda y, x: y + self.visitStmt(x), ctx.stmt(), [])
-        return list(declare), list(stmt)
+        stmt = reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), [])
+        return (list(declare), list(stmt))
 
     def visitStmt(self, ctx:BKITParser.StmtContext):
         if ctx.if_stmt():
@@ -104,6 +104,7 @@ class ASTGeneration(BKITVisitor):
             return self.visitCall_stmt(ctx.call_stmt())
         if ctx.return_stmt():
             return self.visitReturn_stmt(ctx.return_stmt())
+        return []
 
     # Visit a parse tree produced by BKITParser#if_stmt.
     def visitIf_stmt(self, ctx:BKITParser.If_stmtContext):
@@ -120,30 +121,30 @@ class ASTGeneration(BKITVisitor):
         else_stmt = tuple(())
         if ctx.ELSE():
             var_decls, stmt_list = self.visitStmt_list(ctx.stmt_list(num_of_expr))
-            else_stmt = tuple(var_decls, stmt_list)
-        return [If(if_then_stmt, else_stmt)]
+            else_stmt = tuple((var_decls, stmt_list))
+        return If(if_then_stmt, else_stmt)
 
 
     # Visit a parse tree produced by BKITParser#for_stmt.
     def visitFor_stmt(self, ctx:BKITParser.For_stmtContext):
-        iter_var = ctx.ID().getText()
+        iter_var = Id(ctx.ID().getText())
         expr1 = self.visitExpr(ctx.expr(0))
         expr2 = self.visitExpr(ctx.expr(1))
         expr3 = self.visitExpr(ctx.expr(2))
         loop = tuple(self.visitStmt_list(ctx.stmt_list()))
-        return [For(iter_var, expr1, expr2, expr3, loop)]
+        return For(iter_var, expr1, expr2, expr3, loop)
 
     # Visit a parse tree produced by BKITParser#while_stmt.
     def visitWhile_stmt(self, ctx:BKITParser.While_stmtContext):
         expr = self.visitExpr(ctx.expr())
-        sl = self.visitStmt_list(tuple(ctx.stmt_list()))
-        return [While(expr, sl)]
+        sl = tuple(self.visitStmt_list(ctx.stmt_list()))
+        return While(expr, sl)
 
     # Visit a parse tree produced by BKITParser#dowhile_stmt.
     def visitDowhile_stmt(self, ctx:BKITParser.Dowhile_stmtContext):
         expr = self.visitExpr(ctx.expr())
-        sl = self.visitStmt_list(tuple(ctx.stmt_list()))
-        return [DoWhile(sl, expr)]
+        sl = tuple(self.visitStmt_list(ctx.stmt_list()))
+        return Dowhile(sl, expr)
 
     # Visit a parse tree produced by BKITParser#assign_stmt
     def visitAssign_stmt(self, ctx:BKITParser.Assign_stmtContext):
@@ -153,7 +154,7 @@ class ASTGeneration(BKITVisitor):
         else:
             lhs = self.visitArray_cell(ctx.array_cell())
         rhs = self.visitExpr(ctx.expr())
-        return [Assign(lhs, rhs)]
+        return Assign(lhs, rhs)
 
     # Visit a parse tree produced by BKITParser#array_cell.
     def visitArray_cell(self, ctx:BKITParser.Array_cellContext):
@@ -162,21 +163,21 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#break_stmt.
     def visitBreak_stmt(self, ctx:BKITParser.Break_stmtContext):
-        return [Break()]
+        return Break()
 
     # Visit a parse tree produced by BKITParser#continue_stmt.
     def visitContinue_stmt(self, ctx:BKITParser.Continue_stmtContext):
-        return [Continue()]
+        return Continue()
 
 
     # Visit a parse tree produced by BKITParser#call_stmt.
     def visitCall_stmt(self, ctx:BKITParser.Call_stmtContext):
-        return self.visitFunction_call(ctx)
+        return self.visitFunction_call(ctx.function_call())
 
 
     # Visit a parse tree produced by BKITParser#return_stmt.
     def visitReturn_stmt(self, ctx:BKITParser.Return_stmtContext):
-        return [Return(self.visitExpr(ctx.expr()))]
+        return Return(self.visitExpr(ctx.expr()) if ctx.expr() else None)
 
     # Visit a parse tree produced by BKITParser#expr.
     def visitExpr(self, ctx:BKITParser.ExprContext):
@@ -230,7 +231,7 @@ class ASTGeneration(BKITVisitor):
     # Visit a parse tree produced by BKITParser#expr7.
     def visitExpr7(self, ctx:BKITParser.Expr7Context):
         if ctx.function_call():
-            return self.visitCall_stmt(ctx.function_call())
+            return self.visitFunction_call(ctx.function_call())
         return self.visitExpr8(ctx.expr8())
 
     # Visit a parse tree produced by BKITParser#expr8.

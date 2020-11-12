@@ -1,0 +1,10 @@
+Var: a,b,c;
+Function: main
+Body:
+
+EndBody.
+Function: foo
+Body:
+main();
+If a[1] Then foo(); EndIf.
+EndBody.

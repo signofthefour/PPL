@@ -14,6 +14,7 @@ class TestUtil:
     @staticmethod
     def makeSource(inputStr,num):
         filename = "./test/testcases/" + str(num) + ".txt"
+        print(num)
         file = open(filename,"w")
         """tmp = repr(inputStr)
         file.write(tmp[1:-1])"""
@@ -100,5 +101,7 @@ class TestAST:
         dest.close()
         dest = open("./test/solutions/" + str(num) + ".txt","r")
         line = dest.read()
+        if not (line == str(expect)):
+            print("LINE: " + line + "\nEXPC: " + str(expect))
         return line == str(expect)
         

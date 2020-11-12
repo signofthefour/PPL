@@ -101,10 +101,11 @@ array_lit: LEFT_BRACE ((primitive_data | array_lit) (COMMA (primitive_data | arr
 array_cell: expr7 (LEFT_BRACKET expr RIGHT_BRACKET)+;
 // var declare
 var_list: (var_non_init | var_init) (COMMA (var_non_init | var_init))*; //non empty
+var_init: ( ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID) ASSIGN (array_lit | primitive_data);
 var_non_init: ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID;
 composite_var: ID (LEFT_BRACKET  expr RIGHT_BRACKET)+;
 // var_init: composite_init | primitive_init;
-var_init: ( ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID) ASSIGN (array_lit | primitive_data);
+
 composite_init: composite_var ASSIGN array_lit;
 primitive_init: ID ASSIGN primitive_data;
 // func_utils

@@ -1,0 +1,7 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a, a[1][12]
+        Body:
+        For(i=expr, a =/= {{}}, "what is that" + 1) Do
+        EndFor.
+        EndBody.

@@ -1,0 +1,1 @@
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[VarDecl(Id(a)),VarDecl(Id(a),[1,12])],([][If(Id(expr),[],[])ElseIf(Id(expr),[],[While(Id(expr),[],[]),Dowhile([],[Return()],ArrayLiteral(ArrayLiteral()))])Else([],[CallStmt(Id(nothing),[]),Assign(Id(a),BinaryOp(+,Id(b),Id(a))),Continue()])]))])

@@ -1,0 +1,6 @@
+Var: a,b,c;
+Function: main
+Parameter: a
+Body:
+foo(1+a, b, c)[something][whatever] = 12;
+EndBody.

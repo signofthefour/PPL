@@ -1,0 +1,9 @@
+Var: a,b,c;
+Function: main
+Parameter: a
+Body:
+Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+For (i = 2, a < 2, i + 1) Do 
+For (i=2, a>1341,a+b) Do EndFor.
+something(); EndFor.
+EndBody.

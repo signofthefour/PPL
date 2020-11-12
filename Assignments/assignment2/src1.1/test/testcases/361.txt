@@ -1,0 +1,5 @@
+Var: a,b,c;
+        Function: main
+        Body:
+        a = a[c[1][b]][1] < foo(arg1, "???", foo(nothing));
+        EndBody.

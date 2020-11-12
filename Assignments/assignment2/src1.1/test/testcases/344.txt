@@ -1,0 +1,6 @@
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        a = !(x &&  y || b) && (a || abc);
+        EndBody.

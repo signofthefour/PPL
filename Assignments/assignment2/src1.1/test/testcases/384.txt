@@ -1,0 +1,7 @@
+
+        Function: main_123_main
+        Parameter: a, b[1][100]
+        Body:
+        While a<b Do
+        EndWhile.
+        EndBody.

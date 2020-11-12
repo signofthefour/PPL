@@ -1,0 +1,21 @@
+Function: foo
+Body:
+
+If a > b Then doNothing(); Break;
+
+ElseIf !somecon() Then doSomething();
+
+ElseIf a \ 100 -20 Then Continue;
+stop();
+
+ElseIf whatever() Then 
+
+ElseIf anything() Then Do something(); While a + foo()[100] EndDo.
+EndIf.
+EndBody.
+Function: main
+Parameter: a, b[1][100]
+Body:
+While a<b Do
+EndWhile.
+EndBody.

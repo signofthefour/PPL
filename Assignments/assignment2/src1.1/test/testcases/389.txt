@@ -1,0 +1,6 @@
+Var: a,b,c;
+Function: main
+Parameter: a, b
+Body:
+While statement Do Break; EndWhile.
+EndBody.

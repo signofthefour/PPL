@@ -1,0 +1,6 @@
+Var: a,b,c;
+Function: main
+Parameter: a
+Body:
+Do something(); While a && bool_of_string("True") EndDo.
+EndBody.

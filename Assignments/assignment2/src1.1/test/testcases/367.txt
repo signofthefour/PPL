@@ -1,0 +1,10 @@
+Var: a,b,c;
+Function: main
+Body:
+foo(a < b + c);
+printLn();
+a = 1+ 2+2+{1, 2,3};
+**print(arg);
+printStrLn(arg)**
+read();
+EndBody.

@@ -1,0 +1,6 @@
+Var: a,b,c;
+Function: main
+Parameter: a, bn
+Body:
+Return a + bn - a[foo()];
+EndBody.

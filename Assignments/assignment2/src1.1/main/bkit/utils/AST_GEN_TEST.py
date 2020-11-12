@@ -101,7 +101,9 @@ class BinaryOp(Expr):
     right:Expr
 
     def __str__(self):
-        return "BinaryOp('" + self.op + "'," + str(self.left) + "," + str(self.right) + ")"
+        if self.op == '\\':
+            self.op = str(self.op).replace("\\", "\\\\")
+        return "BinaryOp(\"\"\"" + str(self.op) + "\"\"\"," + str(self.left) + "," + str(self.right) + ")"
 
     def accept(self, v, param):
         return v.visitBinaryOp(self, param)
@@ -111,7 +113,7 @@ class UnaryOp(Expr):
     body:Expr
 
     def __str__(self):
-        return "UnaryOp('" + self.op + "'," + str(self.body) + ")"
+        return "UnaryOp(\"\"\"" + str(self.op) + "\"\"\"," + str(self.body) + ")"
 
     def accept(self, v, param):
         return v.visitUnaryOp(self, param)
@@ -134,7 +136,7 @@ class IntLiteral(Literal):
     value:int
 
     def __str__(self):
-        return "IntLiteral('" + str(self.value) + "')"
+        return "IntLiteral(" + str(self.value) + ")"
 
     def accept(self, v, param):
         return v.visitIntLiteral(self, param)
@@ -144,7 +146,7 @@ class FloatLiteral(Literal):
     value:float
 
     def __str__(self):
-        return "FloatLiteral('" + str(self.value) + "')"
+        return "FloatLiteral(" + str(self.value) + ")"
 
     def accept(self, v, param):
         return v.visitFloatLiteral(self, param)
@@ -153,7 +155,8 @@ class StringLiteral(Literal):
     value:str
 
     def __str__(self):
-        return "StringLiteral('" + self.value + "')"
+        self.value = self.value.replace('\"', "\\\"")
+        return "StringLiteral(\"\"\"" + self.value + "\"\"\")"
 
     def accept(self, v, param):
         return v.visitStringLiteral(self, param)
@@ -162,7 +165,7 @@ class BooleanLiteral(Literal):
     value:bool
 
     def __str__(self):
-        return "BooleanLiteral('" + str(self.value) + "')"
+        return "BooleanLiteral(" + str(self.value) + ")"
 
     def accept(self, v, param):
         return v.visitBooleanLiteral(self, param)
@@ -171,7 +174,7 @@ class ArrayLiteral(Literal):
     value:List[Literal]
 
     def __str__(self):
-        return printlist(self.value,start="ArrayLiteral(",ending=")")
+        return printlist(self.value,start="ArrayLiteral([",ending="])")
 
     def accept(self, v, param):
         return v.visitArrayLiteral(self, param)
@@ -225,8 +228,8 @@ class For(Stmt):
         	str(self.idx1)+","+ \
         	str(self.expr1) + ","+ \
         	str(self.expr2) + "," + \
-        	str(self.expr3) + "," + \
-        	printListStmt(self.loop) + ")"
+        	str(self.expr3) + ",(" + \
+        	printListStmt(self.loop) + "))"
 
     def accept(self, v, param):
         return v.visitFor(self, param)
@@ -261,7 +264,7 @@ class Dowhile(Stmt):
     exp: Expr
 
     def __str__(self):
-        return "Dowhile(" + printListStmt(self.sl) + "," + str(self.exp) + ")"
+        return "Dowhile((" + printListStmt(self.sl) + ")," + str(self.exp) + ")"
 
     def accept(self, v, param):
         return v.visitDowhile(self, param)
@@ -273,7 +276,7 @@ class While(Stmt):
     
 
     def __str__(self):
-        return "While(" + str(self.exp) + "," + printListStmt(self.sl)+ ")"
+        return "While(" + str(self.exp) + ",(" + printListStmt(self.sl)+ "))"
 
     def accept(self, v, param):
         return v.visitWhile(self, param)
