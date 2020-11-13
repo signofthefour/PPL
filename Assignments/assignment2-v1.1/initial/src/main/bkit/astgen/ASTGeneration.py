@@ -21,15 +21,13 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#var_declare.
     def visitVar_declare(self, ctx:BKITParser.Var_declareContext):
-
         return self.visitVar_list(ctx.var_list())
 
 
     # Visit a parse tree produced by BKITParser#var_list.
     def visitVar_list(self, ctx:BKITParser.Var_listContext):
+        return self.visitChildren(ctx)
 
-        a = self.visitChildren(ctx)
-        return a
 
 
     # Visit a parse tree produced by BKITParser#main_func.
@@ -39,7 +37,11 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#func_declare.
     def visitFunc_declare(self, ctx:BKITParser.Func_declareContext):
-        return self.visitChildren(ctx)
+        id      = Id(ctx.IDENTIFIER().getText())
+        param   = self.visitPara_list(ctx.para_list) if ctx.PARAMETER() else []
+        body    = self.visitFunc_body(ctx.func_body())
+
+        return FuncDecl(id, param, body)
 
 
     # Visit a parse tree produced by BKITParser#func_body.
@@ -49,7 +51,13 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#stm_list.
     def visitStm_list(self, ctx:BKITParser.Stm_listContext):
-        return self.visitChildren(ctx)
+        decl_inter  = [i for i in ctx.var_declare()]
+        stmt_inter  = [i for i in ctx.smt()]
+
+        decl_list   = list(reduce(lambda x,y: x + [self.visitVar_declare(y)], decl_inter, []))
+        stmt_list   = list(reduce(lambda x,y: x + [self.visitStm(y)], stmt_inter, []))
+
+        return tuple((decl_list, stmt_list))       
 
 
     # Visit a parse tree produced by BKITParser#stm.
