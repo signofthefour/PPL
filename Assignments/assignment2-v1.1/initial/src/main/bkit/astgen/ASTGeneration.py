@@ -29,7 +29,6 @@ class ASTGeneration(BKITVisitor):
         return self.visitChildren(ctx)
 
 
-
     # Visit a parse tree produced by BKITParser#main_func.
     def visitMain_func(self, ctx:BKITParser.Main_funcContext):
         return self.visitChildren(ctx)
@@ -78,7 +77,13 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#var_init.
     def visitVar_init(self, ctx:BKITParser.Var_initContext):
-        return self.visitChildren(ctx)
+        id  = Id(ctx.IDENTIFIER().getText())
+        lit = self.visitLiterals(ctx.literals())
+        if ctx.INTEGER():
+            dim = [int(i.getText()) for i in ctx.INTEGER()]
+            return VarDecl(id, dim, lit)
+        else:
+            return VarDecl(id, [], lit)
 
 
     # Visit a parse tree produced by BKITParser#para_list.
@@ -203,7 +208,16 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#literals.
     def visitLiterals(self, ctx:BKITParser.LiteralsContext):
-        return self.visitChildren(ctx)
+        if ctx.INTEGER():
+            return IntLiteral(int(ctx.INTEGER().getText()))
+        elif ctx.FLOAT():
+            return FloatLiteral(float(ctx.FLOAT().getText()))
+        elif ctx.BOLEAN():
+            return BooleanLiteral(bool(ctx.BOLEAN(),getText()))
+        elif ctx.LSTRING():
+            return StringLiteral(bool(ctx.LSTRING().getText()))
+        else: 
+            return 
 
 
     # Visit a parse tree produced by BKITParser#bool_array.

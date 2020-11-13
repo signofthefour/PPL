@@ -22,15 +22,15 @@ def emit(self):
 }
 
 options{
-	language=Python3;
+    language=Python3;
 }
 
 //programstructure
 program  : (var_declare*)  (func_declare)* EOF;
 
 //var declare
-var_declare: VAR COLON var_list (AS )? SEMI;
-var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
+var_declare: VAR COLON var_list SEMI;
+var_list: (var_init | non_initted_var) (',' (var_init |non_initted_var))*;
 
 //func_declare ()
 main_func: ;
@@ -56,19 +56,14 @@ WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 COMMENT: ('**' .*? '**') -> skip;
 
 //init type
-non_initted_var: scalar_var | composite_var;
-initted_var: scalar_init | composite_init;
+non_initted_var: IDENTIFIER (LK INTEGER RK)*;
 
 //init rules:
-scalar_init: scalar_var AS literals;
-composite_init: composite_var AS literals;
+var_init: IDENTIFIER (LK INTEGER RK)* AS literals;
 
-//var type:
-scalar_var: IDENTIFIER;
-composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 
 //para_list:
-para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
+para_list: non_initted_var (',' non_initted_var)*;
 
 
 
@@ -77,11 +72,11 @@ para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
-composite_ass: IDENTIFIER index_op;  
+assign_stmt: (IDENTIFIER | composite_ass) AS expression SEMI ;
+composite_ass: expression index_op;  
 
 //for statement:
-for_stmt: FOR LP scalar_var AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP IDENTIFIER AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
@@ -257,5 +252,6 @@ fragment CHAR_STRING:   ESCAPE_CHAR | '\'' '"' |~[\n'"\\] ;
 
 //String
 LSTRING: DOUQUO CHAR_STRING* DOUQUO { self.text = self.text[1:-1] };
+
 
 
