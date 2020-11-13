@@ -158,8 +158,9 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#array_cell.
     def visitArray_cell(self, ctx:BKITParser.Array_cellContext):
+        arr = self.visitExpr7(ctx.expr7())
         expr_list = list(map(lambda x: self.visitExpr(x), ctx.expr()))
-        return ArrayCell(expr_list[0], expr_list[1:])
+        return ArrayCell(arr, expr_list)
 
     # Visit a parse tree produced by BKITParser#break_stmt.
     def visitBreak_stmt(self, ctx:BKITParser.Break_stmtContext):
@@ -172,7 +173,10 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#call_stmt.
     def visitCall_stmt(self, ctx:BKITParser.Call_stmtContext):
-        return self.visitFunction_call(ctx.function_call())
+        expr_list = []
+        if ctx.expr():
+            expr_list = list(map(lambda x: self.visitExpr(x), ctx.expr()))
+        return CallStmt(Id(ctx.ID().getText()), expr_list)
 
 
     # Visit a parse tree produced by BKITParser#return_stmt.
@@ -255,5 +259,5 @@ class ASTGeneration(BKITVisitor):
         expr_list = []
         if ctx.expr():
             expr_list = list(map(lambda x: self.visitExpr(x), ctx.expr()))
-        return CallStmt(Id(ctx.ID().getText()), expr_list)
+        return CallExpr(Id(ctx.ID().getText()), expr_list)
         

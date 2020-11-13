@@ -68,7 +68,7 @@ dowhile_stmt: DO stmt_list WHILE expr ENDDO DOT;
 assign_stmt: (array_cell | ID) ASSIGN expr;
 break_stmt: BREAK;
 continue_stmt: CONTINUE;
-call_stmt: function_call ;
+call_stmt: ID LEFT_PAREN (expr (COMMA expr)*)* RIGHT_PAREN ;
 return_stmt: RETURN expr?;
 
 // 6. expr_utils

@@ -1,1 +1,1 @@
-Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([][CallStmt(Id(foo),[Id(arg1),StringLiteral(???),CallStmt(Id(foo),[Id(nothing)])])]))])
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([][CallStmt(Id(foo),[Id(arg1),StringLiteral(???),CallExpr(Id(foo),[Id(nothing)])])]))])

@@ -1,1 +1,1 @@
-Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([][Assign(ArrayCell(IntLiteral(1),[]),CallStmt(Id(something),[CallStmt(Id(foo),[])]))]))])
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([][Assign(ArrayCell(CallExpr(Id(foo),[Id(arg1),StringLiteral(???),CallExpr(Id(foo),[Id(nothing)])]),[IntLiteral(1)]),CallExpr(Id(something),[CallExpr(Id(foo),[])]))]))])
