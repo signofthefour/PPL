@@ -54,28 +54,8 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#initted_var.
-    def visitInitted_var(self, ctx:BKITParser.Initted_varContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#scalar_init.
-    def visitScalar_init(self, ctx:BKITParser.Scalar_initContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#composite_init.
-    def visitComposite_init(self, ctx:BKITParser.Composite_initContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#scalar_var.
-    def visitScalar_var(self, ctx:BKITParser.Scalar_varContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#composite_var.
-    def visitComposite_var(self, ctx:BKITParser.Composite_varContext):
+    # Visit a parse tree produced by BKITParser#var_init.
+    def visitVar_init(self, ctx:BKITParser.Var_initContext):
         return self.visitChildren(ctx)
 
 
