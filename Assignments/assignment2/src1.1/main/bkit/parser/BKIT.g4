@@ -73,13 +73,13 @@ return_stmt: RETURN expr?;
 
 // 6. expr_utils
 expr: expr1 REL_OP expr1 | expr1;
-        
 expr1: expr1 BIN_LOGICAL_OP expr2 | expr2;
 expr2: expr2 ADD_OP expr3 | expr3;
 expr3: expr3 MUL_OP expr4 | expr4;
 expr4: UN_LOGICAL_OP expr4 | expr5;
 expr5: UN_OP expr5 | expr6;
 expr6: array_cell | expr7;
+array_cell: expr7 (LEFT_BRACKET expr RIGHT_BRACKET)+;
 expr7: function_call | expr8;
 expr8: operand | LEFT_PAREN expr RIGHT_PAREN;
 operand: ID | primitive_data | array_lit;
@@ -98,7 +98,6 @@ primitive_data: INT_LIT | FLOAT_LIT | STRING_LIT | BOOL_LIT;
 
 array_lit: LEFT_BRACE ((primitive_data | array_lit) (COMMA (primitive_data | array_lit))*)? RIGHT_BRACE;
 
-array_cell: expr7 (LEFT_BRACKET expr RIGHT_BRACKET)+;
 // var declare
 var_list: (var_non_init | var_init) (COMMA (var_non_init | var_init))*; //non empty
 var_init: ( ID (LEFT_BRACKET INT_LIT RIGHT_BRACKET)+ | ID) ASSIGN (array_lit | primitive_data);
@@ -155,8 +154,8 @@ fragment DECIMAL: [0] | [1-9][0-9]*;
 fragment OCTAL: ('0o' | '0O') [1-7] OCTALDIGIT*;
 
 INT_LIT: DECIMAL 
-                | HEXADECIMAL 
-                | OCTAL;
+        | HEXADECIMAL 
+        | OCTAL;
 
 FLOAT_LIT: FLOATING_POINT_NUM;
 

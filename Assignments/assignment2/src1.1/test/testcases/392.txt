@@ -1,6 +1,7 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a
-        Body:
-        a[3 + foo(2)] = a[b[2][3]] + 4;
-        EndBody.
+
+            Function:  test
+            Parameter: var,x
+            Body:
+                var = (x - 1)\2 && True;
+            EndBody.
+            

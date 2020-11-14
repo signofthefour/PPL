@@ -1,316 +1,168 @@
-300
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-301
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-302
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-303
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-304
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-305
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-306
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-307
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-308
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-309
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-310
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-311
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-312
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-313
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-314
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-315
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-316
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-317
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-318
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-319
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-320
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-321
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-322
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-323
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-324
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-325
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-326
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-327
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-328
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-329
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-330
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-331
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-332
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-333
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-334
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-335
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-336
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-337
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-338
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 339
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-340
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-341
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-342
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 343
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-344
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-345
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-346
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-347
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-348
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-349
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 350
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 351
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 352
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 353
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 354
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 355
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 356
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 357
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 358
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
+340
 359
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 360
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 361
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-362
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 363
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 364
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 365
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 366
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 367
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 368
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
+341
+LINE: Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][Assign(Id(c),Id(a))]))])
+EXPC: Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][Assign(Id(c),UnaryOp(-.,Id(a)))]))])
 369
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 370
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 371
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 372
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 373
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 374
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 375
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 376
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 377
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 378
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
+342
 379
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 380
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 381
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 382
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 383
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 384
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 385
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 386
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 387
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 388
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
+344
 389
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 390
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 391
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 392
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 393
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-394
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 395
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 396
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 397
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
 398
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
+345
 399
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-400
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-401
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-ANTLR runtime and generated code versions disagree: 4.7.2!=4.8
-Tests run  102
-Errors  []
-[]
+346
+347
+348
+329
+330
+334
+335
+331
+326
+327
+327
+328
+336
+332
+333
+318
+319
+323
+324
+309
+310
+312
+313
+314
+315
+316
+LINE: Program([FuncDecl(Id(foo)[VarDecl(Id(a))],([][Assign(Id(x),IntLiteral(3))]))])
+EXPC: Program([FuncDecl(Id(foo)[VarDecl(Id(a))],([][Assign(Id(x),UnaryOp(-,IntLiteral(3)))]))])
+317
+326
+337
+338
+300
+301
+302
+303
+304
+305
+306
+307
+308
+Program([VarDecl(Id(b),BooleanLiteral(true)),VarDecl(Id(c),BooleanLiteral(false))])
+311
+322
+325
+Tests run  97
+Errors  [(<ASTGenSuite.ASTGenSuite testMethod=test_21>, 'Traceback (most recent call last):\n  File "./test/ASTGenSuite.py", line 683, in test_21\n    self.assertTrue(TestAST.checkASTGen(input,expect,360))\n  File "./test/TestUtils.py", line 99, in checkASTGen\n    asttree = ASTGeneration().visit(tree)\n  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit\n    return tree.accept(self)\n  File "../target/main/bkit/parser/BKITParser.py", line 437, in accept\n    return visitor.visitProgram(self)\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in visitProgram\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in <lambda>\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in visitFunction_declare\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in <lambda>\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 88, in visitStmt\n    return self.visitAssign_stmt(ctx.assign_stmt())\n  File "./main/bkit/astgen/ASTGeneration.py", line 142, in visitAssign_stmt\n    rhs = self.visitExpr(ctx.expr())\n  File "./main/bkit/astgen/ASTGeneration.py", line 177, in visitExpr\n    return self.visitExpr1(ctx.expr1(0))\n  File "./main/bkit/astgen/ASTGeneration.py", line 182, in visitExpr1\n    if ctx.BIN_LOGICAL_OP():\nAttributeError: \'NoneType\' object has no attribute \'BIN_LOGICAL_OP\'\n')]
+[(<ASTGenSuite.ASTGenSuite testMethod=test_3>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/ASTGenSuite.py", line 478, in test_3\n'
+  '    self.assertTrue(TestAST.checkASTGen(input,expect,341))\n'
+  'AssertionError: False is not true\n'),
+ (<ASTGenSuite.ASTGenSuite testMethod=test_func_declare6>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/ASTGenSuite.py", line 148, in test_func_declare6\n'
+  '    self.assertTrue(TestAST.checkASTGen(input,expect,316))\n'
+  'AssertionError: False is not true\n')]
 Test output
- ......................................................................................................
+ .............E.......F..........................................................F................
+======================================================================
+ERROR: test_21 (ASTGenSuite.ASTGenSuite)
 ----------------------------------------------------------------------
-Ran 102 tests in 3.103s
+Traceback (most recent call last):
+  File "./test/ASTGenSuite.py", line 683, in test_21
+    self.assertTrue(TestAST.checkASTGen(input,expect,360))
+  File "./test/TestUtils.py", line 99, in checkASTGen
+    asttree = ASTGeneration().visit(tree)
+  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit
+    return tree.accept(self)
+  File "../target/main/bkit/parser/BKITParser.py", line 437, in accept
+    return visitor.visitProgram(self)
+  File "./main/bkit/astgen/ASTGeneration.py", line 12, in visitProgram
+    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))
+  File "./main/bkit/astgen/ASTGeneration.py", line 12, in <lambda>
+    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))
+  File "./main/bkit/astgen/ASTGeneration.py", line 21, in visitFunction_declare
+    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))
+  File "./main/bkit/astgen/ASTGeneration.py", line 21, in <lambda>
+    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))
+  File "./main/bkit/astgen/ASTGeneration.py", line 88, in visitStmt
+    return self.visitAssign_stmt(ctx.assign_stmt())
+  File "./main/bkit/astgen/ASTGeneration.py", line 142, in visitAssign_stmt
+    rhs = self.visitExpr(ctx.expr())
+  File "./main/bkit/astgen/ASTGeneration.py", line 177, in visitExpr
+    return self.visitExpr1(ctx.expr1(0))
+  File "./main/bkit/astgen/ASTGeneration.py", line 182, in visitExpr1
+    if ctx.BIN_LOGICAL_OP():
+AttributeError: 'NoneType' object has no attribute 'BIN_LOGICAL_OP'
 
-OK
+======================================================================
+FAIL: test_3 (ASTGenSuite.ASTGenSuite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/ASTGenSuite.py", line 478, in test_3
+    self.assertTrue(TestAST.checkASTGen(input,expect,341))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_func_declare6 (ASTGenSuite.ASTGenSuite)
+Simple program: int main() {}
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/ASTGenSuite.py", line 148, in test_func_declare6
+    self.assertTrue(TestAST.checkASTGen(input,expect,316))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 97 tests in 2.844s
+
+FAILED (failures=2, errors=1)
 

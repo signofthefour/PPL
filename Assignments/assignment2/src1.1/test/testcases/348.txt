@@ -1,6 +1,9 @@
-Var: a,b,c;
-Function: main
-Parameter: a
-Body:
-Do something(); While a && bool_of_string("True") EndDo.
-EndBody.
+Function: foo 
+        Parameter: n
+        Body: 
+            If n == 0 Then
+                Return 1;
+            Else
+                Return n * fact (n - 1);
+            EndIf.
+        EndBody.

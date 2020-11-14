@@ -7,6 +7,7 @@ from functools import reduce
 class ASTGeneration(BKITVisitor):
 
     def visitProgram(self,ctx:BKITParser.ProgramContext):
+        # import pdb; pdb.set_trace()z
         var_decls = list(reduce(lambda y,x: y + self.visitVar_declare(x), [item for item in ctx.var_declare()], []))
         funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))
         return Program(var_decls + funcs_decls)
@@ -30,47 +31,36 @@ class ASTGeneration(BKITVisitor):
         if ctx.STRING_LIT():
             return StringLiteral(str(ctx.STRING_LIT().getText()))
         if ctx.BOOL_LIT():
-            return BooleanLiteral(bool(ctx.BOOL_LIT().getText()))
+            return BooleanLiteral(ctx.BOOL_LIT().getText() == "True")
 
 
     # Visit a parse tree produced by BKITParser#array_lit.
     def visitArray_lit(self, ctx:BKITParser.Array_litContext):
-        if ctx.primitive_data():
-            return ArrayLiteral(list(map(lambda datum: self.visitPrimitive_data(datum), ctx.primitive_data())))
-        else:
-            return ArrayLiteral(list(map(lambda datum: self.visitArray_lit(datum), ctx.array_lit())))
+        data = [self.visit(datum) for datum in ctx.children if isinstance(datum, (BKITParser.Primitive_dataContext, BKITParser.Array_litContext))]
+        return ArrayLiteral(data)
 
 
     # Visit a parse tree produced by BKITParser#var_list.
     def visitVar_list(self, ctx:BKITParser.Var_listContext):
-        var_non_init = list(map(lambda decl: self.visitVar_non_init(decl), ctx.var_non_init()))
-        var_init = list(map(lambda decl: self.visitVar_init(decl), ctx.var_init()))
-        return var_non_init + var_init
+        var_list = [self.visit(decl) for decl in ctx.children  if isinstance(decl,(BKITParser.Var_non_initContext, BKITParser.Var_initContext))]
+        return var_list
 
     # Visit a parse tree produced by BKITParser#var_non_init.
     def visitVar_non_init(self, ctx:BKITParser.Var_non_initContext):
         if ctx.getChildCount() == 1:
-            decl = VarDecl(Id(ctx.ID().getText()), [], None)
-            if isinstance(decl, VarDecl):
-                return decl
+            return VarDecl(Id(ctx.ID().getText()), [], None)
         else:
-            dim = map(lambda x: int(x), [lit.getText() for lit in ctx.INT_LIT()])
-            decl = VarDecl(Id(ctx.ID().getText()), dim, None)
-            if isinstance(decl, VarDecl):
-                return decl
+            dim = map(lambda x: int(x, 0), [lit.getText() for lit in ctx.INT_LIT()])
+            return VarDecl(Id(ctx.ID().getText()), dim, None)
 
 
     # Visit a parse tree produced by BKITParser#var_init.
     def visitVar_init(self, ctx:BKITParser.Var_initContext):
-        if ctx.array_lit():
-            dim = list(map(lambda x: int(x), [lit.getText() for lit in ctx.INT_LIT()]))
-            decl = VarDecl(Id(ctx.ID().getText()), dim, self.visitArray_lit(ctx.array_lit()))
-            if isinstance(decl, VarDecl):
-                return decl
+        if ctx.LEFT_BRACKET():
+            dim = list(map(lambda x: int(x, 0), [lit.getText() for lit in ctx.INT_LIT()]))
+            return VarDecl(Id(ctx.ID().getText()), dim, self.visit(ctx.children[-1]))
         else:
-            decl = VarDecl(Id(ctx.ID().getText()), [], self.visitPrimitive_data(ctx.primitive_data()))
-            if isinstance(decl, VarDecl):
-                return decl
+            return VarDecl(Id(ctx.ID().getText()), [], self.visit(ctx.children[-1]))
 
 
     # Visit a parse tree produced by BKITParser#params_list.
@@ -148,11 +138,7 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#assign_stmt
     def visitAssign_stmt(self, ctx:BKITParser.Assign_stmtContext):
-        lhs = None
-        if ctx.ID():
-            lhs = Id(ctx.ID().getText())
-        else:
-            lhs = self.visitArray_cell(ctx.array_cell())
+        lhs = Id(ctx.ID().getText()) if ctx.ID() else self.visit( ctx.array_cell())
         rhs = self.visitExpr(ctx.expr())
         return Assign(lhs, rhs)
 
@@ -187,6 +173,7 @@ class ASTGeneration(BKITVisitor):
     def visitExpr(self, ctx:BKITParser.ExprContext):
         if ctx.REL_OP():
             return BinaryOp(ctx.REL_OP().getText(), self.visitExpr1(ctx.expr1(0)), self.visitExpr1(ctx.expr1(1)))
+        # import pdb; pdb.set_trace()
         return self.visitExpr1(ctx.expr1(0))
 
 

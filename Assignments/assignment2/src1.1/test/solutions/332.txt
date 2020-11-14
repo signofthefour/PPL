@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main)[VarDecl(Id(a))],([][Assign(ArrayCell(BinaryOp(+,IntLiteral(1),Id(c)),[BinaryOp(+,CallExpr(Id(foo),[]),IntLiteral(1)),BinaryOp(+,IntLiteral(1),IntLiteral(2)),BinaryOp(+,Id(a),Id(v))]),Id(a))]))])
+Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][Dowhile([],[Return(BinaryOp(+,Id(a),IntLiteral(3)))],BooleanLiteral(true))]))])

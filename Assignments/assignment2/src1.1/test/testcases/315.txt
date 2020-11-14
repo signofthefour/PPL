@@ -1,5 +1,6 @@
-Var: a,b,c;
-Function: main
-Body:
-a = a <b - c;
-EndBody.
+ Function: foo
+                        Parameter: a
+                        Body:
+                        x = 3 && 5 ;
+                        EndBody.
+                

@@ -1,7 +1,8 @@
-Var: a,b,c;
-Function: main
-Parameter: a
-Body:
-Var: x=1,a[1]=1;
-Var: a,b[1]={"this"};
-EndBody.
+Function: foo 
+        Parameter: n
+        Body: 
+            Var: i = 0;
+            While i < 5 Do
+
+            EndWhile.
+        EndBody.

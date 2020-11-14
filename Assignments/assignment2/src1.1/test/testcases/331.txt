@@ -1,10 +1,8 @@
-Function: main
-                Parameter: a
-                Body:
-                    If 1 + 1 Then
-                    For (i=1,i>1,1+2) Do
-                        Var: a=10,c[1]={1,2};
-                        c[foo() + 1] = a;
-                    EndFor.
-                    EndIf.
-                EndBody.
+Function: foo 
+        Parameter: n
+        Body: 
+            Do
+                Continue;
+            While True
+            EndDo.
+        EndBody.

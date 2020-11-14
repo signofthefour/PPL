@@ -1,7 +1,8 @@
-Var: a,b,c;
-Function: main
-Parameter: a
-Body:
-Var: x=1,a[1]={12, "asdf"},b=1.21;
-Var: a,b[1]={"this"};
-EndBody.
+Function: foo 
+        Parameter: n
+        Body: 
+            While x>1 Do
+                If x==1 Then Return;
+                EndIf.
+            EndWhile.
+        EndBody.

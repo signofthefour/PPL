@@ -1,6 +1,11 @@
-Var: a,b,c;
-Function: main
-Parameter: a, b
-Body:
-While statement Do Break; EndWhile.
-EndBody.
+
+            Function: test
+            Parameter: n
+            Body:
+                While n >0 Do
+                    If n==0 Then Break;
+                    Else n= toInt(sqrt(n)); 
+                    EndIf. 
+                EndWhile.
+            EndBody.
+            

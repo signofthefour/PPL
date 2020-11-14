@@ -1,6 +1,8 @@
-Var: a,b,c;
-        Function: main
-        Body:
-        b = {{{}}};
-        a = (a + b) +. (a-a-.a*a*.a\.b%!c&&a||a==b);
-        EndBody.
+
+            Function: test
+            Body:
+                foo(x+y,goo());
+                a= foo(x+y,goo());
+                b= goo(print(f)) + "String";
+                Return foo();
+            EndBody. 

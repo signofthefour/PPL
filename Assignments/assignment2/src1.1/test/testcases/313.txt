@@ -1,6 +1,6 @@
-Var: a,b,c;
-            Function: main
-            Parameter: a
-            Body:
-            Var:x = 1, y;
-            EndBody.
+ Function: foo
+                        Parameter: a
+                        Body:
+                        x = 3+5 ;
+                        EndBody.
+                

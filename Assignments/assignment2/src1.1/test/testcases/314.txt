@@ -1,1 +1,7 @@
-Var: x = "yay";
+ Function: foo
+                        Parameter: a
+                        Body:
+                        Var:a=5;
+                        x = 3*5 ;
+                        EndBody.
+                

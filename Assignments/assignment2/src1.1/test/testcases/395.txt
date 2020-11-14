@@ -1,11 +1,10 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a, a[1][12]
-        Body:
-        If expr Then 
-        ElseIf expr Then
-        While expr Do EndWhile.
-        Do Return; While {{}} EndDo.
-        Else
-        EndIf.
-        EndBody.
+ Function: testCallStatement
+                        Parameter: x,y,z
+                        Body:
+                            If(x > y) Then
+                                sub(x,1);
+                            Else
+                                add(x,2);
+                            EndIf.
+                        EndBody.
+                    

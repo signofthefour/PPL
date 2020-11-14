@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main)[VarDecl(Id(a)),VarDecl(Id(b),[1,100])],([][While(BinaryOp(<,Id(a),Id(b)),[],[If(BinaryOp(>,Id(a),Id(b)),[],[CallStmt(Id(doNothing),[]),Break()])ElseIf(UnaryOp(!,CallExpr(Id(somecon),[])),[],[CallStmt(Id(doSomething),[])])Else([],[Dowhile([],[CallStmt(Id(something),[])],BinaryOp(+,Id(a),ArrayCell(CallExpr(Id(foo),[]),[IntLiteral(100)])))])])]))])
+Program([FuncDecl(Id(test)[],([][Return(Id(a)),Return(),Return(StringLiteral(abc)),Return(Id(none)),Return()]))])

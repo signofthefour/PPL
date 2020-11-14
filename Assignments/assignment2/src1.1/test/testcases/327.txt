@@ -1,7 +1,10 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a
-        Body:
-        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
-        Var: a,b[1]={"this"};
+Function: foo 
+        Parameter: n
+        Body: 
+            Do
+                Do
+                While(b!=4)
+                EndDo.
+            While(a!=3)                
+            EndDo.
         EndBody.

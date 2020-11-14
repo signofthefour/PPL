@@ -1,6 +1,5 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a
-        Body:
-        Do something(); While 1 <. 2.0 EndDo.
+Function: foo 
+        Parameter: n, a[10]
+        Body: 
+        
         EndBody.

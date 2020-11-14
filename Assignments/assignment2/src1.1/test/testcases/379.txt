@@ -1,5 +1,17 @@
-Function: main
-Parameter: a
-Body:
-a[1] = b[1] + {1,2,3} + append();
-EndBody.
+
+            Function: test
+            Body:
+            EndBody. 
+            Function: test
+            Parameter: n
+            Body:
+            EndBody.
+            Function: test
+            Body:
+            EndBody.
+            Function: test
+            Body:
+            EndBody.
+            Function: test
+            Body:
+            EndBody.

@@ -1,10 +1,6 @@
-Var: a,b,c;
-Function: main
-Body:
 
-EndBody.
-Function: foo
-Body:
-main();
-If a[1] Then foo(); EndIf.
-EndBody.
+        Function: test
+        Body:
+            Return 1 +. 3e-14 - "ABC" + {1,2,3} \. 2.;
+        EndBody.
+        

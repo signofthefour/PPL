@@ -1,9 +1,6 @@
-Var: a,b,c;
-                Function: main
-                Parameter: a
-                Body:
-                EndBody.
-                Function: foo
-                Parameter: a,b,c[1]
-                Body:
-                EndBody.
+ Function: foo
+                        Parameter: a
+                        Body:
+                        (3+5)[12] = 3 ;
+                        EndBody.
+                

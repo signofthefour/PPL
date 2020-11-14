@@ -1,7 +1,4 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a
-        Body:
-        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
-        While !(x &&  y || b) && (a || abc) Do something(); EndWhile.
-        EndBody.
+Var: x;
+                    Var: a,b,c;
+                    Var: a[100];
+                

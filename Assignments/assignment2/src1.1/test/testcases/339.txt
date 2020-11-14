@@ -1,9 +1,7 @@
-Var: a,b,c;
-        Function: main
-        Parameter: a
-        Body:
-        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
-        For (i = 0x12, a < 2, i + foo() + 1) Do something();
-        c = a[23][b[1][2][c]] +. 12; 
+Function: foo 
+        Parameter: n
+        Body: 
+        For (i = 0, i < 10, 2) Do
+            writeln(i);
         EndFor.
         EndBody.
