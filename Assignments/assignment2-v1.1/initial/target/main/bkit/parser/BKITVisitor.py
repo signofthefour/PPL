@@ -74,11 +74,6 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#composite_ass.
-    def visitComposite_ass(self, ctx:BKITParser.Composite_assContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BKITParser#for_stmt.
     def visitFor_stmt(self, ctx:BKITParser.For_stmtContext):
         return self.visitChildren(ctx)

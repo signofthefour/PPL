@@ -450,7 +450,10 @@ class BKITLexer(Lexer):
     def UNCLOSE_STRING_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 0:
 
-                self.text = (self.text)[1:]
+                if self.text[-1] == '\n':
+                    self.text = (self.text)[1:-1]
+                else:
+                    self.text = (self.text)[1:]
 
      
 

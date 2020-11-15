@@ -1096,7 +1096,7 @@ class ParserSuite(unittest.TestCase):
             a = index[a3[function(12233)+3];
         EndBody.
         """
-        expect = "Error on line 5 col 43: ;"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,287))
 
     def test_scope_error_3(self):

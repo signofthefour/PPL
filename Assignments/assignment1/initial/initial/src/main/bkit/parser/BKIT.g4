@@ -118,10 +118,10 @@ exp2: exp2 (ADDSUB) exp3 | exp3;
 exp3: exp3 (MULDIV) exp4 | exp4;
 exp4: BNEG exp4 | exp5;
 exp5: ADDSUB exp5 | exp6;
-exp6: exp6 index_op | exp7;
+exp6: exp7 index_op | exp7;
 exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
-operand: IDENTIFIER | literals | BOLEAN;
+operand: IDENTIFIER | literals ;
 
 
 // ===================================== EXPRESSON ===================================s
@@ -225,7 +225,10 @@ FALSE:      'False';
 ERROR_CHAR: .;
 UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF) 
 {
-    self.text = (self.text)[1:]
+    if self.text[-1] == '\n':
+        self.text = (self.text)[1:-1]
+    else:
+        self.text = (self.text)[1:]
 };
 ILLEGAL_ESCAPE: '"' CHAR_STRING* ILLEGAL_CHAR {
     self.text = (self.text)[1:]
@@ -252,6 +255,4 @@ fragment CHAR_STRING:   ESCAPE_CHAR | '\'' '"' |~[\n'"\\] ;
 
 //String
 LSTRING: DOUQUO CHAR_STRING* DOUQUO { self.text = self.text[1:-1] };
-
-
 

@@ -6,7 +6,7 @@ import sys
 
 
 from lexererr import *
-    
+
 
 
 def serializedATN():
@@ -418,20 +418,20 @@ class BKITLexer(Lexer):
         self._predicates = None
 
 
-        def emit(self):
-            tk = self.type
-            result = super().emit()
-            if tk == self.UNCLOSE_STRING:       
-                raise UncloseString(result.text)
-            elif tk == self.ILLEGAL_ESCAPE:
-                raise IllegalEscape(result.text)
-            elif tk == self.ERROR_CHAR:
-                raise ErrorToken(result.text)
-            elif tk == self.UNTERMINATED_COMMENT:
-                raise UnterminatedComment()
-            else:
-                return result;
-        
+    def emit(self):
+        tk = self.type
+        result = super().emit()
+        if tk == self.UNCLOSE_STRING:       
+            raise UncloseString(result.text)
+        elif tk == self.ILLEGAL_ESCAPE:
+            raise IllegalEscape(result.text)
+        elif tk == self.ERROR_CHAR:
+            raise ErrorToken(result.text)
+        elif tk == self.UNTERMINATED_COMMENT:
+            raise UnterminatedComment()
+        else:
+            return result;
+
 
     def action(self, localctx:RuleContext, ruleIndex:int, actionIndex:int):
         if self._actions is None:
@@ -450,15 +450,15 @@ class BKITLexer(Lexer):
     def UNCLOSE_STRING_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 0:
 
-                    self.text = (self.text)[1:]
-                
+                self.text = (self.text)[1:]
+
      
 
     def ILLEGAL_ESCAPE_action(self, localctx:RuleContext , actionIndex:int):
         if actionIndex == 1:
 
-                    self.text = (self.text)[1:]
-                
+                self.text = (self.text)[1:]
+
      
 
     def LSTRING_action(self, localctx:RuleContext , actionIndex:int):

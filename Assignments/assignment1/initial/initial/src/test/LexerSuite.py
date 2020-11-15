@@ -180,7 +180,7 @@ class LexerSuite(unittest.TestCase):
     def test_unterminated_string_2(self):
         self.assertTrue(TestLexer.checkLexeme(""" "n0M@l St1n@"but"uNCl0s3 ""","""n0M@l St1n@,but,Unclosed String: uNCl0s3 """,173))
     def test_unterminated_string_3(self):
-        self.assertTrue(TestLexer.checkLexeme(""" "howabout\nendline" ""","""Unclosed String: howabout\n""",174))
+        self.assertTrue(TestLexer.checkLexeme(""" "howabout\nendline" ""","""Unclosed String: howabout""",174))
     def test_unterminated_string_4(self):
         self.assertTrue(TestLexer.checkLexeme(""" "A quote in string '" ""","""Unclosed String: A quote in string '" """,175))
     def test_unterminated_string_5(self):
@@ -190,7 +190,7 @@ class LexerSuite(unittest.TestCase):
     def test_unterminated_string_7(self):
         self.assertTrue(TestLexer.checkLexeme(""" "nomal string"3mpty" ""","""nomal string,3,mpty,Unclosed String:  """,178))
     def test_unterminated_string_8(self):
-        self.assertTrue(TestLexer.checkLexeme(""" "Unclose first\n "nomal string" ""","""Unclosed String: Unclose first\n""",179))
+        self.assertTrue(TestLexer.checkLexeme(""" "Unclose first\n "nomal string" ""","""Unclosed String: Unclose first""",179))
     def test_unterminated_string_9(self):
         self.assertTrue(TestLexer.checkLexeme(""" "but this is not unclose \" ""","""but this is not unclose ,<EOF>""",180))
 

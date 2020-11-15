@@ -101,11 +101,6 @@ class ASTGeneration(BKITVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by BKITParser#composite_ass.
-    def visitComposite_ass(self, ctx:BKITParser.Composite_assContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by BKITParser#for_stmt.
     def visitFor_stmt(self, ctx:BKITParser.For_stmtContext):
         return self.visitChildren(ctx)
@@ -123,12 +118,12 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#break_stmt.
     def visitBreak_stmt(self, ctx:BKITParser.Break_stmtContext):
-        return self.visitChildren(ctx)
+        return Break()
 
 
     # Visit a parse tree produced by BKITParser#continue_stmt.
     def visitContinue_stmt(self, ctx:BKITParser.Continue_stmtContext):
-        return self.visitChildren(ctx)
+        return Continue()
 
 
     # Visit a parse tree produced by BKITParser#return_stmt.
@@ -158,52 +153,74 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#exp0.
     def visitExp0(self, ctx:BKITParser.Exp0Context):
-        return self.visitChildren(ctx)
+        if ctx.RELATION_OP():
+            return BinaryOp(ctx.RELATION_OP().getText(), self.visitExp1(ctx.exp1(0)), self.visitExp1(ctx.exp1(1)))
+        return self.visitExp1(ctx.exp1())
 
 
     # Visit a parse tree produced by BKITParser#exp1.
     def visitExp1(self, ctx:BKITParser.Exp1Context):
-        return self.visitChildren(ctx)
+        if ctx.BAND(): 
+            return BinaryOp(ctx.BAND().getText(), self.visitExp1(ctx.exp1()), self.visitExp2(ctx.exp2()))
+        if ctx.BOR(): 
+            return BinaryOp(ctx.BOR().getText(), self.visitExp1(ctx.exp1()), self.visitExp2(ctx.exp2()))
+        return self.visitExp2(ctx.exp2())
 
 
     # Visit a parse tree produced by BKITParser#exp2.
     def visitExp2(self, ctx:BKITParser.Exp2Context):
-        return self.visitChildren(ctx)
+        if ctx.ADDSUB():
+            return BinaryOp(ctx.ADDSUB().getText(), self.visitExp2(ctx.exp2()), self.visitExp3(ctx.exp3()))
+        return self.visitExp3(ctx.exp3())
 
 
     # Visit a parse tree produced by BKITParser#exp3.
     def visitExp3(self, ctx:BKITParser.Exp3Context):
-        return self.visitChildren(ctx)
+        if ctx.MULDIV():
+            return BinaryOp(ctx.MULDIV().getText(), self.visitExp3(ctx.ex3()), self.visitExp4(ctx.exp4()))
+
+        return self.visitExp4(ctx.exp4())
 
 
     # Visit a parse tree produced by BKITParser#exp4.
     def visitExp4(self, ctx:BKITParser.Exp4Context):
-        return self.visitChildren(ctx)
+        if ctx.BNEG():
+            return UnaryOp(ctx.BNEG().getText(), self.visitExp4(ctx.exp4()))
+        return self.visitExp5(ctx.exp5())
 
 
     # Visit a parse tree produced by BKITParser#exp5.
     def visitExp5(self, ctx:BKITParser.Exp5Context):
-        return self.visitChildren(ctx)
+        if ctx.NEGSIGN():
+            return UnaryOp(ctx.NEGSIGN().getText(), self.visitExp5(ctx.exp5()))
+        return self.visitExp6(ctx.exp6())
 
 
     # Visit a parse tree produced by BKITParser#exp6.
     def visitExp6(self, ctx:BKITParser.Exp6Context):
-        return self.visitChildren(ctx)
-
+        if ctx.index_op():
+            return self.visitIndex_op(ctx.index_op())
+        return self.visitExp7(self.exp7())
 
     # Visit a parse tree produced by BKITParser#exp7.
     def visitExp7(self, ctx:BKITParser.Exp7Context):
-        return self.visitChildren(ctx)
+        if ctx.func_call():
+            return self.visitFunc_call(ctx.func_call())
+        return self.visitExp8(ctx.exp8())
 
 
     # Visit a parse tree produced by BKITParser#exp8.
     def visitExp8(self, ctx:BKITParser.Exp8Context):
-        return self.visitChildren(ctx)
+        if ctx.LP():
+            return self.visitExpression(ctx.expression())
+        return self.visitOperand(ctx.operand())
 
 
     # Visit a parse tree produced by BKITParser#operand.
     def visitOperand(self, ctx:BKITParser.OperandContext):
-        return self.visitChildren(ctx)
+        if ctx.IDENTIFIER():
+            return Id(ctx.IDENTIFIER().getText())
+        return self.visitLiterals(ctx.literals())
 
 
     # Visit a parse tree produced by BKITParser#literals.
@@ -217,7 +234,7 @@ class ASTGeneration(BKITVisitor):
         elif ctx.LSTRING():
             return StringLiteral(bool(ctx.LSTRING().getText()))
         else: 
-            return 
+            return self.visitArray_list(ctx.array_list())
 
 
     # Visit a parse tree produced by BKITParser#bool_array.

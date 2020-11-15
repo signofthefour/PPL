@@ -1,21 +1,41 @@
-grammar BKIT;
-//MSSV: 1810992
+grammar BKIT ;
+// @lexer::header {
+// from lexererr import *
+// }
 
+// @lexer::members {
+// def emit(self):
+//     tk = self.type
+//     result = super().emit()
+//     if tk == self.UNCLOSE_STRING:       
+//         raise UncloseString(result.text)
+//     elif tk == self.ILLEGAL_ESCAPE:
+//         raise IllegalEscape(result.text)
+//     elif tk == self.ERROR_CHAR:
+//         raise ErrorToken(result.text)
+//     elif tk == self.UNTERMINATED_COMMENT:
+//         raise UnterminatedComment()
+//     else:
+//         return result;
+// }
+
+// options{
+//     language=Python3;
+// }
 
 //programstructure
 program  : (var_declare*)  (func_declare)* EOF;
 
 //var declare
-var_declare: VAR COLON var_list (AS )? SEMI;
-var_list: (initted_var | non_initted_var) (',' (initted_var |non_initted_var))*;
+var_declare: VAR COLON var_list SEMI;
+var_list: (var_init | non_initted_var) (',' (var_init |non_initted_var))*;
 
 //func_declare ()
 main_func: ;
 func_declare: FUNCTION COLON IDENTIFIER (PARAMETER COLON para_list)? BODY COLON func_body  ENDBODY DOT;
 func_body: stm_list;
-stm_list: stm*;
-stm: var_declare
-    | assign_stmt
+stm_list: var_declare* stm*;
+stm:  assign_stmt
     | if_stmt
     | for_stmt
     | while_stmt
@@ -34,19 +54,14 @@ WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 COMMENT: ('**' .*? '**') -> skip;
 
 //init type
-non_initted_var: scalar_var | composite_var;
-initted_var: scalar_init | composite_init;
+non_initted_var: IDENTIFIER (LK INTEGER RK)*;
 
 //init rules:
-scalar_init: scalar_var AS literals;
-composite_init: composite_var AS literals;
+var_init: IDENTIFIER (LK INTEGER RK)* AS literals;
 
-//var type:
-scalar_var: IDENTIFIER;
-composite_var:  IDENTIFIER (LK INTEGER RK)+ ;
 
 //para_list:
-para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
+para_list: non_initted_var (',' non_initted_var)*;
 
 
 
@@ -55,11 +70,10 @@ para_list: (scalar_var | composite_var)  (',' (scalar_var | composite_var))*;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (scalar_var | composite_ass) AS expression SEMI ;
-composite_ass: IDENTIFIER index_op;  
+assign_stmt: (IDENTIFIER | index_op) AS expression SEMI ;
 
 //for statement:
-for_stmt: FOR LP scalar_var AS expression CM expression CM expression    RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP IDENTIFIER AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
@@ -76,7 +90,7 @@ continue_stmt: CONTINUE SEMI;
 //return statement:
 return_stmt: RETURN  (expression (',' expression)*)? SEMI;
 
-//func_call statement:
+//func_call statement
 func_call: IDENTIFIER LP (expression (',' expression)*)?  RP ;
 call_stmt: func_call SEMI;
 
@@ -91,20 +105,20 @@ RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE
 ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
 MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN;
 NEGSIGN: ISUBOP | FSUBOP;
-index_op: (LK expression RK)+;
+index_op: exp7 (LK expression RK)+;
 
 //expression
 expression: exp0;
-exp0: exp0 RELATION_OP exp0 | exp1;
+exp0: exp1 RELATION_OP exp1 | exp1;
 exp1: exp1 (BAND | BOR) exp2 | exp2;
 exp2: exp2 (ADDSUB) exp3 | exp3;
 exp3: exp3 (MULDIV) exp4 | exp4;
 exp4: BNEG exp4 | exp5;
 exp5: ADDSUB exp5 | exp6;
-exp6: exp6 index_op | exp7;
+exp6: index_op | exp7;
 exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
-operand: IDENTIFIER | literals | BOLEAN;
+operand: IDENTIFIER | literals ;
 
 
 // ===================================== EXPRESSON ===================================s
@@ -139,10 +153,11 @@ FLOAT: NUMBER+ (DOT(NUMBER)* SCIEN? | SCIEN); // Error, contain 0;
 BOLEAN: TRUE | FALSE;
 
 //Array:
+bool_array: BOLEAN (',' BOLEAN)*;
 int_array: INTEGER (',' INTEGER)* ;
 float_array: FLOAT (',' FLOAT)*;
 string_array: LSTRING (',' LSTRING)*;
-array_index: int_array | float_array | string_array;
+array_index: int_array | float_array | string_array | bool_array;
 array_list: LB ((array_list | array_index)( ',' (array_list | array_index))*)? RB;
 
 //operators
@@ -205,7 +220,7 @@ THEN:       'Then';
 FALSE:      'False';
 
 ERROR_CHAR: .;
-UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF);
+UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF) ;
 ILLEGAL_ESCAPE: '"' CHAR_STRING* ILLEGAL_CHAR ;
 UNTERMINATED_COMMENT: '**' .*?;
 
@@ -228,6 +243,6 @@ fragment ILLEGAL_CHAR: ('\\' ~[bfrnt'\\]) | '\'' ~'"' ;
 fragment CHAR_STRING:   ESCAPE_CHAR | '\'' '"' |~[\n'"\\] ;
 
 //String
-LSTRING: DOUQUO CHAR_STRING* DOUQUO ;
+LSTRING: DOUQUO CHAR_STRING* DOUQUO;
 
 

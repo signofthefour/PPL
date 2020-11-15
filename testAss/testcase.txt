@@ -1,4 +1,5 @@
-        Function: main
-            Body:
-                a[2] = 1;
-            EndBody.
+        Var: x;
+        Function: test
+        Body:
+            a=-.-9; 
+        EndBody.

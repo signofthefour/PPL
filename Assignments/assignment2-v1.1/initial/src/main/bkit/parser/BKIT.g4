@@ -72,8 +72,7 @@ para_list: non_initted_var (',' non_initted_var)*;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (IDENTIFIER | composite_ass) AS expression SEMI ;
-composite_ass: expression index_op;  
+assign_stmt: (IDENTIFIER | index_op) AS expression SEMI ;
 
 //for statement:
 for_stmt: FOR LP IDENTIFIER AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
@@ -108,7 +107,7 @@ RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE
 ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
 MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN;
 NEGSIGN: ISUBOP | FSUBOP;
-index_op: (LK expression RK)+;
+index_op: (func_call | IDENTIFIER) (LK expression RK)+;
 
 //expression
 expression: exp0;
@@ -117,8 +116,8 @@ exp1: exp1 (BAND | BOR) exp2 | exp2;
 exp2: exp2 (ADDSUB) exp3 | exp3;
 exp3: exp3 (MULDIV) exp4 | exp4;
 exp4: BNEG exp4 | exp5;
-exp5: ADDSUB exp5 | exp6;
-exp6: exp6 index_op | exp7;
+exp5: NEGSIGN exp5 | exp6;
+exp6: index_op | exp7;
 exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
 operand: IDENTIFIER | literals ;
