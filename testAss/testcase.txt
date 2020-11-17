@@ -1,3 +1,15 @@
-Var: x = 1, y = 0X5F, z = 0O11, k = True, z = False;
-Var: x = 1e05 , y = 1.e05 , z= 1.25 , k ="Hohoho";
-Var: x =" hehe " , y = {} , z = {1,2,3}, k ={1,{2,3},True};
+        Var: x;
+        Function: fact
+        Parameter: n
+        Body:
+        If n == 0 Then
+        Return 1;
+        Else
+        Return n * fact (n - 1);
+        EndIf.
+        EndBody.
+        Function: main
+        Body:
+        x = 10;
+        fact (x);
+        EndBody.

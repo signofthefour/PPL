@@ -37,6 +37,16 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitVar_list(BKITParser.Var_listContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BKITParser#decl}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecl(BKITParser.DeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#decl}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecl(BKITParser.DeclContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BKITParser#main_func}.
 	 * @param ctx the parse tree
 	 */
@@ -406,4 +416,24 @@ public interface BKITListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArray_list(BKITParser.Array_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#element}.
+	 * @param ctx the parse tree
+	 */
+	void enterElement(BKITParser.ElementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#element}.
+	 * @param ctx the parse tree
+	 */
+	void exitElement(BKITParser.ElementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#arraylit}.
+	 * @param ctx the parse tree
+	 */
+	void enterArraylit(BKITParser.ArraylitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#arraylit}.
+	 * @param ctx the parse tree
+	 */
+	void exitArraylit(BKITParser.ArraylitContext ctx);
 }

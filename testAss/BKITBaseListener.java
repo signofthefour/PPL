@@ -51,6 +51,18 @@ public class BKITBaseListener implements BKITListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecl(BKITParser.DeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecl(BKITParser.DeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMain_func(BKITParser.Main_funcContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -490,6 +502,30 @@ public class BKITBaseListener implements BKITListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArray_list(BKITParser.Array_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterElement(BKITParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitElement(BKITParser.ElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArraylit(BKITParser.ArraylitContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArraylit(BKITParser.ArraylitContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
