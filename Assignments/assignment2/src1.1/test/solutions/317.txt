@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(foo)[VarDecl(Id(a))],([][Assign(Id(x),UnaryOp(!,IntLiteral(3)))]))])
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([VarDecl(Id(x),IntLiteral(1)),VarDecl(Id(a),[1],IntLiteral(1)),VarDecl(Id(a)),VarDecl(Id(b),[1],ArrayLiteral(StringLiteral(this)))][]))])

@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(main)[VarDecl(Id(a))],([][If(BinaryOp(>,BinaryOp(-,BinaryOp(+,IntLiteral(1),VarDecl(Id(a))),BinaryOp(*,VarDecl(Id(b)),None)),IntLiteral(1)),[],[])])])

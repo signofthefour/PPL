@@ -1,0 +1,5 @@
+ Var: x,y={};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.

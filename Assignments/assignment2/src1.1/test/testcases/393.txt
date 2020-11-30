@@ -1,7 +1,7 @@
-
-            Function: test 
-            Body:
-                Var: x = 10, a[10][12][0x12]; 
-                var = (x - 1)\2 && True;
-            EndBody.
-            
+Var: a,b,c;
+Function: main
+Parameter: a, a[1][12]
+Body:
+Var: x[1][2] = {"ab","da"};
+a[3 + foo(2)] = a[b[2][3]] + 4;
+EndBody.

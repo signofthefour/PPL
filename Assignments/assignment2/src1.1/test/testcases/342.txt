@@ -1,9 +1,7 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            While x>1 Do
-                If x==1 Then Return;
-                Else Continue;
-                EndIf.
-            EndWhile.
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+        While !(x &&  y || b) ** && (a || abc)** Do something(); EndWhile.
         EndBody.

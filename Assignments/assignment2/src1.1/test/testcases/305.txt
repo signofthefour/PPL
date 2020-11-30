@@ -1,2 +1,5 @@
-Var:x;
-        Var: x=12;
+Var: a,b=1,c[3]={1,2,3};
+Function: main
+Body:
+Return;
+EndBody.

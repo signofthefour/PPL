@@ -1,8 +1,6 @@
-
-        Function: foo 
-        Parameter: n 
-        Body: 
-            foo(2 + x, 4. \. y); 
-            goo ();
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        Do something(); While a[1][c[2]] + 123 -1 EndDo.
         EndBody.
-        

@@ -1,5 +1,10 @@
-Function: foo 
-        Parameter: n
-        Body: ** Xin chao**
-        string = "Xin chao";
+Var: a,b,c;
+        Function: main
+        Body:
+        If !(True) Then
+        
+        a = a <c;
+        If (a + b > c) Then a = a+b; ElseIf a == b Then writeln(i); Else a = 12.e1; EndIf.
+        EndIf.
+        Return ;
         EndBody.

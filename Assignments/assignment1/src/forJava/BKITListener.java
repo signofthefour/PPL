@@ -37,126 +37,6 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitFunction_declare(BKITParser.Function_declareContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKITParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void enterArray(BKITParser.ArrayContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void exitArray(BKITParser.ArrayContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#primitive_data}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrimitive_data(BKITParser.Primitive_dataContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#primitive_data}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrimitive_data(BKITParser.Primitive_dataContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#composite_data}.
-	 * @param ctx the parse tree
-	 */
-	void enterComposite_data(BKITParser.Composite_dataContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#composite_data}.
-	 * @param ctx the parse tree
-	 */
-	void exitComposite_data(BKITParser.Composite_dataContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#array_lit}.
-	 * @param ctx the parse tree
-	 */
-	void enterArray_lit(BKITParser.Array_litContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#array_lit}.
-	 * @param ctx the parse tree
-	 */
-	void exitArray_lit(BKITParser.Array_litContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#var_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar_list(BKITParser.Var_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#var_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar_list(BKITParser.Var_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#scalar_var}.
-	 * @param ctx the parse tree
-	 */
-	void enterScalar_var(BKITParser.Scalar_varContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#scalar_var}.
-	 * @param ctx the parse tree
-	 */
-	void exitScalar_var(BKITParser.Scalar_varContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#var_non_init}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar_non_init(BKITParser.Var_non_initContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#var_non_init}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar_non_init(BKITParser.Var_non_initContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#composite_var}.
-	 * @param ctx the parse tree
-	 */
-	void enterComposite_var(BKITParser.Composite_varContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#composite_var}.
-	 * @param ctx the parse tree
-	 */
-	void exitComposite_var(BKITParser.Composite_varContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#var_init}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar_init(BKITParser.Var_initContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#var_init}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar_init(BKITParser.Var_initContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#composite_init}.
-	 * @param ctx the parse tree
-	 */
-	void enterComposite_init(BKITParser.Composite_initContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#composite_init}.
-	 * @param ctx the parse tree
-	 */
-	void exitComposite_init(BKITParser.Composite_initContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#primitive_init}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrimitive_init(BKITParser.Primitive_initContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#primitive_init}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrimitive_init(BKITParser.Primitive_initContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#params_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterParams_list(BKITParser.Params_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#params_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitParams_list(BKITParser.Params_listContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BKITParser#stmt_list}.
 	 * @param ctx the parse tree
 	 */
@@ -277,36 +157,6 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitReturn_stmt(BKITParser.Return_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BKITParser#init_for}.
-	 * @param ctx the parse tree
-	 */
-	void enterInit_for(BKITParser.Init_forContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#init_for}.
-	 * @param ctx the parse tree
-	 */
-	void exitInit_for(BKITParser.Init_forContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#con_for}.
-	 * @param ctx the parse tree
-	 */
-	void enterCon_for(BKITParser.Con_forContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#con_for}.
-	 * @param ctx the parse tree
-	 */
-	void exitCon_for(BKITParser.Con_forContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BKITParser#update_for}.
-	 * @param ctx the parse tree
-	 */
-	void enterUpdate_for(BKITParser.Update_forContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BKITParser#update_for}.
-	 * @param ctx the parse tree
-	 */
-	void exitUpdate_for(BKITParser.Update_forContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BKITParser#expr}.
 	 * @param ctx the parse tree
 	 */
@@ -377,6 +227,16 @@ public interface BKITListener extends ParseTreeListener {
 	 */
 	void exitExpr6(BKITParser.Expr6Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link BKITParser#array_cell}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray_cell(BKITParser.Array_cellContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#array_cell}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray_cell(BKITParser.Array_cellContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BKITParser#expr7}.
 	 * @param ctx the parse tree
 	 */
@@ -426,4 +286,104 @@ public interface BKITListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIndex_op(BKITParser.Index_opContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray(BKITParser.ArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray(BKITParser.ArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#primitive_data}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimitive_data(BKITParser.Primitive_dataContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#primitive_data}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimitive_data(BKITParser.Primitive_dataContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#array_lit}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray_lit(BKITParser.Array_litContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#array_lit}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray_lit(BKITParser.Array_litContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#var_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_list(BKITParser.Var_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#var_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_list(BKITParser.Var_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#var_init}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_init(BKITParser.Var_initContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#var_init}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_init(BKITParser.Var_initContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#var_non_init}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_non_init(BKITParser.Var_non_initContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#var_non_init}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_non_init(BKITParser.Var_non_initContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#composite_var}.
+	 * @param ctx the parse tree
+	 */
+	void enterComposite_var(BKITParser.Composite_varContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#composite_var}.
+	 * @param ctx the parse tree
+	 */
+	void exitComposite_var(BKITParser.Composite_varContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#composite_init}.
+	 * @param ctx the parse tree
+	 */
+	void enterComposite_init(BKITParser.Composite_initContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#composite_init}.
+	 * @param ctx the parse tree
+	 */
+	void exitComposite_init(BKITParser.Composite_initContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#primitive_init}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimitive_init(BKITParser.Primitive_initContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#primitive_init}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimitive_init(BKITParser.Primitive_initContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BKITParser#params_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterParams_list(BKITParser.Params_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BKITParser#params_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitParams_list(BKITParser.Params_listContext ctx);
 }

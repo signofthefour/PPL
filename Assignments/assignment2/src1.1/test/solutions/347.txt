@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(foo)[VarDecl(Id(n)),VarDecl(Id(a),[10])],([][]))])
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[VarDecl(Id(a))],([][Dowhile([],[CallStmt(Id(something),[])],BinaryOp(<.,IntLiteral(1),FloatLiteral(2.0)))]))])

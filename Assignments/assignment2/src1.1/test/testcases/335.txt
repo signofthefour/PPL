@@ -1,5 +1,7 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            test(a,3*7, a+ 5,"string",True);
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+        For (i = "abc", a < 2, i + 1) Do something(); EndFor.
         EndBody.

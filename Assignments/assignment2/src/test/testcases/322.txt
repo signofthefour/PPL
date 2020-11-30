@@ -1,6 +1,0 @@
-Function: main
-                Parameter: a
-                Body:
-                    If 1 Then
-                    EndIf.
-                EndBody.

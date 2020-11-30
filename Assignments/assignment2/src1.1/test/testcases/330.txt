@@ -1,7 +1,8 @@
-Function: foo 
-        Parameter: n
+Var: a,b,c;
+        Function: main
+        Parameter: a
         Body:
-            If a<3 Then
-                Break;
-            EndIf.
+        Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+        If a == True Then
+        EndIf.
         EndBody.

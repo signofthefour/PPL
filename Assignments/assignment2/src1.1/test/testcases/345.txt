@@ -1,9 +1,6 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            While(1) Do
-                While(!x) Do
-                    x = True;
-                EndWhile.
-            EndWhile.
+Var: a,b,c;
+        Function: main
+        Parameter: a
+        Body:
+        Do something(); While !(abc < 12 || b && True) EndDo.
         EndBody.

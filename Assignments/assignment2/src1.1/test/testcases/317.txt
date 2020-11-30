@@ -1,6 +1,6 @@
- Function: foo
-                        Parameter: a
-                        Body:
-                        x = !3 ;
-                        EndBody.
-                
+Var: a,b,c;
+        Function: main
+        Body:
+        Var: x=1,a[1]=1;
+        Var: a,b[1]={"this"};
+        EndBody.

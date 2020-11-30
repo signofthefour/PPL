@@ -1,1 +1,5 @@
- 
+Var: a,b,c;
+        Function: main
+        Body:
+        a = b[something()[a[1]] + 1][c + d < 1] + c *. d[1][21 * 0x21AF];
+        EndBody.

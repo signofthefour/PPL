@@ -1,7 +1,6 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            While i < 5 Do
-                a= b +. 1.0;
-            EndWhile.
-        EndBody.
+Function: main
+                Parameter: a
+                Body:
+                    If 1 Then
+                    EndIf.
+                EndBody.

@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][Assign(Id(a),BinaryOp(+,CallExpr(Id(foo),[Id(a),Id(b)]),CallExpr(Id(goo),[Id(x)])))]))])
+Program([VarDecl(Id(a)),VarDecl(Id(b)),VarDecl(Id(c)),FuncDecl(Id(main)[],([][CallStmt(Id(foo),[Id(arg1),StringLiteral(???),CallExpr(Id(foo),[Id(nothing)]),ArrayLiteral(StringLiteral(asdab),ArrayLiteral(IntLiteral(1),FloatLiteral(200.0),FloatLiteral(1230.0),StringLiteral(nothing)))])]))])

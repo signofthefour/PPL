@@ -1,8 +1,5 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            Do
-                Return a+3;
-            While True
-            EndDo.
-        EndBody.
+Function: main
+                Parameter: a
+                Body:
+                (1 + c)[foo() + 1][1 + 2][a + v] = a;
+                EndBody.

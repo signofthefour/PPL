@@ -1,5 +1,7 @@
-Function: foo 
-        Parameter: n
-        Body: 
-            foo(x +3,y +. 10.2);
-        EndBody.
+Var: a,b,c;
+Function: main
+Parameter: a
+Body:
+Var: x=1,a[1]={12, "asdf"},a={12,12.e5,True,0x12};
+For (i = 1, a < 2, i + 1) Do something(); EndFor.
+EndBody.

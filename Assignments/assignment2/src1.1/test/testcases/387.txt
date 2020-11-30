@@ -1,6 +1,6 @@
 
-            Function: test 
-            Body:
-                a[True] = (foo(a+b,c >d) + 12.e3) *. 0x123;
-            EndBody.
-            
+        Function: foo
+        Parameter: a,b,c
+        Body:
+        nothing(a[1][1][b[k]]);
+        EndBody.

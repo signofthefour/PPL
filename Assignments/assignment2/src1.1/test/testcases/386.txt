@@ -1,6 +1,10 @@
- 
-            Function: test 
-            Body:
-                a[foo(x)+12] = ("String" + 12.e3) *. 0x123;
-            EndBody.
-            
+
+        Function: nothing
+        Body:
+        Var: a = {1238,32412, 120};
+        EndBody.
+        Function: foo
+        Parameter: a,b,c
+        Body:
+        nothing(a[1][1][b[k]]);
+        EndBody.
