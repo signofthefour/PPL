@@ -223,7 +223,7 @@ class For(Stmt):
     def __str__(self):
         return "For(" + \
         	str(self.idx1)+","+ \
-        	str(self.expr1) + ","+ \
+        	str(self.expr1) + "," + \
         	str(self.expr2) + "," + \
         	str(self.expr3) + "," + \
         	printListStmt(self.loop) + ")"

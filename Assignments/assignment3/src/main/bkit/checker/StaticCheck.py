@@ -134,15 +134,107 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitBinaryOp(self, ast, env):
         """
-        docstring
+        ==, ! =, <, >, <=, >=, = / =, < ., > ., <= ., >= .
         """
-        pass
+        # RELATIONAL
+        ## Int
+        if ast.op in ['==', '!=', '<', '>', '>=', '<=']:
+            l = self.visit(ast.left, env)
+            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+                l.type = IntType()
+            r = self.visit(ast.right, env)
+            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+                r.type = IntType()
+
+            if isinstance(l, IntType) and isinstance(r, IntType):
+                raise TypeMismatchInExpr(ast)
+            return BoolType()
+        ## Float
+        if ast.op in ['=/=', '<.', '>.', '>=.', '<=.']:
+            l = self.visit(ast.left, env)
+            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+                l.type = FloatType()
+            r = self.visit(ast.right, env)
+            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+                r.type = FloatType()
+            
+            if isinstance(l, FloatType) and isinstance(r, FloatType):
+                raise TypeMismatchInExpr(ast)
+            return BoolType()
+        
+        # BOOLEAN
+        if ast.op in ['&&' , '||']:
+            l = self.visit(ast.left, env)
+            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+                l.type = BoolType()
+            r = self.visit(ast.right, env)
+            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+                r.type = BoolType()
+
+            if isinstance(l, BoolType) and isinstance(r, BoolType):
+                raise TypeMismatchInExpr(ast)
+            return BoolType()
+        
+        # ARITHMETIC
+        ## Int
+        if ast.op in ['-' , '+', '*', '\\']:
+            l = self.visit(ast.left, env)
+            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+                l.type = IntType()
+            r = self.visit(ast.right, env)
+            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+                r.type = IntType()
+
+            if isinstance(l, IntType) and isinstance(r, IntType):
+                raise TypeMismatchInExpr(ast)
+            return IntType()
+        
+        ## Float
+        if ast.op in ['-.' , '+.', '*.', '\\.']:
+            l = self.visit(ast.left, env)
+            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+                l.type = FloatType()
+            r = self.visit(ast.right, env)
+            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+                r.type = FloatType()
+
+            if isinstance(l, FloatType) and isinstance(r, FloatType):
+                raise TypeMismatchInExpr(ast)
+            return FloatType()
 
     def visitUnaryOp(self, ast, env):
         """
         docstring
         """
-        pass
+        # ARITHMETIC
+        ## Int
+        if ast.op in ['-']:
+            operand = self.visit(ast.body, env)
+            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+                operand.type = IntType()
+
+            if isinstance(operand, IntType):
+                raise TypeMismatchInExpr(ast)
+            return IntType()
+        ## Float
+        if ast.op in ['-.']:
+            operand = self.visit(ast.body, env)
+            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+                operand.type = FloatType()
+
+            if isinstance(operand, FloatType):
+                raise TypeMismatchInExpr(ast)
+            return FloatType()
+
+        # BOOLEAN
+        if ast.op in ['!']:
+            operand = self.visit(ast.body, env)
+            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+                operand.type = BoolType()
+
+            if isinstance(operand, BoolType):
+                raise TypeMismatchInExpr(ast)
+            return BoolType()
 
     def visitCallExpr(self, ast, env):
         """
@@ -217,7 +309,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitFor(self, ast, env):
         """
-        docstring
+        Check if all has the same type as spec
         """
         idx1 = self.visit(ast.idx1, env)
         if not isinstance(idx1, (IntType, Unknown)):
@@ -226,37 +318,82 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             idx1.mtype = IntType()
 
         init_expr = self.visit(ast.expr1, env)
+        if not isinstance(init_expr, (IntType, Unknown)):
+            raise TypeMismatchInStmt(ast)
+        if isinstance(init_expr, Unknown):
+            init_expr.mtype = IntType()
+
+        con_expr = self.visit(ast.expr2, env)
+        if not isinstance(con_expr, (BoolType, Unknown)):
+            raise TypeMismatchInStmt(ast)
+        if isinstance(con_expr, Unknown):
+            con_expr.mtype = BoolType()
         
+        update_expr = self.visit(ast.expr3, env)
+        if not isinstance(update_expr, (IntType, Unknown)):
+            raise TypeMismatchInStmt(ast)
+        if isinstance(update_expr, Unknown):
+            update_expr.mtype = IntType()
+
+        scope = reduce(lambda env, x: self.visit(x, env), ast.loop[0], [])
+        cur_env = scope + env
+        [(idx, self.visit(x, cur_env)) for (idx, x) in enumerate(ast.loop[1])]
                 
     def visitBreak(self, ast, env):
         """
-        docstring
+        Do not care about unreachablestmt
         """
-        pass
+        return VoidType()
 
     def visitReturn(self, ast, env):
         """
-        docstring
+        TODO: check the type of this return stmt and the type of function return
         """
-        pass
+        return self.visit(ast.expr, env)
 
     def visitDowhile(self, ast, env):
         """
         docstring
         """
-        pass
+        scope = reduce(lambda env, x: self.visit(x, env), ast.sl[0], [])
+        [self.visit(x, env) for x in ast.sl[1]]
+        expr = self.visit(ast.exp, env)
+        if not isinstance(expr, BoolType()):
+            raise TypeMismatchInStmt(ast)
 
     def visitWhile(self, ast, env):
         """
-        docstring
+        Same with Dowhile?
         """
-        pass
+        expr = self.visit(ast.exp, env)
+        if not isinstance(expr, BoolType()):
+            raise TypeMismatchInStmt(ast)
+        scope = reduce(lambda env, x: self.visit(x, env), ast.sl[0], [])
+        [self.visit(x, env) for x in ast.sl[1]]
 
     def visitCallStmt(self, ast, env):
         """
         docstring
         """
-        pass
+        method_ref = self.visit(ast.method, env)
+        if method_ref == None or not isinstance(method_ref.mtype, MType):
+            raise Undeclared(Function(), ast.method)
+        args_type = [self.visit(x, env) for x in ast.param] # from call statement
+        param_type = method_ref.intype # from function declaration
+        both_unknown_type = list(map(lambda x, y: isinstance(x, Unknown) and isinstance(y,Unknown),\
+                                    args_type, param_type))
+        if any(both_unknown_type):
+            raise TypeCannotBeInferred(ctx)
+        # inference type of param & args
+        args_type = list(map(lambda x: args_type[x[0]] if isinstance(args_type[x[0]], Unknown) \
+                                    else param_type[x[0]], list(enumerate(args_type))))
+        
+        param_type = list(map(lambda x: param_type[x[0]] if isinstance(args_type[x[0]], Unknown) \
+                                    else args_type[x[0]], list(enumerate(args_type))))
+
+        unmatch_type = list(map(lambda x, y: type(x) != type(y), args_type, param_type))
+        if any(unmatch_type):
+            raise TypeMismatchInStmt(ast)
 
     def visitId(self, ast, env):
         """
