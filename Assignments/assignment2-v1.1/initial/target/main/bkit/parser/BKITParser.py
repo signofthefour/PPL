@@ -113,7 +113,7 @@ def serializedATN():
         buf.write("\2\u00d3\35\3\2\2\2\u00d4\u00d5\7;\2\2\u00d5\u00d6\7\f")
         buf.write("\2\2\u00d6\u00d7\7\7\2\2\u00d7\u00d8\7,\2\2\u00d8\u00d9")
         buf.write("\5\60\31\2\u00d9\u00da\7\20\2\2\u00da\u00db\5\60\31\2")
-        buf.write("\u00db\u00dc\7\20\2\2\u00dc\u00dd\5\64\33\2\u00dd\u00de")
+        buf.write("\u00db\u00dc\7\20\2\2\u00dc\u00dd\5\60\31\2\u00dd\u00de")
         buf.write("\7\r\2\2\u00de\u00df\7>\2\2\u00df\u00e0\5\20\t\2\u00e0")
         buf.write("\u00e1\7\61\2\2\u00e1\u00e2\7\21\2\2\u00e2\37\3\2\2\2")
         buf.write("\u00e3\u00e4\78\2\2\u00e4\u00e5\5\60\31\2\u00e5\u00e6")
@@ -1380,10 +1380,6 @@ class BKITParser ( Parser ):
             else:
                 return self.getToken(BKITParser.CM, i)
 
-        def exp1(self):
-            return self.getTypedRuleContext(BKITParser.Exp1Context,0)
-
-
         def RP(self):
             return self.getToken(BKITParser.RP, 0)
 
@@ -1435,7 +1431,7 @@ class BKITParser ( Parser ):
             self.state = 217
             self.match(BKITParser.CM)
             self.state = 218
-            self.exp1(0)
+            self.expression()
             self.state = 219
             self.match(BKITParser.RP)
             self.state = 220

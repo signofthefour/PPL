@@ -1,0 +1,12 @@
+
+        Function: test
+        Body:
+            If (True) Then 
+                If (!trueAgain) Then 
+                    If (againTrue) Then doSomeThing();
+                Else doSongThing();
+            EndIf.
+            EndIf.
+            EndIf.
+        EndBody.
+        

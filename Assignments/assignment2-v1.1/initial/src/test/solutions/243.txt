@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][While(BinaryOp(<,Id(i),IntLiteral(5)),[VarDecl(Id(b),IntLiteral(10))],[Assign(ArrayCell(Id(a),[Id(i)]),BinaryOp(+.,Id(b),FloatLiteral(1.0))),Assign(Id(i),BinaryOp(+,Id(i),IntLiteral(2)))])]))])

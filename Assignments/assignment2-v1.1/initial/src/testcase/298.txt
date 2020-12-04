@@ -1,0 +1,17 @@
+
+        Function: tamgiac
+        Body:
+            Var: a,b,c;
+            input(a,b,c);
+            If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
+                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
+                    print("tam giac vuong");
+                
+                ElseIf (a==b) && (b==c) Then print("tam giac deu");
+                ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
+                Else print("tam giac thuong");
+                EndIf.
+            Else print("khong phai tam giac");
+            EndIf.
+        EndBody.
+        

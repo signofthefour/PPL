@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][If(BinaryOp(!=,Id(n),IntLiteral(10000)),[],[Return(BinaryOp(-,Id(n),IntLiteral(9999)))])Else([],[])]))])

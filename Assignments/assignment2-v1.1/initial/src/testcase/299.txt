@@ -1,0 +1,15 @@
+
+        Var: a = 5, b = 7, lcm;
+        Var: max;
+        Function: main
+        Body:
+            Var: maxV;
+            maxV = a*b;
+            For ( i = max(a,b), i <= maxV, 1) Do
+                If (i % a == 0) && (i % b == 0) Then
+                    lcm = i;
+                    Break;
+                EndIf.
+            EndFor.
+        EndBody.
+        

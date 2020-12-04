@@ -1,0 +1,11 @@
+
+        Function: sum
+        Parameter: n
+        Body:
+            While True Do
+                If a==10 Then 
+                    Return a > 12 || b[12][1] + {12};
+                EndIf.
+            EndWhile.
+        EndBody.
+        

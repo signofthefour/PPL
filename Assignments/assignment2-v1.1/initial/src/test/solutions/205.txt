@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(a)[],([VarDecl(Id(s),StringLiteral(hi_hi)),VarDecl(Id(n),StringLiteral(nice))][]))])

@@ -1,0 +1,19 @@
+
+        Function: test
+        Body:
+            Var: x;
+            If 1 Then 
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            ElseIf 2 Then
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            ElseIf 3 Then
+                Var: x = 4, y = 6;
+                Var: c = 2;
+                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
+            EndIf.
+        EndBody.
+        

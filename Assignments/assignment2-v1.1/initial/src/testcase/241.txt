@@ -1,0 +1,8 @@
+
+        Function: test
+        Body:
+            If foo(2) Then foo(2);
+            ElseIf foo(2) Then foo(2);
+            EndIf.
+        EndBody.
+        

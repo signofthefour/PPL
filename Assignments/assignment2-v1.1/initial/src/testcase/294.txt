@@ -1,0 +1,9 @@
+
+        Function: test
+        Parameter: a, a[1][2]
+        Body:
+        For(i=expr, a =/= {{{},{}}} + a - b, "bruhhhhhh" + 1) Do
+            Return "bruhhhhhh";
+        EndFor.
+        EndBody.
+        

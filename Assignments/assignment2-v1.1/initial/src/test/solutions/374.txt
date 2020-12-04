@@ -1,1 +1,0 @@
-Program([VarDecl(Id(x),[1,13,1,16],ArrayLiteral(FloatLiteral(0.5),FloatLiteral(9e+21)))])

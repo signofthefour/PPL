@@ -1,0 +1,30 @@
+
+        Var: a[2309], m, n, d[2309];
+        Function: dijkstra
+        Body:
+        Var: pq;
+        For (i = 1, i <= n, 1) Do
+            d[i] = oo;
+        EndFor.
+        d[1] = 0;
+        push(pq, ii(0, 1));
+        While size(pq) Do
+            Var: u, du;
+            u = top(pq, second);
+            du = top(pq, first);
+            pop(pq);
+            If du != d[u] Then Continue; 
+            EndIf.
+            
+            For ( i = 0, i < size(a[u]), 1) Do
+                Var: v, uv;
+                v = second(a[u][v]);
+                uv = first(a[u][v]);
+                If d[v] > du + uv Then
+                    d[v] = du + uv;
+                    push(pq, ii(d[v], v));
+                EndIf.
+            EndFor.
+        EndWhile.
+        EndBody.
+        

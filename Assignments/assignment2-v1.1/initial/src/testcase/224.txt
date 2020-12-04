@@ -1,0 +1,6 @@
+
+        Function: test
+        Body:
+            Var: v_a_r, x[1][2], kOr0="string";
+        EndBody.
+        

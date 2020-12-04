@@ -24,6 +24,11 @@ class BKITVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BKITParser#decl.
+    def visitDecl(self, ctx:BKITParser.DeclContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BKITParser#main_func.
     def visitMain_func(self, ctx:BKITParser.Main_funcContext):
         return self.visitChildren(ctx)
@@ -71,11 +76,6 @@ class BKITVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKITParser#assign_stmt.
     def visitAssign_stmt(self, ctx:BKITParser.Assign_stmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BKITParser#composite_ass.
-    def visitComposite_ass(self, ctx:BKITParser.Composite_assContext):
         return self.visitChildren(ctx)
 
 
@@ -211,6 +211,16 @@ class BKITVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by BKITParser#array_list.
     def visitArray_list(self, ctx:BKITParser.Array_listContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#element.
+    def visitElement(self, ctx:BKITParser.ElementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by BKITParser#arraylit.
+    def visitArraylit(self, ctx:BKITParser.ArraylitContext):
         return self.visitChildren(ctx)
 
 

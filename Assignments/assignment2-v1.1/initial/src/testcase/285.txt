@@ -1,0 +1,11 @@
+
+        Function: sum
+        Parameter: n
+        Body:
+            While True Do
+                If a==10 Then 
+                    Return 10;
+                EndIf.
+            EndWhile.
+        EndBody.
+        

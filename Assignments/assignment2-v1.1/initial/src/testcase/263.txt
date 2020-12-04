@@ -1,0 +1,14 @@
+
+        Function: test
+        Body:
+            Var: x = 1;
+            While (x <= 5) Do
+                While (x) Do
+                    While x Do
+                        While (!(!(x))) Do
+                        EndWhile.
+                    EndWhile.
+                EndWhile.
+            EndWhile.
+        EndBody.
+        

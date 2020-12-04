@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[],([VarDecl(Id(a),IntLiteral(2))][For(Id(i),IntLiteral(0),BinaryOp(<,Id(a),IntLiteral(15)),BinaryOp(+,Id(a),IntLiteral(1)),[],[CallStmt(Id(writeln),[StringLiteral(15ph GG)]),Assign(Id(i),BinaryOp(+,Id(i),IntLiteral(1))),If(BinaryOp(<,Id(i),IntLiteral(20)),[],[CallStmt(Id(write),[StringLiteral(GoPro)])])Else([],[])])]))])

@@ -1,30 +1,22 @@
 
-        Var: a[2309], m, n, d[2309];
-        Function: dijkstra
+        Function: fibonacci1
+        Parameter: nEvents
         Body:
-        Var: pq;
-        For (i = 1, i <= n, 1) Do
-            d[i] = oo;
-        EndFor.
-        d[1] = 0;
-        push(pq, ii(0, 1));
-        While size(pq) Do
-            Var: u, du;
-            u = top(pq, second);
-            du = top(pq, first);
-            pop(pq);
-            If du != d[u] Then Continue; 
-            EndIf.
-            
-            For ( i = 0, i < size(a[u]), 1) Do
-                Var: v, uv;
-                v = second(a[u][v]);
-                uv = first(a[u][v]);
-                If d[v] > du + uv Then
-                    d[v] = du + uv;
-                    push(pq, ii(d[v], v));
+            For (i = 0, i < nEvents, 1) Do
+                fibonacci(float_to_int(i*.25e5-.2.+(2*fibonacci(2 + 1 + i)\.2e54)*2) + i%2);
+                If i == nEvents\5 Then Break;
                 EndIf.
             EndFor.
-        EndWhile.
+        EndBody.
+        Function: fibonacci2
+        Body:
+            Var: n;
+            If (n == 1) || (n == 2) Then
+                Return 1;
+            EndIf.
+            Return fibonacci(n - 1) + fibonacci(n - 2);
+        EndBody.
+        Function: main
+        Body:
         EndBody.
         

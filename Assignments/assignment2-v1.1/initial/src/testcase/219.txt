@@ -1,0 +1,7 @@
+  Var: x;
+        Function:  fact
+        Parameter: n , c, d
+        Body:
+            Var: c = "a var declare";
+        EndBody.
+        

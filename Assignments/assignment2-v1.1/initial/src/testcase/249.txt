@@ -1,0 +1,10 @@
+
+        Function: test
+        Parameter: n
+        Body:
+            Var: i = 0;
+            For (i = aFun(-t[2][1]) + 12E-12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
+
+            EndFor.
+        EndBody.
+        

@@ -1,0 +1,7 @@
+
+        Function: test
+        Body:   
+            For (a = (a==b) && (b==c),1 + 1, aFun(-t[2][1]) + 12E-12 ) Do
+            EndFor.
+        EndBody.
+        

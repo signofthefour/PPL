@@ -1,0 +1,22 @@
+
+        Function: test
+        Body:
+            Do
+                While True Do
+                    For (i = 0, i < 10 , 1) Do
+                    If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
+                    If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
+                        print("tam giac vuong");
+                    
+                    ElseIf (a==b) && (b==c) Then print("tam giac deu");
+                    ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
+                    Else print("tam giac thuong");
+                    EndIf.
+                    Else print("khong phai tam giac");
+                    EndIf.
+                    EndFor.
+                EndWhile.
+            While (a*a==b*b+c*c) **|| (b*b==a*a+c*c)** || (c*c== a*a+b*b) 
+            EndDo.
+        EndBody.
+        

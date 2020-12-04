@@ -1,0 +1,8 @@
+
+        Var: a;
+        Function: test
+        Body:
+            v = (4. \. 3.) *. 3.14 *. r *. r *. r;
+            r = 5 + 1 +3 * 12e6 % 0X12;
+        EndBody.
+        

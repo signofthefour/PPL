@@ -1,0 +1,8 @@
+
+        Function: main
+            Body:
+                If (True + False) Then a = aFun(-t[2][1]) + 12E-12;
+                Else c = s || !foo(2+4) && k == 12 - (8*3e-2)\.math(12+change_R);
+                EndIf.
+            EndBody.
+        

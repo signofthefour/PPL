@@ -1,0 +1,8 @@
+ Var: x;
+        Var: a,b;
+        Function:  test
+        Parameter: scalar
+        Body:
+            h = "Where is var declare?";
+        EndBody.
+        

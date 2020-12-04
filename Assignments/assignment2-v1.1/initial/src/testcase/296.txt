@@ -1,0 +1,16 @@
+
+        Function: fibonacci
+        Parameter: n
+        Body:
+            If ((n == 1) || (n == 2)) Then Return 1; EndIf.
+            Return fibonacci(n-1) + fibonacci(n - 2);
+        EndBody.
+
+        Function: main
+        Body:
+        Var: n;
+        scan(n);
+
+        Return fibonacci(n);
+        EndBody.
+        

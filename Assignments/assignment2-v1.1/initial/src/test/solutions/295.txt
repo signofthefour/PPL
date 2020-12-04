@@ -1,0 +1,1 @@
+Program([VarDecl(Id(x)),FuncDecl(Id(test)[],([VarDecl(Id(body)),VarDecl(Id(endBody))][]))])

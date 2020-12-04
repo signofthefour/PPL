@@ -1,0 +1,6 @@
+
+        Function: test
+        Body:
+            foo(dasd + foo(), "!@$C#hc%", 12. \. 921.9e5 * 32e1);
+        EndBody.
+        

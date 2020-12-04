@@ -1010,9 +1010,6 @@ public class BKITParser extends Parser {
 		public TerminalNode CM(int i) {
 			return getToken(BKITParser.CM, i);
 		}
-		public Exp1Context exp1() {
-			return getRuleContext(Exp1Context.class,0);
-		}
 		public TerminalNode RP() { return getToken(BKITParser.RP, 0); }
 		public TerminalNode DO() { return getToken(BKITParser.DO, 0); }
 		public Stm_listContext stm_list() {
@@ -1049,7 +1046,7 @@ public class BKITParser extends Parser {
 			setState(223);
 			match(CM);
 			setState(224);
-			exp1(0);
+			expression();
 			setState(225);
 			match(RP);
 			setState(226);
@@ -2756,7 +2753,7 @@ public class BKITParser extends Parser {
 		"\u00d9\7\16\2\2\u00d9\35\3\2\2\2\u00da\u00db\7;\2\2\u00db\u00dc\7\f\2"+
 		"\2\u00dc\u00dd\7\7\2\2\u00dd\u00de\7,\2\2\u00de\u00df\5\60\31\2\u00df"+
 		"\u00e0\7\20\2\2\u00e0\u00e1\5\60\31\2\u00e1\u00e2\7\20\2\2\u00e2\u00e3"+
-		"\5\64\33\2\u00e3\u00e4\7\r\2\2\u00e4\u00e5\7>\2\2\u00e5\u00e6\5\20\t\2"+
+		"\5\60\31\2\u00e3\u00e4\7\r\2\2\u00e4\u00e5\7>\2\2\u00e5\u00e6\5\20\t\2"+
 		"\u00e6\u00e7\7\61\2\2\u00e7\u00e8\7\21\2\2\u00e8\37\3\2\2\2\u00e9\u00ea"+
 		"\78\2\2\u00ea\u00eb\5\60\31\2\u00eb\u00ec\7>\2\2\u00ec\u00ed\5\20\t\2"+
 		"\u00ed\u00ee\7\66\2\2\u00ee\u00ef\7\21\2\2\u00ef!\3\2\2\2\u00f0\u00f1"+

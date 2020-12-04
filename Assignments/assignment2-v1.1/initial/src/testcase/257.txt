@@ -1,0 +1,8 @@
+
+        Function: test
+        Body:
+            Var: x = 0;
+            While aFun(-t[2][1]) + 12E-12 < 10  Do
+            EndWhile.
+        EndBody.
+        

@@ -1,1 +1,7 @@
-Var: c, d = 6.12, e=10, f="string";
+ 
+        Function: foo 
+        Parameter: x
+        Body: 
+            c = !a; 
+        EndBody.
+        

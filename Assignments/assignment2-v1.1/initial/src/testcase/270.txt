@@ -1,0 +1,8 @@
+
+        Function: test
+        Body:  
+            While True Do
+                doSomeThing();
+            EndWhile.
+        EndBody.
+        

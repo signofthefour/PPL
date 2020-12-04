@@ -1,0 +1,6 @@
+
+        Function: test
+        Body:
+            Return asd * 12 + 6e-1;
+        EndBody.
+        

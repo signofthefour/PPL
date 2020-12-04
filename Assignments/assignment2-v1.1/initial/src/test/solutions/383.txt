@@ -1,1 +1,0 @@
-Program([VarDecl(Id(s)),FuncDecl(Id(square)[],([VarDecl(Id(h))][Return(BinaryOp(*,Id(h),Id(h)))]))])

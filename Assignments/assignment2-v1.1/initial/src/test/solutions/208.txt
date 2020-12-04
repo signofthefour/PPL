@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(foo)[VarDecl(Id(n))],([][If(Id(a),[],[Assign(Id(b),IntLiteral(1))])Else([],[])]))])

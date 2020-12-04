@@ -1,8 +1,10 @@
 
 from BKITVisitor import BKITVisitor
 from BKITParser import BKITParser
-from main.bkit.utils.AST import *
+from AST import *
+#from AST_GEN_TEST import * 
 from functools import reduce
+
 
 class ASTGeneration(BKITVisitor):
 
@@ -68,6 +70,7 @@ class ASTGeneration(BKITVisitor):
 
     # Visit a parse tree produced by BKITParser#stm.
     def visitStm(self, ctx:BKITParser.StmContext):
+        #print(type(ctx))
         return self.visitChildren(ctx)
 
 
@@ -102,13 +105,16 @@ class ASTGeneration(BKITVisitor):
     def visitIf_stmt(self, ctx:BKITParser.If_stmtContext):
         exp_lst = [self.visitExpression(i) for i in ctx.expression()]
         stm_lst = [self.visitStm_list(i) for i in ctx.stm_list()]
-        ifelse_list  = [tuple((exp_lst[i],stm_lst[i][0], stm_lst[i][1])) for i in exp_lst]
-        return If(ifelse_list,stm_lst[-1]) if (ctx.ELSE()) else If(ifelse_list,tuple([],[]))
+
+        ifelse_list  = [tuple((exp_lst[i],stm_lst[i][0], stm_lst[i][1])) for i in range(0,int(len(exp_lst)))]
+        
+        return If(ifelse_list,stm_lst[-1]) if (ctx.ELSE()) else If(ifelse_list,tuple(([],[])))
 
 
     # Visit a parse tree produced by BKITParser#assign_stmt.
     def visitAssign_stmt(self, ctx:BKITParser.Assign_stmtContext):
-        lhs = Id(ctx.IDENTIFIER().getText()) if ctx.IDENTIFIER() else self.visitIndex_op(self.index_op())
+        #print(type(ctx))
+        lhs = Id(ctx.IDENTIFIER().getText()) if ctx.IDENTIFIER() else self.visitIndex_op(ctx.index_op())
         rhs = self.visitExpression(ctx.expression())
         
         return Assign(lhs, rhs)
@@ -118,7 +124,7 @@ class ASTGeneration(BKITVisitor):
         id = Id(ctx.IDENTIFIER().getText())
         expr1 = self.visitExpression(ctx.expression(0))
         expr2 = self.visitExpression(ctx.expression(1))
-        expr3 = self.visitExp1(ctx.exp1())
+        expr3 = self.visitExpression(ctx.expression(2))
         loop  = self.visitStm_list(ctx.stm_list())
 
         return For(id, expr1, expr2, expr3, loop)

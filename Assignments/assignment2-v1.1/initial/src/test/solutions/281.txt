@@ -1,0 +1,1 @@
+Program([VarDecl(Id(a)),FuncDecl(Id(foo)[],([VarDecl(Id(zzHQKzz),[2,3,4,5],ArrayLiteral(ArrayLiteral(IntLiteral(12345),FloatLiteral(4100000.0),FloatLiteral(3.14)),ArrayLiteral(StringLiteral(Yasuo),StringLiteral(Leesin),StringLiteral(Garen)))),VarDecl(Id(a),[234]),VarDecl(Id(c))][]))])

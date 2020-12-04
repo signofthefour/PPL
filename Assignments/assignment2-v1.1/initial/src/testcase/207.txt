@@ -1,0 +1,2 @@
+Var: array[2][5][3] = 10, scalar_var = {1,2,3};
+                    Var: ace;

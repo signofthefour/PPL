@@ -1,0 +1,14 @@
+
+        Function: fGCD
+        Parameter: a,b
+        Body:
+            If (a == 0) || (b == 0) Then Return a + b;
+            While a != b Do 
+                If a > b Then a = a - b; 
+                Else b = b - a;
+                EndIf.
+            EndWhile.
+            Return a;
+            EndIf.
+        EndBody.
+        

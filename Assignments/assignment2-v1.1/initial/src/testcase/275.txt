@@ -1,0 +1,9 @@
+
+        Function: test
+        Body:
+            While false Do
+                x = True || False;
+                Continue;
+            EndWhile.
+        EndBody.
+        

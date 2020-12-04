@@ -30,7 +30,8 @@ program  : (var_declare*)  (func_declare)* EOF;
 
 //var declare
 var_declare: VAR COLON var_list SEMI;
-var_list: (var_init | non_initted_var) (',' (var_init |non_initted_var))*;
+var_list: decl (',' decl)*;
+decl: var_init | non_initted_var;
 
 //func_declare ()
 main_func: ;
@@ -63,7 +64,7 @@ var_init: IDENTIFIER (LK INTEGER RK)* AS literals;
 
 
 //para_list:
-para_list: non_initted_var (',' non_initted_var)*;
+para_list: var_list;
 
 
 
@@ -72,11 +73,10 @@ para_list: non_initted_var (',' non_initted_var)*;
 if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE stm_list)? ENDIF DOT ;
 
 //assignment stament:
-assign_stmt: (IDENTIFIER | composite_ass) AS expression SEMI ;
-composite_ass: expression index_op;  
+assign_stmt: (IDENTIFIER | index_op) AS expression SEMI ;
 
 //for statement:
-for_stmt: FOR LP IDENTIFIER AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP IDENTIFIER AS expression CM expression CM expression RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;
@@ -91,10 +91,10 @@ break_stmt: BREAK SEMI;
 continue_stmt: CONTINUE SEMI;
 
 //return statement:
-return_stmt: RETURN  (expression (',' expression)*)? SEMI;
+return_stmt: RETURN  (expression)? SEMI;
 
 //func_call statement
-func_call: IDENTIFIER LP (expression (',' expression)*)?  RP ;
+func_call: IDENTIFIER '(' (expression (',' expression)*)?  ')' ;
 call_stmt: func_call SEMI;
 
 // ===================================== STATMENT ====================================
@@ -105,20 +105,18 @@ call_stmt: func_call SEMI;
 // ===================================== EXPRESSON ===================================
 //relation operator
 RELATION_OP: EQUAL | FNEQUAL | FLESSOE | FGROE | FLESS | FGR | INEQUAL | ILESSOE | IGROE | ILESS | IGR ;
-ADDSUB: FADDOP | FSUBOP | IADDOP | ISUBOP;
-MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN;
-NEGSIGN: ISUBOP | FSUBOP;
-index_op: (LK expression RK)+;
+MULDIV: FMULOP | FDIVOP | IMULOP | IDIVOP | IREMAIN ;
+index_op: (func_call | IDENTIFIER) (LK expression RK)+;
 
 //expression
 expression: exp0;
 exp0: exp1 RELATION_OP exp1 | exp1;
 exp1: exp1 (BAND | BOR) exp2 | exp2;
-exp2: exp2 (ADDSUB) exp3 | exp3;
-exp3: exp3 (MULDIV) exp4 | exp4;
+exp2: exp2 (FADDOP | FSUBOP | IADDOP | ISUBOP) exp3 | exp3;
+exp3: exp3  MULDIV exp4 | exp4;
 exp4: BNEG exp4 | exp5;
-exp5: ADDSUB exp5 | exp6;
-exp6: exp7 index_op | exp7;
+exp5:  (FSUBOP | ISUBOP) exp5 | exp6;
+exp6: index_op | exp7;
 exp7: func_call |exp8;
 exp8: LP (expression) RP | operand;
 operand: IDENTIFIER | literals ;
@@ -146,7 +144,7 @@ DOT:    '.';
 
 
 //Literals
-literals: array_list | INTEGER | FLOAT | BOLEAN | LSTRING ;
+literals: arraylit | INTEGER | FLOAT | BOLEAN | LSTRING ;
 
 //Integer
 INTEGER: [1-9]NUMBER* | HEX[1-9A-F][0-9A-F]* | OCTA[1-7][0-7]* | '0'; // 
@@ -161,7 +159,11 @@ int_array: INTEGER (',' INTEGER)* ;
 float_array: FLOAT (',' FLOAT)*;
 string_array: LSTRING (',' LSTRING)*;
 array_index: int_array | float_array | string_array | bool_array;
-array_list: LB ((array_list | array_index)( ',' (array_list | array_index))*)? RB;
+array_list: LB ((element)( ',' (element))*)? RB;
+
+element: array_list | array_index;
+
+arraylit: array_list;
 
 //operators
 // Arithmetic operators
@@ -225,10 +227,7 @@ FALSE:      'False';
 ERROR_CHAR: .;
 UNCLOSE_STRING: DOUQUO CHAR_STRING* ('\n' | EOF) 
 {
-    if self.text[-1] == '\n':
-        self.text = (self.text)[1:-1]
-    else:
-        self.text = (self.text)[1:]
+    self.text = (self.text)[1:]
 };
 ILLEGAL_ESCAPE: '"' CHAR_STRING* ILLEGAL_CHAR {
     self.text = (self.text)[1:]
@@ -255,4 +254,5 @@ fragment CHAR_STRING:   ESCAPE_CHAR | '\'' '"' |~[\n'"\\] ;
 
 //String
 LSTRING: DOUQUO CHAR_STRING* DOUQUO { self.text = self.text[1:-1] };
+
 

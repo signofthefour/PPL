@@ -2,436 +2,672 @@ import unittest
 from TestUtils import TestParser
 
 class ParserSuite(unittest.TestCase):
-    def test_var_declare_1(self):
-        input = """Var: a;"""
+
+    def test1(self):
+        input = """Var: x[1];"""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,201))
-
-    def test_var_declare_2(self):
-        input = """Var: a_c_e,b,c,d;"""
+    
+    def test2(self):
+        input = """Var: y;"""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,202))
-
-    def test_var_declare_3(self):
-        input = """Var: c, d = 6.12, e=10, f="string";"""
+    
+    def test3(self):
+        input = """ 
+        Function: foo 
+        Parameter: x
+        Body: 
+            c = !a; 
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,203))
 
-    def test_var_declare_4(self):
-        input = """Var: m[2][7][3], n[10], a, goTHeR;"""
+    def test4(self):
+        input = """
+        Function: foo
+        Parameter: n
+        Body:
+            c = -.x;
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,204))
 
-    def test_var_declare_5(self):
-        input = """Var:  m[1][7], n[10], a= 18, gother = "loki????";"""
+    def test5(self):
+        input = """
+        Function:  a
+        Body:
+            Var: s = "hi_hi";
+            Var: n = "nice";
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,205))
 
-    def test_var_declare_6(self):
-        input = """Var: a, b, c[10][3][2], aVar, b() ;"""
-        expect = "Error on line 1 col 31: ("
+    def test6(self):
+        input = """ 
+        Function: foo 
+        Parameter: x
+        Body: 
+            c =a * 5; 
+        EndBody.
+        """
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,206))
-
-    def test_var_declare_7(self):
-        input = """Var: array[2][5][3] = 10, scalar_var = {1,2,3};
-                    Var: ace;"""
+    def test7(self):
+        input = """ 
+        Function: foo 
+        Parameter: n 
+        Body: 
+            c =a + 5; 
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,207))
 
-    def test_var_declare_8(self):
-        input = """Var: a=True, b=0XAB12, c=0o1127;"""
+    def test8(self):
+        input = """ Function: foo 
+        Parameter: n 
+        Body: 
+            If a Then b = 1; EndIf.
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,208))
-    
-    def test_var_declare_9(self):
-        input = """Var: array[1][2][3] = {{1,2,3},{2.5,3e6},{"string","??1810992"},{True, False, True}};"""
+
+    def test9(self):
+        input = """ 
+        Function: foo 
+        Parameter: n 
+        Body: 
+            c = x <= 0; 
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,209))
-
-    def test_var_declare_10(self):
-        input = """Var: scalar = {1,"string",5e6,True}, a[10][22], e=40e5, c, f=20;"""
+    
+    def test10(self):
+        input = """ 
+        Function: foo 
+        Parameter: n 
+        Body: 
+            x = y < 100;
+            x = !a; 
+        EndBody.
+        """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,210))
-    
-    def test_var_declare_11(self):
-        input = """Var: a, b, k f=20;"""
-        expect = "Error on line 1 col 13: f"
-        self.assertTrue(TestParser.checkParser(input,expect,211))
 
-    def test_function_declare_1(self):
-        input = """ Var: x;
-        Function: fact
-        Body:
-
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,212))    
-
-
-    def test_function_declare_2(self):
-        input = """ Var: x;
-        Function: fact[]
-        Body:
-
-        EndBody.
-        """
-        expect = "Error on line 2 col 22: ["
-        self.assertTrue(TestParser.checkParser(input,expect,213))  
-
-    def test_function_declare_3(self):
+    def test11(self):
         input = """ 
-        Function: fact
-        Parameter: scalar, com[1][23], s_u_Pe
-        Body:
-
+        Function: foo 
+        Parameter: n 
+        Body: 
+            a = (3 + 5) * 10 ; 
         EndBody.
         """
         expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,214))  
+        self.assertTrue(TestParser.checkParser(input,expect,211))
+    
+    def test12(self):
+        input = """ 
+        Function: foo 
+        Parameter: n 
+        Body: 
+            c =x && y; 
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,212))
 
+    def test13(self):
+        input = """ 
+        Function: foo 
+        Parameter: n 
+        Body: 
+            If a == 1 Then b = a + 5;
+            ElseIf a == 6 Then b= a - 6; 
+            EndIf.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,213))
+    
+    def test14(self):
+        input = """ Function: foo 
+        Parameter: n 
+        Body: 
+            If !a Then b = (5 + 10) * 100; 
+            Else c= 500000 ; 
+            EndIf. 
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,214))
 
-    def test_function_declare_4(self):
+    def test15(self):
         input = """
-        Function: fact
-        Parameter: scalar, com[1][23], s_u_Pe
-        Body:
-            Var: a, arr={1,"abc",{5, 6e3}};
-            a = "String";
+        Function: foo 
+        Parameter: n 
+        Body: 
+            For (i = 3, i != 5, i*1) Do x=10000*2; EndFor.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,215))
+
+    def test16(self):
+        input = """
+        Function: foo 
+        Parameter: n 
+        Body: 
+            foo(2 + x, 4. \. y); 
+            goo ();
         EndBody.
         """
         expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,215))  
-
-
-    def test_function_declare_5(self):
-        input = """ Var: x;
-        Function:  
-        Body:
-            Var s = "Name missing";
-        EndBody.
-        """
-        expect = "Error on line 3 col 8: Body"
         self.assertTrue(TestParser.checkParser(input,expect,216))
-
-    def test_function_declare_6(self):
-        input = """ Var: x;
-        Function:  test
-        Parameter: 16;
-        Body:
-            x = "Wrong parameter"
-        EndBody.
-        """
-        expect = "Error on line 3 col 19: 16"
+    
+    def test17(self):
+        input = """Function: foo 
+        Parameter: n 
+        Body: 
+        x = 10;
+        x = (x - 5) * n; 
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,217))
 
-    def test_function_declare_7(self):
-        input = """ Var: x;
-        Function:  test
-        Var a,b;
-        Parameter: scalar
-        Body:
-            h = "Where is var declare?";
-        EndBody.
-        """
-        expect = "Error on line 3 col 8: Var"
+    def test18(self):
+        input = """Function: foo
+        Parameter: n
+        Body: 
+            Var: a = 10., b, c;
+            a = c - (4. \. 3.) *. 3.14 *. a * (c - b *. a);
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,218))
 
-    def test_function_declare_8(self):
-        input = """  Var: x;
-        Function:  fact
-        Parameter: n , c, d
-        Body:
-            a = "not a var declare";
-            Var: c = "a var declare";
-        EndBody.
-        """
-        expect = "Error on line 6 col 12: Var"
+    def test19(self):
+        input = """Function: foo 
+        Parameter: n, a[10]
+        Body: 
+
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,219))
-    
-    def test_function_declare_9(self):
-        input = """Var: x;
-        Function: foo
-        Parameter:
-        Body:
-            Var: i = "null parameter";
-        EndBody.
-        """
-        expect = "Error on line 4 col 8: Body"
-        self.assertTrue(TestParser.checkParser(input,expect,220))
-    
-    def test_function_declare_10(self):
-        input = """Var: x;
-        Var: y;
-        Function: foo
-        Body:
-        EndBody.
 
-        Var: z = "declare after a funtion";
-        """
-        expect = "Error on line 7 col 8: Var"
+    def test20(self):
+        input = """Var: x, y =1, y = "abc'" hello \\t ", m[1], n[10] = {1,2,{"an",5.4},5.e-12};
+            Var: a_jacj933 = 00012.21; 
+        Function: fact
+        Parameter: n, aca_312aAX[3][44][0x31FF], cxa[0x12][0o1][8][0]
+        Body:
+        Var: t, r= 10.;
+        Var: thread = 00212.3123E+3120, r= 10.;
+        v = (4. \\. 3.) *.   3.14 *. r * r * a;
+
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input, expect, 220))
+
+    def test21(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            If n == 0 Then
+                Return 0;
+            Else
+                Return n * fact (n - 2);
+            EndIf.
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,221))
-
-    def test_function_declare_11(self):
-        input = """
-        Function: func_NAME
-        Parameter: x[10], a[2][3][2][9]
-        Body:
-            a = 10;
-
-            Return a + 10 - 2;
-        EndBody.
-        """
+    
+    def test22(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            x = 10;
+            y = 15 - x;
+            z = x * y;
+            fact (z);
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,222))
 
-    def test_function_declare_12(self):
-        input = """ Var: x = "where is DOT";
-        Function: func_NAME
-        Parameter: x[10], a[2][3][2][9]
-        Body:
-
-        EndBody
-        """
-        expect = "Error on line 7 col 8: <EOF>"
+    def test23(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Var: i = 1;
+            While i < 5 Do
+                a[i] = b * 2 +. 1.0;
+                i = i + 2;
+            EndWhile.
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,223))
 
-    def test_var_declare_statement_1(self):
-        input = """
-        Function: test
-        Body:
-            Var: v_a_r, x[1][2], kOr0="string";
-        EndBody.
-        """
+    def test24(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            While x<10000000000 Do
+                If x!=100000 Then Return;
+                Else Continue;
+                EndIf.
+            EndWhile.
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,224))
-
-    def test_var_declare_statement_2(self):
-        input = """
-        Var: a;
-        Function: test
-        Body:
-            Var: v_a_r={{}, {1,"ac"}};
-        EndBody.
-        """
+    
+    def test25(self):
+        input = """Function: foo 
+        Parameter: n 
+        Body: 
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,225))
-    
-    def test_var_declare_statement_3(self):
-        input = """
-        Function: test
-        Body:
-            Var: x = 4, y = 6;
-            Var: c = 2;
-            Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-        EndBody.
-        """
+
+    def test26(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Do
+                x = a + b - c * d + e - f * g - 123455;
+                y =  a + n + h - y - e - u + e * m;
+            While x > 0 + 326264 +  x
+            EndDo.
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,226))
 
-    def test_statements_1(self):
-        input = """
-        Var: a;
-        Function: test
-        Body:
-            v = (4. \. 3.) *. 3.14 *. r *. r *. r;
-            r = 5 + 1 +3 * 12e6 % 0X12;
-        EndBody.
-        """
+    def test27(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            If n != 0 Then
+                Return 0;
+            Else
+                Return (n-1) * (n-2) * (n-3) * (n-4);
+            EndIf.
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,227))
 
-    def test_statement_2(self):
-        input = """
-        Function: test
-        Body:
-            b[2][3] = {{2,3,4},{4,5,6}};
-            x[1] = 2;
-            d = 1e-12;
-            m = foo(12);
-        EndBody.
-        """
+    def test28(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            a[3+foo(1)] = a[b[1][3]] + 4 * 10 - 7 + b[c[1][3]] + c[b[a][b]];
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,228))
     
-    def test_statement_3(self):
+    def test29(self):
         input = """
-        Function: test
-        Body:
-            a = b = c = d;
-        EndBody.
+        Var: a = 5;
+        Var: b = {{2,3,4},{4,5,6}};
+        Var: c, d = 6, e, f;
+        Var: m, n[100];
         """
-        expect = "Error on line 4 col 18: ="
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,229))
-
-    def test_statement_4(self):
-        input = """
-        Function: test
-        Body:
-            r = a == b + 2;
-            s = r*r + 2;
-            t = s || !foo(2+4) && k == 12 + (8*3e-2)\.math(12+change_R);
-        EndBody.
-        """
+    
+    def test30(self):
+        """ test comment in function """
+        input = """Function: foo 
+        Parameter: n
+        Body: ** Tran Thanh da cuoi**
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,230))
-    
-    def test_statement_5(self):
+    def test31(self):
         input = """
-        Var: x, y = 5e3, z;
         Function: test
+        Parameter: n
         Body:
-            If a == b Then
-                a = b;
+            If n != 10 Then
+                Return 3.1415919191;
+            Else
+                Return false;
             EndIf.
-        EndBody.
-        """
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,231))
-
-    def test_statement_6(self):
+    
+    def test32(self):
         input = """
-        Function: test
-        Body:
-            If (True && False) Then a = 5;
-            Else a = s || !foo(2+4) && k == 12;
-            EndIf.
-        EndBody.
+        Var: b[2][3]={{1,2,3},{4,5,6}};
+        Var: a[100] = {1,2,3};
+        Var: a[100000][1000] = {{2,3},{4,5,6,7,8,9,10}};
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,232))
 
-    def test_statement_7(self):
-        input = """
-        Function: test
-        Body:
-            If (True && False) Then a = 5;
-            ElseIf (as || !foo(2+4) && k == 12) Then dosomething();
-            ElseIf (aFunction(!foo(2+4) )) Then dosomething2();
-            Else a = s || !foo(2+4) && k == 12;
-            EndIf.
-        EndBody.
-        """
+    def test33(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            While x<1000000000000 Do
+                If x != 99999 Then Return;
+                Else Break;
+                EndIf.
+            EndWhile.
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,233))
-
-    def test_statement_8(self):
-        input = """
-        Function: main
-            Body:
-                If (True + False) Then a = aFun(-t[2][1]) + 12E-12;
-                Else c = s || !foo(2+4) && k == 12 - (8*3e-2)\.math(12+change_R);
-            EndBody.
-        """
-        expect = "Error on line 6 col 12: EndBody"
+    
+    def test34(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            If n != n+1 Then
+                Return (n-1) * (n-2) * (n-3) * (n-4);
+            EndIf.
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,234))
 
-
-    def test_statement_9(self):
-        input = """
-        Function: test
-        Body:
-            If (True) Then 
-                If (!trueAgain) Then 
-                    If (againTrue) Then doSomeThing();
-                Else doSongThing();
-            EndIf.
-            EndIf.
-            EndIf.
-        EndBody.
-        """
+    def test35(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            x1 = a[3-foo(3)];
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,235))
 
-    def test_statement_10(self):
+    def test36(self):
         input = """
-        Function: test
-        Body:
-            If (True) Then 
-                If (!trueAgain) Then 
-                    If (againTrue) Then doSomeThing();
-                    Else doSongThing();
-                    EndIf.
-                ElseIf (False) Then doSomeThing();
-            EndIf.
-            EndIf.
-        EndBody.
-        """
+        Var: x, y[1][3]={{{12345,1}, {12., 12e3}},{23}, {13,32}};
+        Function: foo 
+        Parameter: n
+        Body: 
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,236))
 
-    def test_statement_11(self):
-        input = """
-        Function: test
-        Body:
-            If avg < 3 Then raise = "Fail";
-            ElseIf avg <=. 4 Then raise = "Y";
-            ElseIf avg <=. 6.5 Then raise = "TB";
-            ElseIf avg <=. 8. Then raise = "K";
-            ElseIf avg <=. 9. Then raise =  "G";
-            EndIf.
-        EndBody.
-        """
+    def test37(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Var: x, y[1][3]={{{12,1}, {12., 12e3}},{23}, {13,32}};
+            x1 = a[3-foo(3)];
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,237))
-    
 
-
-    def test_statement_12(self):
-        input = """
-        Function: test
-        Body:
-            If avg < 3 Then raise = "Fail";
-            ElseIf avg <=. 4 Then raise = "Y";
-            ElseIf avg <=. 6.5 Then raise = "TB";
-            ElseIf avg <=. 8. Then raise = "K";
-            ElseIf avg <=. 9. Then raise =  "G";
-        EndBody.
-        EndIf.
-        """
-        expect = "Error on line 9 col 8: EndBody"
+    def test38(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Var: i = 0;
+            While i < 5 Do
+                b[i] = i +. 1.0;
+                i = i + 1;
+            EndWhile.
+        EndBody."""
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,238))
 
-    def test_statement_13(self):
-        input = """
-        Function: test
-        Body:
-            If avg < 3 Then raise = "Fail";
-            ElseIf avg <=. 4 Then raise = "Y";
-            ElseIf avg <=. 6.5 Then raise = "TB";
-            ElseIf avg <=. 8. Then raise = "K";
-            ElseIf avg <=. 9. Then raise =  "G";
-        EndBody.
-        EndIf.
-        """
-        expect = "Error on line 9 col 8: EndBody"
-        self.assertTrue(TestParser.checkParser(input,expect,238))
+    def test39(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Var: i = 0;
+            While i < 5 Do
+                Var: k = 100;
+                a[i] = b +. 1.0 - k * a[i+1];
+                i = i + 5;
+            EndWhile.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,239))
 
-    
-    def test_statement_15(self):
-        input = """
-        Function: test
-        Body:
-            If foo(2) Then foo(2);
+    def test40(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            If n == 0 Then
+                If n!=0 Then
+                    Return 100;
+                Else 
+                    Return 2200;
+                EndIf.
             EndIf.
-        EndBody.
-        """
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,240))
 
-    def test_statement_16(self):
+    def test41(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            While x >1 Do
+                If x==1 Then Return;
+                EndIf.
+            EndWhile.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,241))
+
+    def test42(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            Var: i = 100;
+            While i < 5000 Do
+
+            EndWhile.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,242))
+
+    def test43(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            While i < 5 Do
+                Var: b = 10;
+                a[i] = b +. 1.0;
+                i = i + 2;
+            EndWhile.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,243))
+
+    def test44(self):
+        input = """
+        Function: foo 
+        Parameter: n 
+        Body: 
+            For (i = 0, i != 5, i*1) Do x=6; EndFor.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,244))
+
+    def test45(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+        For (i = 0, i < 10, 2) Do
+            y = e + u;
+            a = n + h - y - e -u + e - m;
+        EndFor.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,245))
+
+    def test46(self):
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            n = fact(x) - 3;
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,246))
+
+    def test47(self):
+        input = """Function: test
+        Parameter: n
+        Body:
+            If n > 10 Then
+                Return ;
+                If n > 11 Then Return n;
+                EndIf.
+                
+            EndIf.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,247))
+    def test48(self):
+        input = """Function: foo 
+        Parameter: n
+        Body:
+            Var: r = 10., v;
+            r = 10.;
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,248))
+
+    def test49(self):
+        """ test error break """
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+            While x>1 Do
+                If x==1 Then Return;
+                Else Break;
+                EndIf.
+            EndWhile.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,249))
+
+    def test50(self):
+        """ test error scala-type in for_stmt """
+        input = """
+        Function: foo 
+        Parameter: n 
+        Body: 
+            For (a_a = 0, i != 5, i*1) Do x=6; EndFor.
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,250))
+
+    def test51(self):
+        """ test multi function """
+        input = """Function: foo 
+        Parameter: n
+        Body: 
+        EndBody.
+        Function: goo 
+        Parameter: n
+        Body: 
+        EndBody."""
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,251))
+
+    def test52(self):
         input = """
         Function: test
         Body:
-            If foo(2) Then foo(2);
-            ElseIf foo(2) Then foo(2);
+            Var: a = 3, b = 4, c = 5;
+            If (a < b + c) && ( b < a + c) && ( c < a + b) Then
+                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
+                    print("Day la tam giac vuong");
+                EndIf.
+            ElseIf (a==b) && (b==c) Then print("Day la tam giac deu");
+            ElseIf (a==b) || (a==c) || (b==c) Then print("Day la tam giac can");
+            ElseIf (a*a > b*b+c*c) || (b*b > a*a+c*c) || (c*c > a*a+b*b) Then print("Day la tam giac tu");
+            Else print("Day la tam giac nhon");
             EndIf.
         EndBody.
         """
         expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,241))
-  
-    def test_statement_17(self):
+        self.assertTrue(TestParser.checkParser(input,expect,252))
+
+    def test53(self):
+        input = """
+        Function: test
+        Body:
+            Var: arr[1] = {3,4}, x = 4.5, y = 5.;
+            If arr[1] >. x Then arr[1] = y;
+            EndIf.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,253))
+    
+    def test54(self):
+        input = """
+        Function: foo
+        Parameter: n
+        Body:
+            Var: x;   
+            For (i = 0, i < sqrt(n)*2, 1) Do
+                x = i + n;
+                writeln(x*3);
+            EndFor.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,254))
+
+    def test55(self):
+        input = """
+        Function: test
+        Body:
+            Var: i = 20, a, b, c;
+            If i == 1 Then 
+                a = 1;
+                b = 2;
+                c = (a + b) * (a - b);
+            ElseIf i == 2 Then
+                a = 3;
+                b = 4;
+                c = (b - a) * 2;
+            ElseIf i == 3 Then
+                a = 2;
+                b = 2;
+                c = (a*2 + b*3) * a * b;
+            EndIf.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,255))
+
+    def test56(self):
+        input = """
+        Function: test
+        Body:
+            Var: i = 21;
+            If i == 10 Then 
+            ElseIf i == 15 Then
+            ElseIf i == 20 Then
+            Else
+            EndIf.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,256))
+
+    def test57(self):
+        input = """
+        Function: test
+        Body:   
+            For (i = 0, i < 10, 2) Do
+                writeln(i);
+            EndFor.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,257))
+
+    def test58(self):
         input = """
         Function: test
         Body:
@@ -441,885 +677,719 @@ class ParserSuite(unittest.TestCase):
         EndBody.
         """
         expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,242))
+        self.assertTrue(TestParser.checkParser(input,expect,258))
     
-    def test_statement_18(self):
-        input = """
-        Function: test
-        Body:
-
-            If 1 Then 
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            ElseIf 2 Then
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            ElseIf 3 Then
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            EndIf.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,243))
-
-    def test_statement_19(self):
-        input = """
-        Function: test
-        Body:
-            If 1 Then 
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            ElseIf 2 Then
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            ElseIf 3 Then
-                Var: x = 4, y = 6;
-                Var: c = 2;
-                Var: z_1[2][3] = {{6572e21, 2341e+56, 0.5},{"%^DFGZ", "Rvul^%", "sin2xy"}}, a[24], c;
-            EndIf.
-            Var a = 10;
-        EndBody.
-        """
-        expect = "Error on line 17 col 12: Var"
-        self.assertTrue(TestParser.checkParser(input,expect,244))
-
-    def test_statement_20(self):
-        input = """
-        Function: test
-        Body:
-            If 1 Then 
-            EndIf.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,245))
-
-    def test_for_statement_1(self):
-        input = """
-        Function: test
-        Body:   
-            For (i = 0, i < 10, 1) Do
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,246))
-
-    def test_for_statement_2(self):
-        input = """
-        Function: test
-        Parameter: n
-        Body:
-            Var: x;   
-            For (i = 0, i < 10 , 1) Do
-                If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
-                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
-                    print("tam giac vuong");
-                
-                ElseIf (a==b) && (b==c) Then print("tam giac deu");
-                ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
-                Else print("tam giac thuong");
-                EndIf.
-            Else print("khong phai tam giac");
-            EndIf.
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,247))
-    
-    def test_for_statement_3(self):
-        input = """
-        Function: test
-        Body:   
-            For (a = (a==b) && (b==c),1 + 1, aFun(-t[2][1]) + 12E-12 ) Do
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,248))
-
-    def test_for_statement_4(self):
-        input = """
-        Function: test
-        Parameter: n
-        Body:
-            Var: i = 0;
-            For (i = aFun(-t[2][1]) + 12E-12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
-
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,249))
-
-
-    def test_for_statement_5(self):
-        input = """
-        Function: test
-        Parameter: n
-        Body:
-            Var: i = 0;
-            For (i, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
-
-            EndFor.
-        EndBody.
-        """
-        expect = "Error on line 6 col 18: ,"
-        self.assertTrue(TestParser.checkParser(input,expect,250))
-
-
-    def test_for_statement_6(self):
-        input = """
-        Function: test
-        Parameter: n
-        Body:
-            If 1 Then 
-                For (i = 3e12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
-                    doSomeThing();
-                EndFor.
-            EndIf.
-
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,251))
-        
-    def test_for_statement_7(self):
-        input = """
-        Function: test
-        Body:
-            For (i = 0, i < 4, a = a +1) Do
-            EndFor.
-        EndBody.
-        """
-        expect = "Error on line 4 col 33: ="
-        self.assertTrue(TestParser.checkParser(input,expect,252))
-
-    def test_for_statement_8(self):
+    def test59(self):
         input = """
         Function: foo
-        Body:
-            Var: arr[10][10];
-            For (i = 0, i < 10, 1) Do  
-                For (j = 0, j < 10, 1) Do
-                    print(arr[i][j]);
-                EndFor.
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,253))
-
-    def test_for_statement_9(self):
-        input = """
-        Function: test
-        Body:
-            For (i = 0XABC12, afuntion(), "string???????") Do
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,254))
-
-    def test_for_statement_10(self):
-        input = """
-        Function: test
-        Body:
-            Var: a = 2;
-            For (i = 10 - a*a%2, a < 100 * iuuw,  a + 1) Do
-                writeln(a*a - i*i);
-                i = i + 1;
-            EndFor.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,255))
-
-    def test_while_statement_1(self):
-        input = """
-        Function: test
-        Body:
-            While True Do
-            EndWhile.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,256))
-
-    def test_while_statement_2(self):
-        input = """
-        Function: test
-        Body:
-            Var: x = 0;
-            While aFun(-t[2][1]) + 12E-12 < 10  Do
-            EndWhile.
-        EndBody.
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.checkParser(input,expect,257))
-
-    def test_while_statement_3(self):
-        input = """
-        Function: test
-        Body:
-            Var: x = 0;
-            While Do
-            EndWhile.
-        EndBody.
-        """
-        expect = "Error on line 5 col 12: While"
-        self.assertTrue(TestParser.checkParser(input,expect,258))
-
-    def test_while_statement_4(self):
-        input = """
-        Function: test
-        Body:
-            Var: x = 0;
-            While True Do
-                For (i = 0, i < 10 , 1) Do
-                If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
-                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
-                    print("tam giac vuong");
-                
-                ElseIf (a==b) && (b==c) Then print("tam giac deu");
-                ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
-                Else print("tam giac thuong");
+        Body: 
+            For (i = 0, i <= 100\\10, 1) Do
+                If i%2 == 1 Then writeln(i\\2);
                 EndIf.
-                Else print("khong phai tam giac");
-                EndIf.
-                EndFor.
-            EndWhile.
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,259))
 
-
-    def test_while_statement_5(self):
+    def test60(self):
         input = """
-        Function: test
+        Var: a;
+        Function: foo
+        Parameter: a, c
         Body:
-            Var: x = 0;
-            While True Do
-                For (i = 0, i < 10 , 1) Do
-                If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
-                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
-                    print("tam giac vuong");
-                
-                ElseIf (a==b) && (b==c) Then print("tam giac deu");
-                ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
-                Else print("tam giac thuong");
-                EndIf.
-                Else print("khong phai tam giac");
-                EndIf.
-                EndFor.
         EndBody.
         """
-        expect = "Error on line 18 col 8: EndBody"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,260))
 
-    def test_while_statement_6(self):
+    def test61(self):
         input = """
-        Function: test
-        Parameter: t
+        Function: foo
         Body:
-            While (a*a==b*b+c*c) **|| (b*b==a*a+c*c)** || (c*c== a*a+b*b) Do
-                Var: a = 2;
-                For (i = 10 - a*a%2, a < 100 * iuuw,  a + 1) Do
-                writeln(a*a - i*i);
-                i = i + 1;
-                EndFor.
-            EndWhile.
+            Var: x = False, a;
+            a = !True;
+            For (i = 0, x == c, 1) Do
+                x = False;
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,261))
 
-    def test_while_statement_7(self):
+    def test62(self):
         input = """
-        Function: test
-        Parameter: t
+        Function: foo
         Body:
-            While (a*a==b*b+c*c) **|| (b*b==a*a+c*c)** || (c*c== a*a+b*b) Do
-                For (i = 10 - a*a%2, a < 100 * iuuw,  a + 1) Do
-                writeln(a*a - i*i);
-                i = i + 1;
+            Var: arr[100][100][100];
+            For (i = 0, i < 100, 2) Do  
+                For (j = 0, j < 100, 2) Do
+                    For (k = 0, k < 100, 2) Do
+                        arr[i][j][k] = 0;
+                    EndFor.
                 EndFor.
-                Var: a = 2;
-            EndWhile.
+            EndFor.
         EndBody.
         """
-        expect = "Error on line 10 col 16: Var"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,262))
 
-    def test_while_statement_8(self):
+    def test63(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: n
         Body:
-            Var: x = 1;
-            While (x <= 5) Do
-                While (x) Do
-                    While x Do
-                        While (!(!(x))) Do
-                        EndWhile.
-                    EndWhile.
-                EndWhile.
-            EndWhile.
+            Var: i = 0;
+            For (i = a, i <= (n*n - 2*n + 1) * 2 - (2*n + 1) + 4 * (1 +2*n) , 1) Do
+                print(3*i);
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,263))
 
-    def test_while_statement_9(self):
+    def test64(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            Var: x = 1;
-            If nnnn Then
-            While (x <= 5) Do
-                While (x) Do
-                    While x Do
-                        While (!(!(x))) Do
-                        EndWhile.
-                    EndWhile.
-                EndWhile.
-            EndWhile.
-            EndIf.
+            Var: a = 2;
+            For (i = 0 , a < 15, a + 1) Do
+                writeln("15ph GG");
+                i = i + 1;
+                    If i < 20 Then write("GoPro");
+                    EndIf.
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,264))
 
-    def test_while_statement_10(self):
+    def test65(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            Var: x = 1;
-            If nnnn Then
-            While (x <= 5) Do
-                While (x) Do
-                    While x Do
-                        While (!(!(x))) Do
-                        EndWhile.
+            While True Do
+                While False Do
+                    While True Do
                     EndWhile.
                 EndWhile.
-            EndWhile
-            EndIf.
+            EndWhile.
         EndBody.
         """
-        expect = "Error on line 14 col 12: EndIf"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,265))
 
-    def test_do_while_statement_1(self):
+    def test66(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            Do While True EndDo.
+            Var: n = 0;
+            While i < 10 Do
+                writeln("Hello");
+                i = i + 2;
+            EndWhile.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,266))
 
-    def test_do_while_statement_2(self):
+    def test67(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: t
         Body:
-            Do
-                While True Do
-                    For (i = 0, i < 10 , 1) Do
-                    If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
-                    If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
-                        print("tam giac vuong");
-                    
-                    ElseIf (a==b) && (b==c) Then print("tam giac deu");
-                    ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
-                    Else print("tam giac thuong");
-                    EndIf.
-                    Else print("khong phai tam giac");
-                    EndIf.
-                    EndFor.
-                EndWhile.
-            While (a*a==b*b+c*c) **|| (b*b==a*a+c*c)** || (c*c== a*a+b*b) 
-            EndDo.
+            While t < 10 Do
+                If t%2 Then t = t + 10;
+                Else t = t + 5;
+                EndIf.
+            EndWhile.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,267))
 
-    def test_do_while_statement_3(self):
+    def test68(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            Do a = a + 1; While True Do EndWhile. While True EndDo.
+            For (i = 0, False, 1) Do
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,268))
 
-    def test_do_while_statement_4(self):
+    def test69(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            Do a = a + 1; While True Do EndWhile.
-        EndBody.
-        """
-        expect = "Error on line 5 col 8: EndBody"
-        self.assertTrue(TestParser.checkParser(input,expect,269))
-
-    def test_do_while_statement_5(self):
-        input = """
-        Function: test
-            While True 
-                doSomeThing();
+            Var: x = True, t = 100, a;
+            While (!x || t == 2) Do
+                x = False;
+                a = x + a;
+                x = a - x;
+                t = a -x;
             EndWhile.
         EndBody.
         """
-        expect = "Error on line 3 col 12: While"
-        self.assertTrue(TestParser.checkParser(input,expect,270))
-    
-    def test_break_statement_1(self):
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,269))
+
+    def test70(self):
         input = """
         Function: test
-        Body:   
-            For (i = 0, i < 10, 2) Do
-                Break;
-                someStament();
-                Break;
-            EndFor.
+        Parameter: m, n, o, p
+        Body:
+            Var: x;
+            While (m <= 2) Do
+                While (n >= 1) Do
+                    While (o <= n) Do
+                        o = o - 1;
+                        While (p <= 2) Do
+                            p = p + 1;
+                            While (p <= 2) Do
+                                p = p + 1;
+                                While (p <= 2) Do
+                                    p = p + 1;
+                                    While (p <= 2) Do
+                                        p = p + 1;
+                                        While (p <= 2) Do
+                                            p = p + 1;
+                                            While (p <= 2) Do
+                                                p = p + 1;
+                                            EndWhile.
+                                        EndWhile.
+                                    EndWhile.
+                                EndWhile.
+                            EndWhile.
+                        EndWhile.
+                    EndWhile.
+                    x = True;
+                    n = n - 1;
+                EndWhile.
+                x = m * n * p * o;
+                m = m + 1;
+            EndWhile.
+        EndBody.
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.checkParser(input,expect,270))
+
+    def test71(self):
+        input = """
+        Function: test
+        Body:
+            Var: i, arr[5][10];
+            While (i < 10) Do
+                For (j = 1, j < 10, 1) Do
+                    arr[i][j] = 1;
+                EndFor.
+                i = i + 2;
+            EndWhile.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,271))
-    
-    def test_break_statement_2(self):
+
+    def test72(self):
         input = """
-        Function: test
-        Parameter: foo
+        Function: foo
+        Parameter: x
         Body:
-            For (i = 0, i < 10, 2) Do
-                Break;
-                If (True) Then
-                Break;
-                a[1][2][3][4] = 2.E-59;
-                Break;
-                EndIf.
-                Break;
-            EndFor.
-            
+            Var: n = 0, s = 0;
+            Do 
+                n = n - 1;
+                s = s + n;
+            While s * n + 1 < x EndDo.
+            writeln(x);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,272))
 
-    def test_break_statement_3(self):
+    def test73(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: n
         Body:
-            While True Do
-            For (i = 0, i < 10, 2) Do
-                someStament(); 
-                Break;        
-            EndFor.
-            Break;
-            EndWhile.        
+            Var: i = 0;
+            While (i <= n) Do
+                If (i == n) Then
+                    writeln(n);
+                    Return;
+                EndIf.
+                i = i + 1;
+            EndWhile.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,273))
 
-    def test_continue_statement_1(self):
+    def test74(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: n
         Body:
-            For (a = 10, a < 10, 28) Do 
-                Continue;
-            EndFor.
+            Var: i = 0;
+            While i < 10 Do
+                i = i + 1;
+                If (i == 10) Then write("MVP");
+                EndIf.
+            EndWhile.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,274))
 
-    def test_continue_statement_2(self):
+    def test75(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            While false Do
-                x = True || False;
-                Continue;
-            EndWhile.
+            Var: i, j, k, l;
+            Do 
+                i = i + 1;
+                While (j < 100) Do
+                    Do
+                        k = k + 1;
+                        While (l < 100) Do
+                            l = l + 2;
+                            While (l < 10) Do
+                                l = l + 3;
+                                While (l < 1) Do
+                                    l = l + 4;
+                                    While (l < 0.1) Do
+                                        l = l + 5;
+                                        While (l < 0.01) Do
+                                            l = l + 6;
+                                            While (l < 0.001) Do
+                                                l = l + 7;
+                                            EndWhile.
+                                        EndWhile.
+                                    EndWhile.
+                                EndWhile.
+                            EndWhile.
+                        EndWhile.
+                    While (k < 100) EndDo.
+                    j = j + 3;
+                EndWhile.
+            While (i + j + k + l < foo(2)) EndDo.
+            writeln(n);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,275))
 
-    def test_call_statement_1(self):
+    def test76(self):
         input = """
-        Function: test
+        Function: lcd
+        Parameter: n
         Body:
-            foo (2 + x, 4. \. y);
+            Var: i;
+            i = n - 1;
+            While (n % i != 0) Do
+                i = i - 1;
+            EndWhile.
+            writeln(i);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,276))
 
-    def test_call_statement_2(self):
+    def test77(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            foo();
+            Var: n = 5, s = 5;
+            Do
+                n = n + 1;
+                Do 
+                    If n%2 == 0 Then s = s - 1;
+                    EndIf.
+                While (s < 1000) 
+                EndDo.
+                s = s * n;
+            While (s + n + 1 < max) EndDo.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,277))
 
-    def test_call_statement_3(self):
+    def test78(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            foo("12739zd", 0X12F, asd , 6E-232);
+            Var: i = 0;
+            Do 
+                writeln(i);
+                i = i + 1;
+            While (i < 10) EndDo.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,278))
 
-    def test_call_statement_4(self):
+    def test79(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: n
         Body:
-            foo(dasd + foo(), "!@$C#hc%", 12. \\. 921.9e5 * 32e1);
+            Var: a = 0;
+            Do
+                If (n!=3) && (n%i!=0) Then
+                    a=1;
+                EndIf.
+                i = i + 2;
+            While i<=n*n EndDo.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,279))
 
-    def test_call_statement_5(self):
+    def test80(self):
         input = """
-        Function: test
+        Function: foo
         Body:
-            foo(dasd + foo({123,"213"},"aray"), "!@$C#hc%", 12. \\. 921.9e5 * 32e1);
+            Var: x = 1;
+            Do
+            While x EndDo.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,280))
 
-    def test_return_statement_1(self):
+    def test81(self):
         input = """
-        Function: test
+        Var: a;
+        Function: foo
         Body:
-            Return;
+            Var: zzHQKzz[2][3][4][5] = {{12345, 41e+5, 3.14},{"Yasuo", "Leesin", "Garen"}}, a[234], c;
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,281))
-
-    def test_return_statement_2(self):
+    
+    def test82(self):
         input = """
-        Function: test
+        Function: foo
+        Parameter: a, b
         Body:
-            Return asd * 12 + 6e-1;
+            For (i = 0, i < 10, 2) Do
+                Break;
+            EndFor.
+        a = (a + b) * (a - b);
+        b = (a + b) * (b - a);
+        If a + b != 0  Then writeln(a+b);
+        EndIf.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,282))
-
-    def test_return_statement_3(self):
+    
+    def test83(self):
         input = """
-        Function: sum
-        Parameter: n
+        Var: x;
+        Function: foo
+        Parameter: a, b
         Body:
-            If (n == 0) Then Return 0;
-            EndIf.
-            Return n + sum(n - 1);
-            For (i = 0 , i < 10 , i) Do Return i+sum;
-            EndFor.
+            print(a);
+            print(b);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,283))
 
-    def test_return_statement_4(self):
+    def test84(self):
         input = """
-        Function: sum
-        Parameter: n
+        Function: foo
         Body:
-            While True Do
-                If a==10 Then 
-                    Return a > 12 || b[12][1] + {12};
-                EndIf.
-            EndWhile.
+            Var: a[10];
+            Do 
+                a[1][2] = 3.14;
+                Break;
+            While False EndDo.
+            writeln(a[1][2]);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,284))
 
-    def test_return_statement_5(self):
+    def test85(self):
         input = """
-        Function: sum
-        Parameter: n
+        Function: test
         Body:
-            While True Do
-                If a==10 Then 
-                    Return If a > b Then a;
-                EndIf.
-            EndWhile.
+            Var: flag = 0;
+            Do
+                While !flag Do
+                EndWhile.
+            While True
+            EndDo.
         EndBody.
         """
-        expect = "Error on line 7 col 27: If"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,285))
 
-    def test_scope_error_1(self):
+    def test86(self):
         input = """
-        Var: x;
-        Function: test
+        Function: foo
         Body:
-            Function: b
-            Body:  
-                Return a;
-            EndBody.
+            a = foo(100) * 28 + 234;
+        EndBody.
+        Function: foo
+        Parameter: n
+        Body:
         EndBody.
         """
-        expect = "Error on line 5 col 12: Function"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,286))
 
-    def test_scope_error_2(self):
+    def test87(self):
         input = """
-        Var: x;
-        Function: test
+        Function: foo
+        Parameter: n
         Body:
-            a = index[a3[function(12233)+3];
+            For (i = 1, i < 2, 1) Do
+                If (i%2 !=0) Then write(i);
+                EndIf.
+                n = n - i;
+            EndFor.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,287))
 
-    def test_scope_error_3(self):
+    def test88(self):
         input = """
-        Var: x;
-        Function: test
+        Function: multi
+        Parameter: n
         Body:
-            a = index[a3[function(12233+3])];
+            If (n == 0) Then Return 0;
+            EndIf.
+            Return n * sum(n - 1);
         EndBody.
         """
-        expect = "Error on line 5 col 41: ]"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,288))
 
-    def test_scope_error_4(self):
+    def test89(self):
         input = """
-        Var: x;
-        Function: test
+        Function: foo1
         Body:
-            a = index[a3[function(12233+3) * a(array[13][fun]))];
+
+        EndBody.
+        Function: foo2
+        Body:
+            foo2(2);
         EndBody.
         """
-        expect = "Error on line 5 col 62: )"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,289))
-    
 
-    def test_scope_error_5(self):
+    def test90(self):
         input = """
-        Var: x;
-        Function: test
+        Function: foo
         Body:
-            a = index[a3[]];
+            Var: a = 1;
+            While (a != 9) Do
+                x = True || False;
+            EndWhile.
         EndBody.
         """
-        expect = "Error on line 5 col 25: ]"
+        expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,290))
-    
 
-    def test_program_1(self):
-        input = """
-        Var: a = 5;
-        Var: b[2][3] = {{2,3,4},{4,5,6}};
-        Var: c, d = 6, e, f;
-        Var: m, n[10];
-        Function: test
-        Body:
-            
-        EndBody.
-        """
+    def test91(self):
+        input = """Var: successful[10][9];"""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,291))
 
 
-    def test_program_2(self):
+    def test92(self):
         input = """
-        Var: a = 5;
-        Var: b[2][3] = {{2,3,4},{4,5,6}};
-        Var: c, d = 6, e, f;
-        Var: m, n[10];
-        Function: fact
+        Function: foo
         Parameter: n
         Body:
-        If n == 0 Then
-        Return 1;
-        Else
-        Return n * fact (n - 1);
-        EndIf.
-        EndBody.
-        Function: main
-        Body:
-        x = 10;
-        fact (x);
+            If (n != 10000) Then Return (n - 9999);
+            EndIf.
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,292))
-    
-    def test_program_3(self):
-        input="""
-        Var: a_e1={{1273,1e12},"string"} , n = 0X12CD, iD= 0XAD;
-        Function: main **entripoint**
-        Parameter: as,sa
+
+    def test93(self):
+        input = """
+        Function: foo
         Body:
-            cout("HelloWorld") ;
+            Return True;
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,293))
 
-    def test_program_4(self):
-        input="""
-        Function: test
-        Parameter: a, a[1][2]
+    def test94(self):
+        input = """
+        Function: foo1
         Body:
-        For(i=expr, a =/= {{{},{}}} + a - b, "bruhhhhhh" + 1) Do
-            Return "bruhhhhhh";
-        EndFor.
+            foo ();
+        EndBody.
+        Function: foo2
+        Parameter: a, b, c, d
+        Body:
+            writeln(a+.b-.c+.d);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,294))
 
-    def test_program_5(self):
-        input="""
-        Function: foo
-        Parameter: a[5], b
+    def test95(self):
+        input = """
+        Var: x;
+        Function: test
         Body:
-        Var: i = 0;
-        While (i < 5) Do
-        a[i] = b +. 1.0 + "string" - func("{123}", true[12 + hv(foo(a[0xAD]))]);
-        EndWhile.
+            Var: body;
+            Var: endBody;
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,295))
 
-    def test_program_6(self):
-        input="""
-        Function: fibonacci
+    def test96(self):
+        input = """Function: foo 
         Parameter: n
-        Body:
-            If ((n == 1) || (n == 2)) Then Return 1; EndIf.
-            Return fibonacci(n-1) + fibonacci(n - 2);
-        EndBody.
-
-        Function: main
-        Body:
-        Var: n;
-        scan(n);
-
-        Return fibonacci(n);
-        EndBody.
-        """
+        Body: 
+            a =(foo(3) != foo(4))* 0.e2;
+        EndBody."""
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,296))
 
-    def test_program_7(self):
-        input="""
-        Function: fGCD
-        Parameter: a,b
+    def test97(self):
+        input = """
+        Var: s = 0, arr[2] = {1,2};
+        Function: assignmentKTLT
+        Parameter: hp1, hp2, d
         Body:
-            If (a == 0) || (b == 0) Then Return a + b;
-            While a != b Do 
-                If a > b Then a = a - b; 
-                Else b = b - a;
-                EndIf.
-            EndWhile.
-            Return a;
+            Var: p1, p2;
+            Var: h1;
+            Var: armor = False;
+            Var: pR;
+            p1 = hp1 * (1000 - d) \\. int_of_float(1000);
+            p2 = (hp2 * d) \\. int_of_float(1000);
+            h1 = (hp1 + hp2) % 100;
+            h2 = (h1*hp2) % 100;
+
+            If (hp2 == 888) Then armor = True;
             EndIf.
+            If hp1 == 777 && ((p1 < p2) || (h1 < h2)) && (armor == False) Then
+                Var: e = 1;
+                d = e;
+                p1 = hp1 *. (1000 - d) \\. float(1000);
+                p2 = (hp2 *. d) \\. float(1000);
+            EndIf.
+            pR = (h1*p1 - h2 * p2) \\. (h1*p1 + h2 * p2);
+            print(pR);
+        EndBody.
+        Function: main
+        Body:
+            assignmentKTLT(544,290,600);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,297))
 
 
-    def test_program_8(self):
+    def test98(self):
         input = """
-        Function: tamgiac
+        Function: foo
+        Parameter: a[5], b
         Body:
-            Var: a,b,c;
-            input(a,b,c);
-            If ( c < a + b) && (a < b + c)   && ( b < a + c) Then
-                If (a*a==b*b+c*c) || (b*b==a*a+c*c) || (c*c== a*a+b*b) Then
-                    print("tam giac vuong");
-                
-                ElseIf (a==b) && (b==c) Then print("tam giac deu");
-                ElseIf (a==b) || (a==c) || (b==c) Then print("tam giac can");
-                Else print("tam giac thuong");
+        Var: i = 45;
+        While (i < 100) Do
+            a[i] = b * 2 +. 1.0;
+            i = i * 2 + 3;
+        EndWhile.
+        Return a[35];
+        EndBody.
+        Function: test
+        Parameter: arr[211][930], b, c
+        Body:
+            For (i = 0 , i < arr[20][2] , 1) Do
+                If foo(i) <= (foo(i+1)\\foo(foo(i))) Then
+                    Return;
+                ElseIf foo(i\\2) <= (foo(i-1)\\foo(foo(7*i\\2))) Then
+                    Break;
+                ElseIf foo(3) <= (foo(i+1)\\foo(foo(7749*i\\2))) Then
+                    Break;
+                ElseIf foo(45) Then print("2 giam khao da cuoi");
+                Else 
+                    While !False Do
+                        If (!False == True) Then print((foo(i*i+111)\\foo(foo(arr[2][1]*i\\2))));
+                        Else Continue;
+                        EndIf.    
+                    EndWhile.
                 EndIf.
-            Else print("khong phai tam giac");
-            EndIf.
+            EndFor.
+        EndBody.
+        Function: main
+        Body:
+            test(2293);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,298))
 
-    def test_program_9(self):
+    def test99(self):
         input = """
-        Var: a = 5, b = 7, lcm;
-        Var: max;
+        Var: c[1000];
+        Function: test99
+        Parameter: value
+        Body:
+            Var: tmp = 1;
+            Var: value_;
+            value_ = value;
+            If (value == 0) Then
+                Var: c[2];
+                c[0] = "0";
+                c[1] = "\\n";
+            ElseIf (value == 1) Then
+                For (i = tmp, i >= 0, -1) Do
+                    c[i] = (value % 10) + 48;
+                    value = value \\. 10.;
+                EndFor.
+                c[tmp+1] = "\\b";
+            Else
+                Var: c[3];
+                c[0] = "0";
+                c[1] = "\\n";
+            EndIf.
+        EndBody.
         Function: main
         Body:
-            Var: maxV;
-            maxV = a*b;
-            For ( i = max(a,b), i <= maxV, 1) Do
-                If (i % a == 0) && (i % b == 0) Then
-                    lcm = i;
-                    Break;
-                EndIf.
-            EndFor.
+            test(2293);
         EndBody.
         """
         expect = "successful"
         self.assertTrue(TestParser.checkParser(input,expect,299))
 
-    def test_program_10(self):
+    def test300(self):
         input = """
-        Var: a[2309], m, n, d[2309];
-        Function: dijkstra
+        Function: fibonacci1
+        Parameter: nEvents
         Body:
-        Var: pq;
-        For (i = 1, i <= n, 1) Do
-            d[i] = oo;
-        EndFor.
-        d[1] = 0;
-        push(pq, ii(0, 1));
-        While size(pq) Do
-            Var: u, du;
-            u = top(pq, second);
-            du = top(pq, first);
-            pop(pq);
-            If du != d[u] Then Continue; 
-            EndIf.
-            
-            For ( i = 0, i < size(a[u]), 1) Do
-                Var: v, uv;
-                v = second(a[u][v]);
-                uv = first(a[u][v]);
-                If d[v] > du + uv Then
-                    d[v] = du + uv;
-                    push(pq, ii(d[v], v));
+            For (i = 0, i < nEvents, 1) Do
+                fibonacci(float_to_int(i*.25e5-.2.+(2*fibonacci(2 + 1 + i)\\.2e54)*2) + i%2);
+                If i == nEvents\\5 Then Break;
                 EndIf.
             EndFor.
-        EndWhile.
+        EndBody.
+        Function: fibonacci2
+        Body:
+            Var: n;
+            If (n == 1) || (n == 2) Then
+                Return 1;
+            EndIf.
+            Return fibonacci(n - 1) + fibonacci(n - 2);
+        EndBody.
+        Function: main
+        Body:
         EndBody.
         """
         expect = "successful"

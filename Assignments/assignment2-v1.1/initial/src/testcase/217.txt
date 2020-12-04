@@ -1,0 +1,7 @@
+Var: x;
+        Function:  test
+        Parameter: a
+        Body:
+            x = "Wrong parameter";
+        EndBody.
+        

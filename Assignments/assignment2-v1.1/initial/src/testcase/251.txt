@@ -1,0 +1,12 @@
+
+        Function: test
+        Parameter: n
+        Body:
+            If 1 Then 
+                For (i = 3e12, i <= aFun(-t[2][1]) + 12E-12, aFun(-t[2][1]) + 12E-12) Do
+                    doSomeThing();
+                EndFor.
+            EndIf.
+
+        EndBody.
+        

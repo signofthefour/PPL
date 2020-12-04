@@ -51,7 +51,7 @@ if_stmt: IF expression THEN stm_list (ELSEIF expression THEN stm_list)* (ELSE st
 assign_stmt: (IDENTIFIER | index_op) AS expression SEMI ;
 
 //for statement:
-for_stmt: FOR LP IDENTIFIER AS expression CM expression CM exp1 RP DO stm_list ENDFOR DOT ;
+for_stmt: FOR LP IDENTIFIER AS expression CM expression CM expression RP DO stm_list ENDFOR DOT ;
 
 //while stament 
 while_stmt: WHILE expression DO stm_list ENDWHILE DOT;

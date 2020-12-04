@@ -1,0 +1,8 @@
+
+        Function: test
+        Body:
+            If (True && False) Then a = 5;
+            Else a = s || !foo(2+4) && k == 12;
+            EndIf.
+        EndBody.
+        

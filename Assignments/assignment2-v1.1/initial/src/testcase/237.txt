@@ -1,0 +1,11 @@
+
+        Function: test
+        Body:
+            If avg < 3 Then raise = "Fail";
+            ElseIf avg <=. 4 Then raise = "Y";
+            ElseIf avg <=. 6.5 Then raise = "TB";
+            ElseIf avg <=. 8. Then raise = "K";
+            ElseIf avg <=. 9. Then raise =  "G";
+            EndIf.
+        EndBody.
+        

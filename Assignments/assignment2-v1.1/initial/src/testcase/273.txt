@@ -1,0 +1,12 @@
+
+        Function: test
+        Body:
+            While True Do
+            For (i = 0, i < 10, 2) Do
+                someStament(); 
+                Break;        
+            EndFor.
+            Break;
+            EndWhile.        
+        EndBody.
+        

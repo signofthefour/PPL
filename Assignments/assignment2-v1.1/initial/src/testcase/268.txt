@@ -1,0 +1,6 @@
+
+        Function: test
+        Body:
+            Do a = a + 1; While True EndDo.
+        EndBody.
+        

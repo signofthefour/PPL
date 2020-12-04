@@ -1,0 +1,7 @@
+
+        Var: x;
+        Function: test
+        Body:
+            a = index[a3[function(12233+3)]];
+        EndBody.
+        

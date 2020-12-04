@@ -1,0 +1,6 @@
+ Var: x;
+        Function: main
+        Body:
+            Var: s = "Name missing";
+        EndBody.
+        

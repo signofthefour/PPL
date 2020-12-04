@@ -1,5 +1,0 @@
-Function: foo 
-        Body:
-            Var: a;
-            a = foo(2, 2*3);
-        EndBody.

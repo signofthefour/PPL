@@ -1,0 +1,7 @@
+ Var: x = "where is DOT";
+        Function: func_NAME
+        Parameter: x[10], a[2][3][2][9]
+        Body:
+
+        EndBody.
+        

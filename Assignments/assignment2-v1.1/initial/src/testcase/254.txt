@@ -1,0 +1,7 @@
+
+        Function: test
+        Body:
+            For (i = 0XABC12, afuntion(), "string???????") Do
+            EndFor.
+        EndBody.
+        
