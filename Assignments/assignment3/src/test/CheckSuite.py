@@ -65,7 +65,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(Undeclared(Function(),"foo"))
+        expect = str(TypeMismatchInStatement())
         self.assertTrue(TestChecker.test(input,expect,406))
 
     def test_init_2(self):
@@ -85,7 +85,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(Undeclared(Function(),"foo"))
+        expect = str(TypeMismatchInStatement(ast))
         self.assertTrue(TestChecker.test(input,expect,408))
 
     def test_init_4(self):
@@ -95,7 +95,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(Undeclared(Function(),"foo"))
+        expect = str(TypeMismatchInStatement(ast))
         self.assertTrue(TestChecker.test(input,expect,408))
 
     def test_init_5(self):
@@ -105,7 +105,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(Undeclared(Function(),"foo"))
+        expect = str(TypeMismatchInStatement(ast))
         self.assertTrue(TestChecker.test(input,expect,409))
 
     

@@ -1,102 +1,48 @@
 1
 1
-1
-2
-1
-1
-1
-1
-2
 Tests run  6
-Errors  []
-[(<CheckSuite.CheckSuite testMethod=test_init_1>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 69, in test_init_1\n'
-  '    self.assertTrue(TestChecker.test(input,expect,406))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_2>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 79, in test_init_2\n'
-  '    self.assertTrue(TestChecker.test(input,expect,407))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_3>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 89, in test_init_3\n'
-  '    self.assertTrue(TestChecker.test(input,expect,408))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_4>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 99, in test_init_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,408))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_5>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 109, in test_init_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,409))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_undeclared_function>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 16, in test_undeclared_function\n'
-  '    self.assertTrue(TestChecker.test(input,expect,400))\n'
-  'AssertionError: False is not true\n')]
+Errors  [(<CheckSuite.CheckSuite testMethod=test_init_1>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 68, in test_init_1\n    expect = str(TypeMismatchInStatement(ast))\nNameError: name \'ast\' is not defined\n'), (<CheckSuite.CheckSuite testMethod=test_init_3>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 88, in test_init_3\n    expect = str(TypeMismatchInStatement(ast))\nNameError: name \'ast\' is not defined\n'), (<CheckSuite.CheckSuite testMethod=test_init_4>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 98, in test_init_4\n    expect = str(TypeMismatchInStatement(ast))\nNameError: name \'ast\' is not defined\n'), (<CheckSuite.CheckSuite testMethod=test_init_5>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 108, in test_init_5\n    expect = str(TypeMismatchInStatement(ast))\nNameError: name \'ast\' is not defined\n')]
+[]
 Test output
- FFFFFF
+ E.EEE.
 ======================================================================
-FAIL: test_init_1 (CheckSuite.CheckSuite)
+ERROR: test_init_1 (CheckSuite.CheckSuite)
 Simple program: main
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 69, in test_init_1
-    self.assertTrue(TestChecker.test(input,expect,406))
-AssertionError: False is not true
+  File "./test/CheckSuite.py", line 68, in test_init_1
+    expect = str(TypeMismatchInStatement(ast))
+NameError: name 'ast' is not defined
 
 ======================================================================
-FAIL: test_init_2 (CheckSuite.CheckSuite)
-Simple program: main
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 79, in test_init_2
-    self.assertTrue(TestChecker.test(input,expect,407))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_init_3 (CheckSuite.CheckSuite)
+ERROR: test_init_3 (CheckSuite.CheckSuite)
 Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 89, in test_init_3
-    self.assertTrue(TestChecker.test(input,expect,408))
-AssertionError: False is not true
+  File "./test/CheckSuite.py", line 88, in test_init_3
+    expect = str(TypeMismatchInStatement(ast))
+NameError: name 'ast' is not defined
 
 ======================================================================
-FAIL: test_init_4 (CheckSuite.CheckSuite)
+ERROR: test_init_4 (CheckSuite.CheckSuite)
 Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 99, in test_init_4
-    self.assertTrue(TestChecker.test(input,expect,408))
-AssertionError: False is not true
+  File "./test/CheckSuite.py", line 98, in test_init_4
+    expect = str(TypeMismatchInStatement(ast))
+NameError: name 'ast' is not defined
 
 ======================================================================
-FAIL: test_init_5 (CheckSuite.CheckSuite)
+ERROR: test_init_5 (CheckSuite.CheckSuite)
 Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 109, in test_init_5
-    self.assertTrue(TestChecker.test(input,expect,409))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_undeclared_function (CheckSuite.CheckSuite)
-Simple program: main
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 16, in test_undeclared_function
-    self.assertTrue(TestChecker.test(input,expect,400))
-AssertionError: False is not true
+  File "./test/CheckSuite.py", line 108, in test_init_5
+    expect = str(TypeMismatchInStatement(ast))
+NameError: name 'ast' is not defined
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.066s
+Ran 6 tests in 0.044s
 
-FAILED (failures=6)
+FAILED (errors=4)
 

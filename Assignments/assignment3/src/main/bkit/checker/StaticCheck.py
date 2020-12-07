@@ -65,15 +65,52 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return self.visit(self.ast,self.global_envi)
 
     def visitProgram(self,ast, c):
+        global_vars = [self.visitVarDecl(x, c) for decl in ast.decl if isinstance(decl, VarDecl)]
+        global_funcs= [Symbol(decl.name.name, MType([], None)) for decl in ast.decl if isinstance(decl, FuncDecl)]
+        c.append(global_funcs)
+
+        # check if there is a function named main
+        for symbol in c:
+            if symbol.name == 'main':
+                return
+        raise NoEntryPoint()
+
+        # Now, the env has all the name of object of the program (global_var and funcs)
         [self.visit(x,c) for x in ast.decl]
+        
 
     def visitVarDecl(self, ast, env):
         """
         Visit each global var top-down
-        first layer in stack
-        """
-        name = self.visit(ast.variable, env)
-        if name is not None:
+        
+        .-------------------------------------------.
+        |        Global variables                   |
+        |-------------------------------------------|
+        |                                           |
+        |        Function declaration               |
+        |                                           |
+        |    /*********Name*******************\     |
+        |    .--------------------------------.     |
+        |    |   Variables                    |     |
+        |    |--------------------------------|     |
+        |    |   Statement (thing that return)|     |
+        |    .________________________________.     |
+        |                                           |
+        |    /*********Name*******************\     |
+        |    .--------------------------------.     |
+        |    |   Variables                    |     |
+        |    |--------------------------------|     |
+        |    |   Statement (thing that return)|     |
+        |    .________________________________.     |
+        |                                           |
+        |     ....                                  |
+        .___________________________________________|
+
+        Originally, the checker know all the name of all the objects that appear
+            in the program now by the preprocess in visitProgram()
+        """ 
+        name_list = [x for x in self.visit(ast.variable, env) if x.mtype == None]
+        if len(name) > 1:
             raise Redeclared(Variable(), name)
         dimen = ast.varDimen
         init_type = self.visit(ast.varInit, []) if ast.varInit else Unknown()
@@ -98,7 +135,10 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitFuncDecl(self, ast, env):
         """
-        docstring
+        -> Name checking: 
+            -> Must contain the 'main' function a.k.a. entry point
+            -> Name must be the name of the method not var
+            -> func_name can be invoke before its declaration
         """
         name = self.visit(ast.name, env)
         if name is not None:
@@ -377,7 +417,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         method_ref = self.visit(ast.method, env)
         if method_ref == None or not isinstance(method_ref.mtype, MType):
-            raise Undeclared(Function(), ast.method)
+            raise Undeclared(Function(), ast.method.name)
         args_type = [self.visit(x, env) for x in ast.param] # from call statement
         param_type = method_ref.intype # from function declaration
         both_unknown_type = list(map(lambda x, y: isinstance(x, Unknown) and isinstance(y,Unknown),\
@@ -397,13 +437,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitId(self, ast, env):
         """
-        docstring
+        output: list of symbols that has the same name as the Id
         """
-        id_list = [sym.name for sym in env]
-        if id_list == []:
-            return None
-        else:
-            return id_list[0]
+        return [sym for sym in env if sym.name == ast.name]
 
     def is_same_type(self, a, b):
         if type(a) != type(b):
