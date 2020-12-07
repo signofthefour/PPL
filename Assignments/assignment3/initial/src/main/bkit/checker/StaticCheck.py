@@ -67,6 +67,69 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitProgram(self,ast, c):
         [self.visit(x,c) for x in ast.decl]
 
+    
+    def visitVarDecl(self, ast, param):
+        return None
+    
+    def visitFuncDecl(self, ast, param):
+        return None
+    
+    def visitBinaryOp(self, ast, param):
+        return None
+    
+    def visitUnaryOp(self, ast, param):
+        return None
+    
+    def visitCallExpr(self, ast, param):
+        return None
+    
+    def visitId(self, ast, param):
+        return None
+    
+    def visitArrayCell(self, ast, param):
+        return None
+    
+    def visitAssign(self, ast, param):
+        return None
+    
+    def visitIf(self, ast, param):
+        return None
+    
+    def visitFor(self, ast, param):
+        return None
+    
+    def visitContinue(self, ast, param):
+        return None
+    
+    def visitBreak(self, ast, param):
+        return None
+    
+    def visitReturn(self, ast, param):
+        return None
+    
+    def visitDowhile(self, ast, param):
+        return None
+
+    def visitWhile(self, ast, param):
+        return None
+
+    def visitCallStmt(self, ast, param):
+        return None
+    
+    def visitIntLiteral(self, ast, param):
+        return None
+    
+    def visitFloatLiteral(self, ast, param):
+        return None
+    
+    def visitBooleanLiteral(self, ast, param):
+        return None
+    
+    def visitStringLiteral(self, ast, param):
+        return None
+
+    def visitArrayLiteral(self, ast, param):
+        return None
 
 
 
