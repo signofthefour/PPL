@@ -59,399 +59,367 @@ Symbol("string_of_bool",MType([BoolType()],StringType())),
 Symbol("read",MType([],StringType())),
 Symbol("printLn",MType([],VoidType())),
 Symbol("printStr",MType([StringType()],VoidType())),
-Symbol("printStrLn",MType([StringType()],VoidType()))]                           
-   
-    def check(self):
-        return self.visit(self.ast,self.global_envi)
+Symbol("printStrLn",MType([StringType()],VoidType()))]
 
-    def visitProgram(self,ast, c):
-        global_vars = [self.visitVarDecl(x, c) for decl in ast.decl if isinstance(decl, VarDecl)]
-        global_funcs= [Symbol(decl.name.name, MType([], None)) for decl in ast.decl if isinstance(decl, FuncDecl)]
-        c.append(global_funcs)
+    class ControlFlow:
+        def __init__(self, ast):
+            self.flow = []
 
-        # check if there is a function named main
-        for symbol in c:
-            if symbol.name == 'main':
-                return
-        raise NoEntryPoint()
+        def add(self, summary:Summary):
+            self.flow.append(summary)
 
-        # Now, the env has all the name of object of the program (global_var and funcs)
-        [self.visit(x,c) for x in ast.decl]
+        def type_inference(self):
+            pass
+    
+    class Summary(AST):
+        @abstractmethod
+        def infer(self):
+            pass
+        @abstractmethod
+        def propagate(self):
+            pass
+        @abstractmethod
+        def receive(self):
+            pass
+    @dataclass
+    class Type(Summary):
+        # mean type of this is <TYPE>
+        symbol: Symbol
+        kind: Kind # for raising
+        ast: AST
+
+        def infer(self, scope_stack1):
+            for symbol in global_scope:
+                if symbol.name == symbol.name:
+                    raise Redeclared(Kind, symbol.name)
+            self.propagate(symbol, inner_most_scope, global_scope)
+
+        def propagate(self, inner_most_scope, global_scope):
+            for summary in inner_most_scope:
+                    summary.receive(Symbol, same_scope=True)
+
+        def receive(self, _symbol, same_scope=False):
+            if same_scope == True:
+                if symbol.name ==  _symbol.name:
+                    raise Redeclared(kind, name)
+                else: return
+            if symbol.name ==  _symbol.name:
+                if symbol.mtype == Unknown():
+                    symbol.mtype = _symbol.mtype
+                else:
+                    raise TypeMismatchInStatement(None)
+
+    @dataclass
+    class Scope(Summary):
+        scope_type: str # 'Function', 'For', 'If', 'Do'
+        symbol: Symbol
+        scope_summarise: List[Summary] # Without first param
+        in_type: List[Summary] # in param of scope
+        ast: AST
+
+        def infer(self, inner_most_scope, global_scope):
+            for symbol in global_scope:
+                if name == symbol.name:
+                    raise Redeclared(kind, name)
+            self.propagate(name, inner_most_scope, global_scope)
+            symbol.mtype = return_type.mtype
+
+        def propagate(self, inner_most_scope, global_scope):
+            # inner most scope means current scope in this situation
+            # for summary in inner_most_scope:
+            #     summary.receive(name, self, same_scope=True)
+            # for summary in global_scope
+            pass
         
+        def receive(self, _name, scope, same_scope=False):
+            if same_scope:
+                if _name ==  name:
+                    raise Redeclared(kind, name)
+                else:
+                    return 
 
-    def visitVarDecl(self, ast, env):
+    @dataclass
+    class Operation(Summary):
+        # mean: in this operation, we need name as Symbol
+        # when infer type, this need a param named ecpected
+        name: str
+        in_type: List[Summary]
+        ret: Symbol
+        ast: AST
+
+        def infer(self):
+            pass
+            # # RELATIONAL
+            # ## Int
+            # if ast.op in ['==', '!=', '<', '>', '>=', '<=']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = IntType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = IntType()
+
+            #     if isinstance(l, IntType) and isinstance(r, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            # ## Float
+            # if ast.op in ['=/=', '<.', '>.', '>=.', '<=.']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = FloatType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = FloatType()
+                
+            #     if isinstance(l, FloatType) and isinstance(r, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            
+            # # BOOLEAN
+            # if ast.op in ['&&' , '||']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = BoolType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = BoolType()
+
+            #     if isinstance(l, BoolType) and isinstance(r, BoolType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            
+            # # ARITHMETIC
+            # ## Int
+            # if ast.op in ['-' , '+', '*', '\\']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = IntType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = IntType()
+
+            #     if isinstance(l, IntType) and isinstance(r, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return IntType()
+            
+            # ## Float
+            # if ast.op in ['-.' , '+.', '*.', '\\.']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = FloatType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = FloatType()
+
+            #     if isinstance(l, FloatType) and isinstance(r, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return FloatType()
+            
+            # if ast.op in ['-']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = IntType()
+
+            #     if isinstance(operand, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return IntType()
+            # ## Float
+            # if ast.op in ['-.']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = FloatType()
+
+            #     if isinstance(operand, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return FloatType()
+
+            # # BOOLEAN
+            # if ast.op in ['!']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = BoolType()
+
+            #     if isinstance(operand, BoolType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+
+    @dataclass
+    class Equivalent(Summary):
+        # between two Symbol mean x = y mean equivalent type
+        # mean two thing that do not know type in current context, need more summaries.
+        name: str
+        lhs: List[Summary]
+        rhs: List[Summary]
+        ast: AST
+    
+    @dataclass
+    class Call(Summary):
+        # Special for BKIT because of function type can be infer before use
+        # 
+        name: str
+        in_type: List[Summary]
+        return_type: Symbol
+        ast: AST
+    
+    @dataclass
+    class FuncReturn(Summary):
+        # Get the return type of the function with rule that it do
+        # not change the return type in program
+        name: str
+        return_type: Summary
+
+  
+    def check(self):
+        """
+        Depend on the idea from J. Aycock. Aggressive Type Inference...
+        Divide this progess into two phase:
+            1. Summarise: get informations as much as possible from the function (here is ast)
+            2. Inference: the summary informations is repeatedly examined in order to propagate type information.
+        """
+        # Phase 1: Summarizing the informations from ast
+        control_flow = self.visit(self.ast)
+
+    def visitProgram(self,ast):
+        summaries = [self.visit(x) for x in ast.decl]
+        control_flow = ControlFlow()
+        for block in summaries:
+            for summary in block:
+                control_flow.add(summary)
+        return control_flow
+        
+    def visitVarDecl(self, ast):
         """
         Visit each global var top-down
-        
-        .-------------------------------------------.
-        |        Global variables                   |
-        |-------------------------------------------|
-        |                                           |
-        |        Function declaration               |
-        |                                           |
-        |    /*********Name*******************\     |
-        |    .--------------------------------.     |
-        |    |   Variables                    |     |
-        |    |--------------------------------|     |
-        |    |   Statement (thing that return)|     |
-        |    .________________________________.     |
-        |                                           |
-        |    /*********Name*******************\     |
-        |    .--------------------------------.     |
-        |    |   Variables                    |     |
-        |    |--------------------------------|     |
-        |    |   Statement (thing that return)|     |
-        |    .________________________________.     |
-        |                                           |
-        |     ....                                  |
-        .___________________________________________|
-
-        Originally, the checker know all the name of all the objects that appear
-            in the program now by the preprocess in visitProgram()
-        """ 
-        name_list = [x for x in self.visit(ast.variable, env) if x.mtype == None]
-        if len(name) > 1:
-            raise Redeclared(Variable(), name)
-        dimen = ast.varDimen
-        init_type = self.visit(ast.varInit, []) if ast.varInit else Unknown()
-        if len(dimen):
-            if not isinstance(init_type, (ArrayType, Unknown)):
-                """
-                Declaration of array with mismatch type is TypeMismatch
-                or Type can not be infered
-                """
-                raise TypeMismatchInStatement(ast)
-            
-            if isinstance(init_type, ArrayType):
-                if dimen != init_type.dimen:
-                    raise TypeMismatchInStatement(ast)
-                env = self.update_scope(env, Symbol(name, init_type))
-            else:
-                env = self.update_scope(env, Symbol(name, ArrayType(dimen, Unknown())))
+        """
+        var = self.visit(ast.variable)
+        if ast.dimen:
+            var.mtype = ArrayType(ast.dimen, Unknown())
         else:
-            if isinstance(init_type, ArrayType):
-                raise TypeMismatchInStatement(ast)
-            env = self.update_scope(env, Symbol(name, init_type))
+            var.mtype = Unknown()
+        init_val = self.visit(ast.varInit) if ast.varInit else Symbol('', Unknown())
+        init = Operation('', [], init_val)
+        return [Type(var.name, var, init, Variable(), ast)]
 
-    def visitFuncDecl(self, ast, env):
+    def visitFuncDecl(self, ast):
+        function = self.visit(ast.name)
+        param_summary = self.flatten([self.visit(param) for param in ast.param])
+        body_var_summary = self.flatten([self.visit(decl) for decl in ast.body[0]])
+        body_summary = self.flatten([self.visit(stmt) for stmt in ast.body[1]])
+        return [Type(function.name, function, init=None, kind=Function(),ast=ast), Scope(function.name, body_var_summary + body_summary, param_summary, ast)]
+
+    def visitArrayCell(self, ast):
         """
-        -> Name checking: 
-            -> Must contain the 'main' function a.k.a. entry point
-            -> Name must be the name of the method not var
-            -> func_name can be invoke before its declaration
-        """
-        name = self.visit(ast.name, env)
-        if name is not None:
-            raise Redeclared(Function(), name)
-        try:
-            param = reduce(lambda env, x: self.visit(x, env), ast.param, [])
-        except Redeclared as e:
-            raise Redeclared(Parameter(), e.n)
-
-        scope_env = reduce(lambda env, x: self.visit(x, env), ast.body[0], param)
-        cur_env = scope_env + env
-
-        res_type = Unknown()
-        [self.visit(x, cur_env) for x in ast.body[1]]
-        param_list = [p for p in \
-                        [x for x in cur_env if x.name in \
-                            [y.name for y in param]]]
-
-        function = Symbol(name, MType(param_list, res_type)) 
-        self.update_scope(env, function)
-
-    def visitArrayCell(self, ast, env):
-        """
-        For an array indexing E[E1]...[En], 
+        For an array indexing E[E1]...[En], -
             E must be in array type with n dimensions and E1...En must be integer.
         """
-        e = self.visit(ast.arr, env)
-        if not isinstance(e, ArrayType):
-            raise TypeMismatchInExpr(ast)
-        e_i = [self.visit(x, env) for x in ast.idx]
-        if any([not isinstance(x, IntType) for x in e_i]):
-            raise TypeMismatchInExpr(ast)
+        e = self.visit(ast.arr)
+        e.ast = ast
+        e_n = [self.visit(x) for x in ast.idx]
+        e_n = self.flatten(e_n)
+        for e_i in e_n:
+            e_i.return_type.mtype = IntType()
+        return e + e_n
 
-    def visitBinaryOp(self, ast, env):
+    def visitBinaryOp(self, ast):
         """
         ==, ! =, <, >, <=, >=, = / =, < ., > ., <= ., >= .
         """
-        # RELATIONAL
-        ## Int
-        if ast.op in ['==', '!=', '<', '>', '>=', '<=']:
-            l = self.visit(ast.left, env)
-            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
-                l.type = IntType()
-            r = self.visit(ast.right, env)
-            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
-                r.type = IntType()
+        lhs = self.visit(ast.left)
+        rhs = self.visit(ast.right)
+        return [Operation(ast.op, lhs+rhs, Unknown(), ast)]
 
-            if isinstance(l, IntType) and isinstance(r, IntType):
-                raise TypeMismatchInExpr(ast)
-            return BoolType()
-        ## Float
-        if ast.op in ['=/=', '<.', '>.', '>=.', '<=.']:
-            l = self.visit(ast.left, env)
-            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
-                l.type = FloatType()
-            r = self.visit(ast.right, env)
-            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
-                r.type = FloatType()
-            
-            if isinstance(l, FloatType) and isinstance(r, FloatType):
-                raise TypeMismatchInExpr(ast)
-            return BoolType()
+    def visitUnaryOp(self, ast):
+        operand = self.visit(ast.body)
+        return [Operation(ast.op, operand, Unknown(), ast)]
+
+    def visitCallExpr(self, ast):
+        op = self.visit(ast.method)
+        param = [self.visit(exp) for exp in ast.param]
+        param = self.flatten(param)
+        return [Operation(op, param, Unknown(), ast)]
         
-        # BOOLEAN
-        if ast.op in ['&&' , '||']:
-            l = self.visit(ast.left, env)
-            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
-                l.type = BoolType()
-            r = self.visit(ast.right, env)
-            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
-                r.type = BoolType()
+    def visitIntLiteral(self, ast):
+        return [Type(None, Symbol('', IntType()), ast)]
 
-            if isinstance(l, BoolType) and isinstance(r, BoolType):
-                raise TypeMismatchInExpr(ast)
-            return BoolType()
+    def visitStringLiteral(self, ast):
+        return [Type(None, Symbol('', StringType()), ast)]
+
+    def visitBooleanLiteral(self, ast):
+        return [Type(None, Symbol('', BoolType()), ast)]
+    
+    def visitFloatLiteral(self, ast):
+        return [Type(None, Symbol('', FloatType()), ast)]
+
+    def visitArrayLiteral(self, ast):
+        literal_summary = [self.visit(x) for x in ast.value]
+        last_dimen = literal_summary[0].var.dimen if literal_summary[0].var.dimen else []
+        return [Type(Symbol('', ArrayType([len(ast.value)] + last_dimen)), ast)]
         
-        # ARITHMETIC
-        ## Int
-        if ast.op in ['-' , '+', '*', '\\']:
-            l = self.visit(ast.left, env)
-            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
-                l.type = IntType()
-            r = self.visit(ast.right, env)
-            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
-                r.type = IntType()
 
-            if isinstance(l, IntType) and isinstance(r, IntType):
-                raise TypeMismatchInExpr(ast)
-            return IntType()
-        
-        ## Float
-        if ast.op in ['-.' , '+.', '*.', '\\.']:
-            l = self.visit(ast.left, env)
-            if isinstance(l, Symbol) and isinstance(l.type, Unknown):
-                l.type = FloatType()
-            r = self.visit(ast.right, env)
-            if isinstance(r, Symbol) and isinstance(r.type, Unknown):
-                r.type = FloatType()
-
-            if isinstance(l, FloatType) and isinstance(r, FloatType):
-                raise TypeMismatchInExpr(ast)
-            return FloatType()
-
-    def visitUnaryOp(self, ast, env):
-        """
-        docstring
-        """
-        # ARITHMETIC
-        ## Int
-        if ast.op in ['-']:
-            operand = self.visit(ast.body, env)
-            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
-                operand.type = IntType()
-
-            if isinstance(operand, IntType):
-                raise TypeMismatchInExpr(ast)
-            return IntType()
-        ## Float
-        if ast.op in ['-.']:
-            operand = self.visit(ast.body, env)
-            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
-                operand.type = FloatType()
-
-            if isinstance(operand, FloatType):
-                raise TypeMismatchInExpr(ast)
-            return FloatType()
-
-        # BOOLEAN
-        if ast.op in ['!']:
-            operand = self.visit(ast.body, env)
-            if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
-                operand.type = BoolType()
-
-            if isinstance(operand, BoolType):
-                raise TypeMismatchInExpr(ast)
-            return BoolType()
-
-    def visitCallExpr(self, ast, env):
-        """
-        docstring
-        """
-        func = self.visit(ast.method, env)
-        if func is None:
-            raise Undeclared(Function(), func)
-        
-        if len(func.mtype.intype) != len(ast.param):
-            raise TypeMismatchInStmt(ast)
-        
-        args = [self.visit(arg, env) for arg in ast.param]
-        match_type = list(map(lambda x, y: type(x) == type(y), args, func.mtype.intype))
-        if any([not match for match in match_type]):
-            raise TypeMismatchInStmt(ast)
-        
-    def visitIntLiteral(self, ast, env):
-        return IntType()
-
-    def visitStringLiteral(self, ast, env):
-        return StringType()
-
-    def visitBooleanLiteral(self, ast, env):
-        return BoolType()
-
-    def visitArrayLiteral(self, ast, env):
-        type_of_arr = [self.visit(x,[]) for x in ast.value]
-        if not len(type_of_arr):
-            return ArrayType([0], Unknown())
-        num_of_type = reduce(lambda count, x: count if self.is_same_type(x, type_of_arr[0]) else count + 1,\
-            type_of_arr, 1)
-        print(num_of_type)
-        if  num_of_type == 1:
-            """
-            Same type for all elements in array
-            """
-            dimen = [len(type_of_arr)] if not isinstance(type_of_arr[0], ArrayType) else \
-                    [len(type_of_arr)] + type_of_arr[0].dimen
-            return ArrayType(dimen, type(type_of_arr[0]))
-        else:
-            raise InvalidArrayLiteral(ast)
-
-    def visitAssign(self, ast, env):
+    def visitAssign(self, ast):
         """
         lhs = rhs
         <Symbol> = <MType>
         """
-        rhs = self.visit(rhs, env) # lhs is a Symbol
-        lhs = self.visit(lhs, env) # rhs is a Mtype
-        if type(rhs) == type(lhs.mtype):
-            if isinstance(rhs, Unknown()):
-                raise TypeCannotBeInferred(ast)
-        else:
-            if isinstance(lhs.mtype, Unknown()):
-                lhs.mtype = rhs
-            else:
-                raise TypeMismatchInStmt(ast)
+        rhs = self.visit(rhs, env)
+        lhs = self.visit(lhs, env)
+        return [Equivalent(lhs, rhs, ast)]
 
-    def visitIf(self, ast, env):
-        """
-        docstring
-        """
+    def visitIf(self, ast):
         con_expr = self.visit(ast.ifthenStmt[0][0]) # if condition
-        scope = reduce(lambda env, x: self.visit(x, env), ast.ifthenStmt[0][1], []) # decl of if - idk why we need it for if :(
-        if_env = env + scope
-        [self.visit(stmt, if_env) for stmt in ast.ifthenStmt[1]]
+        scope_var = self.flatten([self.visit(x) for x in ast.ifthenStmt[0][1]])
+        scope_body = self.flatten([self.visit(x) for x in ast.ifthenStmt[0][2]])
+        if_scope = [Scope('If', con_expr + scope_var + scope_body, None, VoidType(), ast)]
+        else_scope = []
         if len(ast.elseStmt):
-            scope = reduce(lambda env, x: self.visit(x, env), ast.elseStmt[0], [])
-            else_env = env + scope
-            [self.visit(stmt, else_env) for stmt in ast.elseStmt]
+            scope_var = self.flatten([self.visit(x) for x in ast.elseStmt[0]])
+            scope_body = self.flatten([self.visit(x) for x in ast.elseStmt[1]])
+            else_scope = [Scope('Else', scope_var + scope_body, None, VoidType()]
+        return if_scope + else_scope
 
-    def visitFor(self, ast, env):
+    def visitFor(self, ast):
         """
         Check if all has the same type as spec
         """
-        idx1 = self.visit(ast.idx1, env)
-        if not isinstance(idx1, (IntType, Unknown)):
-            raise TypeMismatchInStmt(ast)
-        if isinstance(idx1, Unknown):
-            idx1.mtype = IntType()
-
-        init_expr = self.visit(ast.expr1, env)
-        if not isinstance(init_expr, (IntType, Unknown)):
-            raise TypeMismatchInStmt(ast)
-        if isinstance(init_expr, Unknown):
-            init_expr.mtype = IntType()
-
-        con_expr = self.visit(ast.expr2, env)
-        if not isinstance(con_expr, (BoolType, Unknown)):
-            raise TypeMismatchInStmt(ast)
-        if isinstance(con_expr, Unknown):
-            con_expr.mtype = BoolType()
-        
-        update_expr = self.visit(ast.expr3, env)
-        if not isinstance(update_expr, (IntType, Unknown)):
-            raise TypeMismatchInStmt(ast)
-        if isinstance(update_expr, Unknown):
-            update_expr.mtype = IntType()
-
-        scope = reduce(lambda env, x: self.visit(x, env), ast.loop[0], [])
-        cur_env = scope + env
-        [(idx, self.visit(x, cur_env)) for (idx, x) in enumerate(ast.loop[1])]
+        idx = self.visit(ast.idx1)
+        init_expr = self.visit(ast.expr1)
+        con_expr = self.visit(ast.expr2)
+        update_expr = self.visit(ast.expr3)
+        scope_var = self.flatten(self.visit(ast.loop[0]))
+        scope_body = self.flatten(self.visit(ast.loop[1]))
+        return [Scope('For', idx + init_expr + con_expr + update_expr + scope_var + scope_body, None, VoidType())]
                 
-    def visitBreak(self, ast, env):
-        """
-        Do not care about unreachablestmt
-        """
-        return VoidType()
+    def visitBreak(self, ast):
+        return []
 
-    def visitReturn(self, ast, env):
-        """
-        TODO: check the type of this return stmt and the type of function return
-        """
-        return self.visit(ast.expr, env)
+    def visitReturn(self, ast):
+        return self.visit(ast.expr)
 
-    def visitDowhile(self, ast, env):
-        """
-        docstring
-        """
-        scope = reduce(lambda env, x: self.visit(x, env), ast.sl[0], [])
-        [self.visit(x, env) for x in ast.sl[1]]
-        expr = self.visit(ast.exp, env)
-        if not isinstance(expr, BoolType()):
-            raise TypeMismatchInStmt(ast)
+    def visitDowhile(self, ast):
+        scope_var = self.flatten([self.visit(x) for x in ast.sl[0]])
+        scope_body = self.flatten([self.visit(x) for x in ast.sl[1]])
+        expr = self.visit(ast.exp)
+        return [Scope('Do', scope_var + scope_body + expr, None, VoidType())]
 
-    def visitWhile(self, ast, env):
+    def visitWhile(self, ast):
         """
         Same with Dowhile?
         """
-        expr = self.visit(ast.exp, env)
-        if not isinstance(expr, BoolType()):
-            raise TypeMismatchInStmt(ast)
-        scope = reduce(lambda env, x: self.visit(x, env), ast.sl[0], [])
-        [self.visit(x, env) for x in ast.sl[1]]
+        scope_var = self.flatten([self.visit(x) for x in ast.sl[0]])
+        scope_body = self.flatten([self.visit(x) for x in ast.sl[1]])
+        expr = self.visit(ast.exp)
+        return [Scope('While', expr + scope_var + scope_body, None, VoidType())]
 
     def visitCallStmt(self, ast, env):
-        """
-        docstring
-        """
-        method_ref = self.visit(ast.method, env)
-        if method_ref == None or not isinstance(method_ref.mtype, MType):
-            raise Undeclared(Function(), ast.method.name)
-        args_type = [self.visit(x, env) for x in ast.param] # from call statement
-        param_type = method_ref.intype # from function declaration
-        both_unknown_type = list(map(lambda x, y: isinstance(x, Unknown) and isinstance(y,Unknown),\
-                                    args_type, param_type))
-        if any(both_unknown_type):
-            raise TypeCannotBeInferred(ctx)
-        # inference type of param & args
-        args_type = list(map(lambda x: args_type[x[0]] if isinstance(args_type[x[0]], Unknown) \
-                                    else param_type[x[0]], list(enumerate(args_type))))
-        
-        param_type = list(map(lambda x: param_type[x[0]] if isinstance(args_type[x[0]], Unknown) \
-                                    else args_type[x[0]], list(enumerate(args_type))))
+        method = self.visit(ast.method)
+        params = self.flatten([self.visit(x) for x in ast.param])
+        return [Call(method.name, params, Symbol('', VoidType()),ast)]
 
-        unmatch_type = list(map(lambda x, y: type(x) != type(y), args_type, param_type))
-        if any(unmatch_type):
-            raise TypeMismatchInStmt(ast)
-
-    def visitId(self, ast, env):
+    def visitId(self, ast, env, checking=False):
         """
         output: list of symbols that has the same name as the Id
         """
-        return [sym for sym in env if sym.name == ast.name]
+        return Symbol(ast.name, Unknown())
 
-    def is_same_type(self, a, b):
-        if type(a) != type(b):
-            return False
-        else:
-            if isinstance(a, ArrayType):
-                if a.dimen != b.dimen:
-                    return False
-        return True
-
-    def update_scope(self, scope, var):
-        """
-        stack-like
-        """
-        return [var] + scope
+    def flatten(self, arr):
+        return reduce(lambda arr, y: arr + [y], arr, [])
