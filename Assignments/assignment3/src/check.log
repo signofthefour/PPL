@@ -1,15 +1,17 @@
-1
-1
-1
-2
-1
-1
-1
-1
-2
-Tests run  6
-Errors  []
-[(<CheckSuite.CheckSuite testMethod=test_init_1>,
+Tests run  11
+Errors  [(<CheckSuite.CheckSuite testMethod=test_diff_numofparam_stmt>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 25, in test_diff_numofparam_stmt\n    self.assertTrue(TestChecker.test(input,expect,401))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 147, in checkStatic\n    res = checker.check()\n  File "./main/bkit/checker/StaticCheck.py", line 65, in check\n    return self.visit(self.ast,self.global_envi)\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 55, in accept\n    return v.visitProgram(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 80, in visitProgram\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/checker/StaticCheck.py", line 80, in <listcomp>\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 84, in accept\n    return v.visitFuncDecl(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 133, in visitFuncDecl\n    [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/checker/StaticCheck.py", line 133, in <listcomp>\n    [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 290, in accept\n    return v.visitCallStmt(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 483, in visitCallStmt\n    param_type = method_ref.intype # from function declaration\nAttributeError: \'Symbol\' object has no attribute \'intype\'\n'), (<CheckSuite.CheckSuite testMethod=test_diff_numofparam_stmt_use_ast>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 59, in test_diff_numofparam_stmt_use_ast\n    self.assertTrue(TestChecker.test(input,expect,405))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 147, in checkStatic\n    res = checker.check()\n  File "./main/bkit/checker/StaticCheck.py", line 65, in check\n    return self.visit(self.ast,self.global_envi)\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 55, in accept\n    return v.visitProgram(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 80, in visitProgram\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/checker/StaticCheck.py", line 80, in <listcomp>\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 84, in accept\n    return v.visitFuncDecl(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 133, in visitFuncDecl\n    [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/checker/StaticCheck.py", line 133, in <listcomp>\n    [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 290, in accept\n    return v.visitCallStmt(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 483, in visitCallStmt\n    param_type = method_ref.intype # from function declaration\nAttributeError: \'Symbol\' object has no attribute \'intype\'\n')]
+[(<CheckSuite.CheckSuite testMethod=test_diff_numofparam_expr>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 34, in test_diff_numofparam_expr\n'
+  '    self.assertTrue(TestChecker.test(input,expect,402))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_diff_numofparam_expr_use_ast>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 51, in '
+  'test_diff_numofparam_expr_use_ast\n'
+  '    self.assertTrue(TestChecker.test(input,expect,404))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_init_1>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 69, in test_init_1\n'
   '    self.assertTrue(TestChecker.test(input,expect,406))\n'
@@ -33,14 +35,101 @@ Errors  []
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 109, in test_init_5\n'
   '    self.assertTrue(TestChecker.test(input,expect,409))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_undeclared_function>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 16, in test_undeclared_function\n'
-  '    self.assertTrue(TestChecker.test(input,expect,400))\n'
   'AssertionError: False is not true\n')]
 Test output
- FFFFFF
+ FFEEFFFFF..
+======================================================================
+ERROR: test_diff_numofparam_stmt (CheckSuite.CheckSuite)
+Complex program
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 25, in test_diff_numofparam_stmt
+    self.assertTrue(TestChecker.test(input,expect,401))
+  File "./test/TestUtils.py", line 128, in test
+    return TestChecker.checkStatic(input,expect,num)
+  File "./test/TestUtils.py", line 147, in checkStatic
+    res = checker.check()
+  File "./main/bkit/checker/StaticCheck.py", line 65, in check
+    return self.visit(self.ast,self.global_envi)
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 55, in accept
+    return v.visitProgram(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 80, in visitProgram
+    [self.visit(x,self.env) for x in ast.decl]
+  File "./main/bkit/checker/StaticCheck.py", line 80, in <listcomp>
+    [self.visit(x,self.env) for x in ast.decl]
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 84, in accept
+    return v.visitFuncDecl(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 133, in visitFuncDecl
+    [self.visit(x, cur_env) for x in ast.body[1]]
+  File "./main/bkit/checker/StaticCheck.py", line 133, in <listcomp>
+    [self.visit(x, cur_env) for x in ast.body[1]]
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 290, in accept
+    return v.visitCallStmt(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 483, in visitCallStmt
+    param_type = method_ref.intype # from function declaration
+AttributeError: 'Symbol' object has no attribute 'intype'
+
+======================================================================
+ERROR: test_diff_numofparam_stmt_use_ast (CheckSuite.CheckSuite)
+Complex program
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 59, in test_diff_numofparam_stmt_use_ast
+    self.assertTrue(TestChecker.test(input,expect,405))
+  File "./test/TestUtils.py", line 128, in test
+    return TestChecker.checkStatic(input,expect,num)
+  File "./test/TestUtils.py", line 147, in checkStatic
+    res = checker.check()
+  File "./main/bkit/checker/StaticCheck.py", line 65, in check
+    return self.visit(self.ast,self.global_envi)
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 55, in accept
+    return v.visitProgram(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 80, in visitProgram
+    [self.visit(x,self.env) for x in ast.decl]
+  File "./main/bkit/checker/StaticCheck.py", line 80, in <listcomp>
+    [self.visit(x,self.env) for x in ast.decl]
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 84, in accept
+    return v.visitFuncDecl(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 133, in visitFuncDecl
+    [self.visit(x, cur_env) for x in ast.body[1]]
+  File "./main/bkit/checker/StaticCheck.py", line 133, in <listcomp>
+    [self.visit(x, cur_env) for x in ast.body[1]]
+  File "./main/bkit/utils/Visitor.py", line 7, in visit
+    return ast.accept(self,param)
+  File "./main/bkit/utils/AST.py", line 290, in accept
+    return v.visitCallStmt(self, param)
+  File "./main/bkit/checker/StaticCheck.py", line 483, in visitCallStmt
+    param_type = method_ref.intype # from function declaration
+AttributeError: 'Symbol' object has no attribute 'intype'
+
+======================================================================
+FAIL: test_diff_numofparam_expr (CheckSuite.CheckSuite)
+More complex program
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 34, in test_diff_numofparam_expr
+    self.assertTrue(TestChecker.test(input,expect,402))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_diff_numofparam_expr_use_ast (CheckSuite.CheckSuite)
+More complex program
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 51, in test_diff_numofparam_expr_use_ast
+    self.assertTrue(TestChecker.test(input,expect,404))
+AssertionError: False is not true
+
 ======================================================================
 FAIL: test_init_1 (CheckSuite.CheckSuite)
 Simple program: main
@@ -86,17 +175,8 @@ Traceback (most recent call last):
     self.assertTrue(TestChecker.test(input,expect,409))
 AssertionError: False is not true
 
-======================================================================
-FAIL: test_undeclared_function (CheckSuite.CheckSuite)
-Simple program: main
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 16, in test_undeclared_function
-    self.assertTrue(TestChecker.test(input,expect,400))
-AssertionError: False is not true
+Ran 11 tests in 0.272s
 
-----------------------------------------------------------------------
-Ran 6 tests in 0.066s
-
-FAILED (failures=6)
+FAILED (failures=7, errors=2)
 
