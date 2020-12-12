@@ -129,8 +129,12 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         scope_env = reduce(lambda env, x: env + [self.visit(x, env)], ast.body[0], param)
         cur_env = scope_env + env
 
-        res_type = Unknown()
-        [self.visit(x, cur_env) for x in ast.body[1]]
+        res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]
+        res_type = VoidType()
+        for typ in res_type_list:
+            if typ is not None:
+                res_type = typ
+                break
         param_list = [p for p in \
                         [x for x in cur_env if x.name in \
                             [y.name for y in param]]]
@@ -141,23 +145,26 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         For an array indexing E[E1]...[En], 
             E must be in array type with n dimensions and E1...En must be integer.
+        Input: All arraycell must be declared in vardecl, so there no redeclared
         """
         e = self.visit(ast.arr, env)
         if e is None:
-            raise Undeclared(Identifier(), e.arr.name)
-        if not isinstance(e, ArrayType):
+            raise Undeclared(Identifier(), ast.arr)
+        if not isinstance(e.mtype, (ArrayType,MType)):
             raise TypeMismatchInExpression(ast)
-        if len(e.dimen) > len(ast.idx):
-            raise TypeMismatchInExpression(ast)
+        if isinstance(e.mtype, ArrayType):
+            if len(e.mtype.dimen) != len(ast.idx):
+                raise TypeMismatchInExpression(ast)
+        if isinstance(e.mtype, MType):
+            if isinstance(e.mtype.restype, type(None)):
+                e.mtype.restype = ArrayType([0]*len(ast.idx), Unknown())
+            if len(e.mtype.restype.dimen) != len(ast.idx):
+                raise TypeMismatchInExpression(ast)
         e_i = [self.visit(x, env) for x in ast.idx]
         if any([not isinstance(x.mtype, IntType) for x in e_i]):
             raise TypeMismatchInExpression(ast)
         
-        if len(e.dimen) == len(ast.idx):
-            return Symbol('', e.mtype.eletype)
-        else:
-            return Symbol('', ArrayType(e.mtype.dimen[len(e_i):], e.mtype.eletype))
-    
+        return e
         
 
     def visitBinaryOp(self, ast, env):
@@ -166,19 +173,37 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         # RELATIONAL
         ## Int
+        ltype = rtype = None
         if ast.op in ['==', '!=', '<', '>', '>=', '<=']:
             l = self.visit(ast.left, env)
             if l is None:
                 raise Undeclared(Identifer(), ast.left.name)
             if isinstance(l.mtype, Unknown):
                 l.mtype = IntType()
+            ltype = l.mtype
+            if isinstance(l.mtype, ArrayType):
+                if isinstance(l.mtype.eletype, Unknown):
+                    l.mtype.eletype = IntType()
+                ltype = l.mtype.eletype
+            if isinstance(l.mtype, MType):
+                if isinstance(l.mtype.retype, Unknown):
+                    l.mtype.restype = IntType()
+                ltype = l.mtype.restype
             r = self.visit(ast.right, env)
             if r is None:
                 raise Undeclared(Identifier(), ast.right.name)
             if isinstance(r.mtype, Unknown):
                 r.type = IntType()
-
-            if not isinstance(l.mtype, IntType) or not isinstance(r.mtype, IntType):
+            rtype = r.mtype
+            if isinstance(r.mtype, ArrayType):
+                if isinstance(r.mtype.eletype, Unknown):
+                    r.mtype.eletype = IntType()
+                rtype = r.mtype.eletype
+            if isinstance(r.mtype, MType):
+                if isinstance(r.mtype.restype, Unknown):
+                    r.mtype.restype = IntType()
+                rtype = r.mtype.restype
+            if not isinstance(ltype, IntType) or not isinstance(rtype, IntType):
                 raise TypeMismatchInExpr(ast)
             return Symbol('', BoolType())
         ## Float
@@ -188,14 +213,33 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifer(), ast.left.name)
             if isinstance(l.mtype, Unknown):
                 l.mtype = FloatType()
+            ltype = l.mtype
+            if isinstance(l.mtype, ArrayType):
+                if isinstance(l.mtype.eletype, Unknown):
+                    l.mtype.eletype = FloatType()
+                ltype = l.mtype.eletype
+            if isinstance(l.mtype, MType):
+                if isinstance(l.mtype.retype, Unknown):
+                    l.mtype.restype = FloatType()
+                ltype = l.mtype.restype
+
             r = self.visit(ast.right, env)
             if r is None:
-                raise Undeclared(Identifer(), ast.right.name)
+                raise Undeclared(Identifier(), ast.right.name)
             if isinstance(r.mtype, Unknown):
-                r.mtype = FloatType()
-            
-            if not isinstance(l.mtype, FloatType) or not isinstance(r.mtype, FloatType):
+                r.type = FloatType()
+            rtype = r.mtype
+            if isinstance(r.mtype, ArrayType):
+                if isinstance(r.mtype.eletype, Unknown):
+                    r.mtype.eletype = FloatType()
+                rtype = r.mtype.eletype
+            if isinstance(r.mtype, MType):
+                if isinstance(r.mtype.restype, Unknown):
+                    r.mtype.restype = FloatType()
+                rtype = r.mtype.restype
+            if not isinstance(ltype, FloatType) or not isinstance(rtype, FloatType):
                 raise TypeMismatchInExpr(ast)
+            
             return Symbol('', BoolType())
         
         # BOOLEAN
@@ -205,14 +249,32 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifer(), ast.left.name)
             if isinstance(l.mtype, Unknown):
                 l.mtype = BoolType()
+            ltype = l.mtype
+            if isinstance(l.mtype, ArrayType):
+                if isinstance(l.mtype.eletype, Unknown):
+                    l.mtype.eletype = BoolType()
+                ltype = l.mtype.eletype
+            if isinstance(l.mtype, MType):
+                if isinstance(l.mtype.retype, Unknown):
+                    l.mtype.restype = BoolType()
+                ltype = l.mtype.restype
             r = self.visit(ast.right, env)
             if r is None:
-                raise Undeclared(Identifer(), ast.right.name)
+                raise Undeclared(Identifier(), ast.right.name)
             if isinstance(r.mtype, Unknown):
-                r.mtype = BoolType()
-
-            if not isinstance(l.mtype, BoolType) or notisinstance(r.mtype, BoolType):
+                r.type = BoolType()
+            rtype = r.mtype
+            if isinstance(r.mtype, ArrayType):
+                if isinstance(r.mtype.eletype, Unknown):
+                    r.mtype.eletype = BoolType()
+                rtype = r.mtype.eletype
+            if isinstance(r.mtype, MType):
+                if isinstance(r.mtype.restype, Unknown):
+                    r.mtype.restype = BoolType()
+                rtype = r.mtype.restype
+            if not isinstance(ltype, BoolType) or not isinstance(rtype, BoolType):
                 raise TypeMismatchInExpr(ast)
+            
             return Symbol('', BoolType())
         
         # ARITHMETIC
@@ -223,14 +285,32 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifer(), ast.left.name)
             if isinstance(l.mtype, Unknown):
                 l.mtype = IntType()
+            ltype = l.mtype
+            if isinstance(l.mtype, ArrayType):
+                if isinstance(l.mtype.eletype, Unknown):
+                    l.mtype.eletype = IntType()
+                ltype = l.mtype.eletype
+            if isinstance(l.mtype, MType):
+                if isinstance(l.mtype.retype, Unknown):
+                    l.mtype.restype = IntType()
+                ltype = l.mtype.restype
             r = self.visit(ast.right, env)
             if r is None:
-                raise Undeclared(Identifer(), ast.right.name)
+                raise Undeclared(Identifier(), ast.right.name)
             if isinstance(r.mtype, Unknown):
-                r.mtype = IntType()
-
-            if not isinstance(l.mtype, IntType) or not isinstance(r.mtype, IntType):
-                raise TypeMismatchInExpression(ast)
+                r.type = IntType()
+            rtype = r.mtype
+            if isinstance(r.mtype, ArrayType):
+                if isinstance(r.mtype.eletype, Unknown):
+                    r.mtype.eletype = IntType()
+                rtype = r.mtype.eletype
+            if isinstance(r.mtype, MType):
+                if isinstance(r.mtype.restype, Unknown):
+                    r.mtype.restype = IntType()
+                rtype = r.mtype.restype
+            if not isinstance(ltype, IntType) or not isinstance(rtype, IntType):
+                raise TypeMismatchInExpr(ast)
+            
             return Symbol('', IntType())
         
         ## Float
@@ -240,14 +320,34 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifer(), ast.left.name)
             if isinstance(l.mtype, Unknown):
                 l.mtype = FloatType()
+            ltype = l.mtype
+            if isinstance(l.mtype, ArrayType):
+                if isinstance(l.mtype.eletype, Unknown):
+                    l.mtype.eletype = FloatType()
+                ltype = l.mtype.eletype
+            if isinstance(l.mtype, MType):
+                if isinstance(l.mtype.retype, Unknown):
+                    l.mtype.restype = FloatType()
+                ltype = l.mtype.restype
+                
             r = self.visit(ast.right, env)
             if r is None:
-                raise Undeclared(Identifer(), ast.right.name)
+                raise Undeclared(Identifier(), ast.right.name)
             if isinstance(r.mtype, Unknown):
-                r.mtype = FloatType()
+                r.type = FloatType()
+            rtype = r.mtype
+            if isinstance(r.mtype, ArrayType):
+                if isinstance(r.mtype.eletype, Unknown):
+                    r.mtype.eletype = FloatType()
+                rtype = r.mtype.eletype
+            if isinstance(r.mtype, MType):
+                if isinstance(r.mtype.restype, Unknown):
+                    r.mtype.restype = FloatType()
+                rtype = r.mtype.restype
 
-            if not isinstance(l, FloatType) or not isinstance(r, FloatType):
-                raise TypeMismatchInExpression(ast)
+            if not isinstance(ltype, FloatType) or not isinstance(rtype, FloatType):
+                raise TypeMismatchInExpr(ast)
+            
             return Symbol('', FloatType())
 
     def visitUnaryOp(self, ast, env):
@@ -256,14 +356,23 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         # ARITHMETIC
         ## Int
+        otype = None
         if ast.op in ['-']:
             operand = self.visit(ast.body, env)
             if operand is None:
                 raise Undeclared(Identifier, ast.body.name)
             if isinstance(operand.mtype, Unknown):
                 operand.mtype = IntType()
-
-            if not isinstance(operand, IntType):
+            otype = operand.mtype
+            if isinstance(operand.mtype, ArrayType):
+                if isinstance(operand.mtype.eletype, Unknown):
+                    operand.mtype.eletype = IntType()
+                otype = operand.mtype.eletype
+            if isinstance(operand.mtype, MType):
+                if isinstance(operand.mtype.retype, Unknown):
+                    operand.mtype.restype = IntType()
+                otype = operand.mtype.restype
+            if not isinstance(otype, IntType):
                 raise TypeMismatchInExpression(ast)
             return Symbol('', IntType())
         ## Float
@@ -273,8 +382,16 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifier, ast.body.name)
             if isinstance(operand.mtype, Unknown):
                 operand.mtype = FloatType()
-
-            if not isinstance(operand.mtype, FloatType):
+            otype = operand.mtype
+            if isinstance(operand.mtype, ArrayType):
+                if isinstance(operand.mtype.eletype, Unknown):
+                    operand.mtype.eletype = FloatType()
+                otype = operand.mtype.eletype
+            if isinstance(operand.mtype, MType):
+                if isinstance(operand.mtype.retype, Unknown):
+                    operand.mtype.restype = FloatType()
+                otype = operand.mtype.restype
+            if not isinstance(otype, FloatType):
                 raise TypeMismatchInExpression(ast)
 
             return Symbol('', FloatType())
@@ -286,8 +403,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise Undeclared(Identifier, ast.body.name)
             if isinstance(operand.mtype, Unknown):
                 operand.type = BoolType()
+            otype = operand.mtype
+            if isinstance(operand.mtype, ArrayType):
+                if isinstance(operand.mtype.eletype, Unknown):
+                    operand.mtype.eletype = BoolType()
+                otype = operand.mtype.eletype
+            if isinstance(operand.mtype, MType):
+                if isinstance(operand.mtype.retype, Unknown):
+                    operand.mtype.restype = BoolType()
+                otype = operand.mtype.restype
 
-            if isinstance(operand, BoolType):
+            if isinstance(otype, BoolType):
                 raise TypeMismatchInExpression(ast)
             return Symbol('', BoolType())
 
@@ -298,7 +424,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         func = self.visit(ast.method, env)
         if func is None or not isinstance(func.mtype,  (MType, type(None))):
             raise Undeclared(Function(), ast.method.name)
-        
+        if func.mtype is None:
+            args = [self.visit(arg, env) for arg in ast.param]
+            if any([isinstance(arg, (Unknown, type(None))) for arg in args]):
+                raise TypeCannotBeInferred(ast)
+            func.mtype = MType(args, Unknown())
+            return func
+
         if len(func.mtype.intype) != len(ast.param):
             raise TypeMismatchInStatement(ast)
          
@@ -346,7 +478,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         lhs = self.visit(lhs, env)
         if lhs is None:
             raise Undeclared(Identifier(), lhs.name)
-
+        if isinstance(rhs.mtype, MType):
+            if isinstance(rhs.mtype.restype, Unknown):
+                rhs.mtype.restype = lhs.mtype
         if isinstance(rhs.mtype, Unknown) and isinstance(lhs.mtype, Unknown):
             raise TypeCannotBeInferred(ast)
         if isinstance(rhs.mtype, Unknown):
@@ -524,7 +658,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             for x in c:
                 if x.name == ast.variable.name:
                     raise Redeclared(Variable(), x.name)
-            return Symbol(ast.variable.name, None)
+            return Symbol(ast.variable.name, MType([], None)))
 
     def update_scope(self, scope, var):
         """
