@@ -419,7 +419,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitCallExpr(self, ast, env):
         """
-        docstring
+        Return type of call expr is inferred when it call by the 
+            parent operand (can be infer from op)
+            assignment (can be infer from assign statement)
         """
         func = self.visit(ast.method, env)
         if func is None or not isinstance(func.mtype,  (MType, type(None))):
@@ -435,9 +437,12 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeMismatchInStatement(ast)
          
         args = [self.visit(arg, env) for arg in ast.param]
+        if any([isinstance(arg, (Unknown, type(None))) for arg in args]):
+            raise TypeCannotBeInferred(ast)
         match_type = list(map(lambda x, y: type(x) == type(y), args, func.mtype.intype))
         if any([not match for match in match_type]):
             raise TypeMismatchInStatement(ast)
+        return func
         
     def visitIntLiteral(self, ast, env):
         return Symbol('', IntType())
@@ -456,7 +461,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if not len(type_of_arr):
             return Symbol('',ArrayType([0], Unknown()))
         num_of_type = reduce(lambda count, x: count if self.is_same_type(x, type_of_arr[0]) else count + 1,\
-            type_of_arr, 1) 
+            type_of_arr, 1)
         if  num_of_type == 1:
             """
             Same type for all elements in array
@@ -471,40 +476,131 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         lhs = rhs
         <Symbol> = <Symbol>
+        Can we assign VoidType to VoidType
         """
+        rtype = ltype = None
         rhs = self.visit(rhs, env)
         if rhs is None:
             raise Undeclared(Identifier(), rhs.name)
+
         lhs = self.visit(lhs, env)
         if lhs is None:
             raise Undeclared(Identifier(), lhs.name)
-        if isinstance(rhs.mtype, MType):
+        
+        # there will be 9 case:
+
+        # MTYPE = MTYPE
+        if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, MType):
             if isinstance(rhs.mtype.restype, Unknown):
                 rhs.mtype.restype = lhs.mtype
-        if isinstance(rhs.mtype, Unknown) and isinstance(lhs.mtype, Unknown):
-            raise TypeCannotBeInferred(ast)
-        if isinstance(rhs.mtype, Unknown):
-            lhs.mtype = rhs.mtype
-        if isinstance(lhs.mtype, Unknown):
-            rhs.mtype = lhs.mtype
-
-        if type(rhs.mtype) == type(lhs.mtype):
-            if isinstance(rhs.type, ArrayType):
-                if rhs.mtype.dimen != lhs.mtype.dimen:
-                    raise TypeMismatchInStatement(ast)
-        if type(rhs.mtype) != type(lhs.mtype):
-            raise TypeMismatchInExpression()
+            if isinstance(lhs.mtype.restype, Unknown):
+                lhs.mtype.restype = rhs.mtype
+            if isinstance(lhs.mtype.restype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # ARRAY = MTYPE
+        if isinstance(lhs.mtype, ArrayType) and isinstance(rhs.mtype, MType):
+            if isinstance(rhs.mtype.restype, Unknown):
+                rhs.mtype.restype = lhs.mtype.eletype
+            if isinstance(lhs.mtype.eletype, Unknown):
+                lhs.mtype.eletype = rhs.mtype.restype
+            if isinstance(lhs.mtype.eletype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # PRIM = MTYPE
+        if isinstance(lhs.mtype, (Prim, Unknown)) and isinstance(rhs.mtype, MType):
+            if isinstance(rhs.mtype.restype, Unknown):
+                rhs.mtype.restype = lhs.mtype
+            if isinstance(lhs.mtype, Unknown):
+                lhs.mtype = rhs.mtype.restype
+            if isinstance(lhs.mtype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # MTYPE = ARRAY
+        if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, ArrayType):
+            if isinstance(lhs.mtype.restype, Unknown):
+                lhs.mtype.restype = rhs.mtype.eletype
+            if isinstance(rhs.mtype.eletype):
+                rhs.mtype.eletype = lhs.mtype.restype
+            if isinstance(lhs.mtype.restype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # ARRAY = ARRAY
+        if isinstance(lhs.mtype, ArrayType) and isinstance(rhs.mtype, ArrayType):
+            if isinstance(lhs.mtype.eletype, Unknown):
+                lhs.mtype.eletype = rhs.mtype.eletype
+            if isinstance(rhs.mtype.eletype, Unknown):
+                rhs.mtype.eletype = lhs.mtype.eletype
+            if isinstance(rhs.mtype.eletype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # PRIM = ARRAY
+        if isinstance(lhs.mtype, (Prim, Unknown)) and isinstance(rhs.mtype, ArrayType):
+            if isinstance(lhs.mtype, Unknown):
+                lhs.mtype = rhs.mtype.eletype
+            if isinstance(rhs.mtype.eletype, Unknown):
+                rhs.mtype.eletype = lhs.mtype
+            if isinstance(lhs.mtype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # MTYPE = PRIM
+        if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, (Prim, Unknown)):
+            if isinstance(lhs.mtype.restype, Unknown):
+                lhs.mtype.restype = rhs.mtype
+            if isinstance(rhs.mtype, Unknown):
+                rhs.mtype =  lhs.mtype.restype
+            if isinstance(rhs.mtype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # ARRAY = PRIM
+        if isinstance(lhs.mtype, ArrayType) and isinstance(rhs.mtype, (Prim, Unknown)):
+            if isinstance(lhs.mtype.eletype, Unknown):
+                lhs.mtype.eletype = rhs.mtype
+            if isinstance(rhs.mtype, Unknown):
+                rhs.mtype = lhs.mtype.eletype
+            if isinstance(rhs.mtype, Unknown):
+                raise TypeCannotBeInferred(ast)
+        
+        # PRIM = PRIM
+        if isinstance(lhs.mtype, (Prim, Unknown)) and isinstance(rhs.mtype, (Prim, Unknown)):
+            if isinstance(lhs.mtype, Unknown):
+                lhs.mtype = rhs.mtype
+            if isinstance(rhs.mtype, Unknown):
+                rhs.mtype = lhs.mtype
+            if isinstance(lhs.mtype, Unknown):
+                raise TypeCannotBeInferred(ast)
+            rtype = rhs.mtype.restype
+        
+        return None
 
     def visitIf(self, ast, env):
         """
-        docstring
+        scope_type statement
         """
         con_expr = self.visit(ast.ifthenStmt[0][0]) # if condition
+        con_val = None
         if con_expr is None:
-            raise Undeclared(Identifier(), ast.ifthenStmt[0][0].name)
-        if isinstance(con_expr.mtype, Unknown):
-            con_expr.mtype = BoolType()
-        if not isinstance(con_expr.mtype, BoolType):
+            if isinstance(ast.ifthenStmt[0][0], Id):
+                raise Undeclared(Identifier(), ast.ifthenStmt[0][0].name)
+            # for call_expr and call_stmt: it raise exception when visit call_
+            # so we do not need to handle it here
+
+        if isinstance(con_expr.mtype, (Prim, Unknown)):
+            if isinstance(con_expr.mtype, Unknown):
+                con_expr.mtype = BoolType()
+            con_val = con_expr.mtype
+
+        if isinstance(con_expr.mtype, ArrayType):
+            if isinstance(con_expr.mtype.eletype, Unknown):
+                con_expr.mtype.eletype = BoolType()
+            con_val = con_expr.mtype.eletype
+            
+        if isinstance(con_expr.mtype, Mtype):
+            if isinstance(con_expr.mtype.restype, Unknown):
+                con_expr.mtype.restype = BoolType()
+            con_val = con_expr.mtype.restype
+
+        if not isinstance(con_val, BoolType):
             raise TypeMismatchInStatement(ast)
 
         scope = reduce(lambda y, x: y + [self.visit(x, y)], ast.ifthenStmt[0][1], []) 
@@ -524,7 +620,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         idx1 = self.visit(ast.idx1, env)
         if idx1 is None:
             raise Undeclared(Identifier(), ast.idx1.name)
-        if not isinstance(idx1.mtype, (IntType, Unknown)):
+        if isinstance(idx1.mtype, ""
+        /
+        /''):
             raise TypeMismatchInStatement(ast)
         if isinstance(idx1.mtype, Unknown):
             idx1.mtype = IntType()
