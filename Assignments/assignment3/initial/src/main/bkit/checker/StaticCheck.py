@@ -28,6 +28,8 @@ class VoidType(Type):
     pass
 class Unknown(Type):
     pass
+class UnInfer(Type):
+    pass
 
 @dataclass
 class ArrayType(Type):
@@ -49,7 +51,7 @@ class StaticChecker(BaseVisitor):
         self.ast = ast
         self.global_envi = [
 Symbol("int_of_float",MType([FloatType()],IntType())),
-Symbol("float_of_int",MType([IntType()],FloatType())),
+Symbol("float_to_int",MType([IntType()],FloatType())),
 Symbol("int_of_string",MType([StringType()],IntType())),
 Symbol("string_of_int",MType([IntType()],StringType())),
 Symbol("float_of_string",MType([StringType()],FloatType())),
@@ -58,77 +60,229 @@ Symbol("bool_of_string",MType([StringType()],BoolType())),
 Symbol("string_of_bool",MType([BoolType()],StringType())),
 Symbol("read",MType([],StringType())),
 Symbol("printLn",MType([],VoidType())),
-Symbol("printStr",MType([StringType()],VoidType())),
+Symbol("print",MType([StringType()],VoidType())),
 Symbol("printStrLn",MType([StringType()],VoidType()))]                           
    
-    def getNameOfSymbol(self, envi, a: Symbol):
-        return None 
-            
+    def getSymbol(self, name, mtype, envi):
+        for ctx in envi:
+            if ctx.name == name and type(ctx.mtype)  == mtype:
+                return ctx
+        return None
+    
+    def getName(self, ast):
+        if type(ast) == Id:
+            return ast.name
+        elif isinstance(ast, ArrayCell):
+            if isinstance(ast.arr, CallExpr):
+                return ast.arr.method.name
+            else:
+                return ast.arr.name
+        elif isinstance(ast, CallExpr):
+            return ast.method.name
+
+    def updateType(self, symName, envi, newType: Type):
+        #update type of a symbol in envi 
+        for idx in envi:
+            if idx.name == symName:
+                idx.mtype = newType
+        return
+
+    def buildEnvi(self, inEnvi, outEnvi): 
+        # make enviroment for a function, include function and variable
+        for ele in outEnvi:
+            if type(ele.mtype) is MType:
+                inEnvi.append(ele)
+        inVar = [ele.name for ele in inEnvi]
+        for ele in outEnvi:
+            if type(ele.mtype) != MType and ele.name not in inVar:
+                inEnvi.append(ele)
+        return inEnvi
+
+    def updateOutEnvi(self, inEnvi, outEnvi, tempEnvi):
+        # Update variable after run out a function or a block 
+        outName  = [idx.name for idx in outEnvi]
+        tempName = [idx.name for idx in tempEnvi]
+        for idx in inEnvi:
+            if idx.name in outName and idx.name not in tempName and type(idx.type) != MType:
+                self.updateType(idx.name, outEnvi, idx.mtype)
+
+
+    def funcTraverser(self, ast, o):
+        # name: Id
+        # param: List[VarDecl]
+        # body: Tuple[List[VarDecl],List[Stmt]]
+        name = ast.name.name
+        enviList = [idx.name for idx in o]
+        if name in enviList:                                    # Check if function declared 
+            raise Redeclared(Function(), name)
+        tempEnvi  = []
+        [self.visit(idx, tempEnvi) for idx  in ast.param]
+        return tempEnvi
+
 
     def check(self):
         return self.visit(self.ast,self.global_envi)
 
     def visitProgram(self,ast, c):
         #decl : List[Decl]
-        #c = [[],[]] #mpType and action (for funciton)
-            
-        [self.visit(x,c) for x in ast.decl]
+        #trevease function
+        c = []
+        [self.visit(x,c) for x in ast.decl if type(x) is VarDecl]
+        for idx in ast.decl:
+            if type(idx) is FuncDecl:
+                param = self.funcTraverser(idx, c)
+                name = idx.name.name
+                c.append(Symbol(name, MType(param, Unknown())))
+        #check main func
+        funcList = [idx.name for idx in c]
+        if 'main' not in funcList:
+            raise NoEntryPoint()
+        #visit decl
+        [self.visit(x,c) for x in ast.decl if type(x) is FuncDecl]
         
-    
     def visitVarDecl(self, ast, envi):
         #variable : Id
         #varDimen : List[int] # empty list for scalar variable
         #varInit  : Literal   # null if no initial
-
-        name  = self.visit(ast.variable)
-        enviList = [idx.name for idx in envi] if envi else []
+        name  = ast.variable.name
+        enviList = [idx.name for idx in envi]
         if name in enviList:                                    # Check if variable name used 
-            rasie Redeclared(Identifier(), ast.variable)
-
+            raise Redeclared(Identifier(), ast.variable)
         dimen   = []
         varType = Unknown()
-        if varDimen:                                            # Check if this variable is a arraycell
+        if ast.varDimen:                                            # Check if this variable is a arraycell
             [dimen.append(x) for x in ast.varDimen]
-            varType = self.visit(ast.varInit) if varInit else Unknown()
-            var     = Symbol(name , ArrayType(dimen, varType))
-            envi.append(var)
+            varType = self.visit(ast.varInit) if ast.varInit else Unknown()
+            envi.append(Symbol(name , ArrayType(dimen, varType)))
             return
-
-        varType = self.visit(ast.varInit) if varInit else Unknown()
-        var     = Symbol(name, varType)
-        envi.append(var)
-        return
-
-    
+        else:
+            varType = self.visit(ast.varInit) if ast.varInit else Unknown()
+            envi.append(Symbol(name, varType))
+            return
+        
     def visitFuncDecl(self, ast, envi):
         # name: Id
         # param: List[VarDecl]
         # body: Tuple[List[VarDecl],List[Stmt]]
+        #set up enviroment for a function
+        tempEnvi  = []
+        varList = ast.param + ast.body[0]
+        [self.visit(idx, tempEnvi) for idx  in varList]
+        funcEnvi = self.buildEnvi(tempEnvi, envi)
+        #run statement
+        [self.visit(idx, funcEnvi) for idx in ast.body[1]]
+        #update type 
+        self.updateOutEnvi(funcEnvi, envi, tempEnvi)
 
-        name = self.visit(ast.name)
-        if name in envi[0]:
-            rasie Redeclared(Function(), name)
-        else 
-
-
-        return None
-    
     def visitBinaryOp(self, ast, envi):
         # op:str
         # left:Expr
         # right:Expr
-        return None
+        left  = self.visit(ast.left, envi)
+        right = self.visit(ast.right, envi)
+        #Check UnInfer
+        if type(left) is UnInfer or type(right) is UnInfer:
+            return UnInfer()
+        #If not Uninfer, check operator
+        if ast.op in ['+','-','*','\\','%']:
+            if type(left) is Unknown:
+                self.updateType(self.getName(ast.left), envi, IntType())
+            if type(right) is Unknown:
+                self.updateType(self.getName(ast.right), envi, IntType())
+            left  = self.visit(ast.left, envi)
+            right = self.visit(ast.right, envi)
+            if type(left) != IntType or type(right) != IntType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return IntType()       
+        elif ast.op in ['+.','-.','*.','\\.','%.']:
+            if type(left) is Unknown:
+                self.updateType(self.getName(ast.left), envi, FloatType())
+            if type(right) is Unknown:
+                self.updateType(self.getName(ast.right), envi, FloatType())
+            left  = self.visit(ast.left, envi)
+            right = self.visit(ast.right, envi)
+            if type(left) != FloatType or type(right) != FloatType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return FloatType()
+        elif ast.op in ['==','!=','<','>','<=','>=']:
+            if type(left) is Unknown:
+                self.updateType(self.getName(ast.left), envi, IntType())
+            if type(right) is Unknown:
+                self.updateType(self.getName(ast.right), envi, IntType())
+            left  = self.visit(ast.left, envi)
+            right = self.visit(ast.right, envi)
+            if type(left) != IntType or type(right) != IntType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return BoolType()
+        elif ast.op in ['=/=','<.','>.','<=.','>=.']:
+            if type(left) is Unknown:
+                self.updateType(self.getName(ast.left), envi, FloatType())
+            if type(right) is Unknown:
+                self.updateType(self.getName(ast.right), envi, FloatType())
+            left  = self.visit(ast.left, envi)
+            right = self.visit(ast.right, envi)
+            if type(left) != FloatType or type(right) != FloatType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return BoolType()
+        elif ast.op in  ['&&','||']:
+            if type(left) is Unknown:
+                self.updateType(self.getName(ast.left), envi, BoolType())
+            if type(right) is Unknown:
+                self.updateType(self.getName(ast.right), envi, BoolType())
+            left  = self.visit(ast.left, envi)
+            right = self.visit(ast.right, envi)
+            if type(left) != BoolType or type(right) != BoolType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return BoolType()
     
     def visitUnaryOp(self, ast, envi):
         # op:str
         # body:Expr
-        return None
-    
+        exp = self.visit(ast.body, envi)
+        sign = ast.op
+        
+        if sign == '-':
+            if type(exp) is Unknown:
+                self.updateType(self.getName(ast.body), envi, IntType())
+            exp = self.visit(ast.body, envi)
+            if type(exp) != IntType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return IntType()
+        elif sign == '-.':
+            if type(exp) is Unknown:
+                self.updateType(self.getName(ast.body), envi, FloatType())
+            exp = self.visit(ast.body, envi)
+            if type(exp) != FloatType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return FloatType()
+        elif sign == '!':
+            if type(exp) is Unknown:
+                self.updateType(self.getName(ast.body), envi, BoolType())
+            exp = self.visit(ast.body, envi)
+            if type(exp) != BoolType:
+                raise TypeMismatchInExpression(ast)
+            else:
+                return BoolType()
     def visitCallExpr(self, ast, envi):
         # method:Id
         # param:List[Expr]
-
-        return None
+        funcList = [idx.name for idx in envi if type(idx.mtype) is MType]
+        if ast.method.name not in funcList:
+            raise Undeclared(Function(), ast.method.name)
+        #check type of function
+        funcSym = self.getSymbol(ast.method.name, MType, envi)
+        #check parameter
+        paraList = funcSym.mtype.intype[:]
+        arguList = [self.visit(idx, envi) for idx in ast.param]
+        if len(paraList) != len(arguList):
+            raise TypeMismatchInExpression(ast)
     
     def visitId(self, ast, envi):
         #name : str
@@ -137,13 +291,35 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitArrayCell(self, ast, envi):
         # arr:Expr
         # idx:List[Expr]
-        return None
+        if ast.idx:
+            for exp in ast.idx:
+                value = self.visit(exp, envi)
+                if type(value) is UnInfer:
+                    return UnInfer()
+                elif type(value) is Unknown:
+                    self.updateType(self.getName(ast), envi, IntType())
+                value = self.visit(exp, envi)
+                if type(exp) != IntType:
+                    raise TypeMismatchInExpression(ast)
+
+        else:
+            raise TypeMismatchInExpression(ast)
     
     def visitAssign(self, ast, envi):
         # lhs: LHS
         # rhs: Expr
-        return None
-    
+        lhs = self.visit(ast.lhs, envi)
+        rhs = self.visit(ast.rhs, envi)
+        if type(rhs) is UnInfer and type(lhs) is UnInfer:
+            raise TypeCannotBeInferred(ast)
+        elif type(lhs) is Unknown and type(rhs) is Unknown:
+            raise TypeCannotBeInferred(ast)
+        elif type(lhs) is VoidType or type(rhs) is VoidType:
+            raise TypeMismatchInStatement(ast)
+        elif type(lhs) is Unknown and isinstance(ast.lhs, CallExpr) and type(rhs) is ArrayType:
+            if rhs.dimen and type(rhs.eletype) != Unknown:
+                return 
+        
     def visitIf(self, ast, envi):   
         # ifthenStmt:List[Tuple[Expr,List[VarDecl],List[Stmt]]]
         # elseStmt:Tuple[List[VarDecl],List[Stmt]] # for Else branch, empty list if no Else
@@ -159,8 +335,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
     
     def visitContinue(self, ast, envi):
-
-        
         return None
     
     def visitBreak(self, ast, envi):
@@ -177,21 +351,44 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitWhile(self, ast, envi):
         # exp: Expr
         # sl:Tuple[List[VarDecl],List[Stmt]]
-        return None
+        expr = self.visit(ast.exp, envi)
+        if type(expr) is Unknown:
+            self.updateType(ast.exp.name, envi, BoolType())
+        elif type(expr) is UnInfer:
+            raise TypeCannotBeInferred(ast.exp)
+        elif type(expr) is not BoolType:
+            raise TypeMismatchInExpression(ast.exp)
+        tempEnvi = []
+        [self.visit(idx, tempEnvi) for idx in ast.sl[0]]
+        inEnvi = self.buildEnvi(tempEnvi, envi)
+        [self.visit(idx, inEnvi) for idx in ast.sl[1]]
+        self.updateOutEnvi(inEnvi, envi, tempEnvi)
 
     def visitCallStmt(self, ast, envi):
         # method:Id
         # param:List[Expr]
-        name = self.visit(ast.method)
+        # Check if function not exist
+        funcList = [idx.name for idx in envi if type(idx.mtype) is MType]
+        if ast.method.name not in funcList:
+            raise Undeclared(Function(), ast.method.name)
+        #check type of function
+        funcSym = self.getSymbol(ast.method.name, MType, envi)
+        if type(funcSym.mtype.restype) is Unknown:
+            funcSym.mtype.restype = VoidType()
+        if type(funcSym.mtype.restype) != VoidType:
+            raise TypeMismatchInStatement(ast)
+        #check parameter
+        arguList = [self.visit(idx, envi) for idx in ast.param]
+        paraList = funcSym.mtype.intype[:]
 
-        if name not in envi[0]:
-            raise Undeclared(Function(), name)
-        if name in envi[0] and getType(name) != Function()
-            rasie Undeclared(Function(), name)
-
-        
-
-        return None
+        if len(paraList) != len(arguList):
+            raise TypeMismatchInStatement(ast)
+        for idx in range(len(paraList)):
+            if type(arguList[idx]) is UnInfer or type(paraList[idx]) is UnInfer:
+                raise TypeCannotBeInferred(ast)
+            elif type(arguList[idx]) is Unknown and type(paraList[idx]) is Unknown:
+                raise TypeCannotBeInferred(ast)
+        return
     
     def visitIntLiteral(self, ast, envi):
         # value: int
@@ -211,6 +408,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitArrayLiteral(self, ast, envi):
         # value:List[Literal]
-        return [self.visit(idx) for idx in ast.value] else Unknown()
+
+        return [self.visit(idx) for idx in ast.value] if ast.value else Unknown()
         
 

@@ -1,0 +1,14 @@
+
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo = 2;
+            While False Do
+                main(foo);
+            EndWhile.
+            Return 0;
+        EndBody.
+        Function: foo
+        Body:
+        EndBody.
+                   
