@@ -129,7 +129,7 @@ class TestChecker:
     @staticmethod
     def checkStatic(input,expect,num):
         dest = open("./test/solutions/" + str(num) + ".txt","w")
-        
+        print(num) 
         if type(input) is str:
             inputfile = TestUtil.makeSource(input,num)
             lexer = BKITLexer(inputfile)

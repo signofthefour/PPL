@@ -1,1 +1,1 @@
-Type Mismatch In Statement: VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
+Undeclared Function: foo
