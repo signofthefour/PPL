@@ -65,7 +65,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(TypeMismatchInStatement())
+        expect = ""
         self.assertTrue(TestChecker.test(input,expect,406))
 
     def test_init_2(self):
@@ -85,7 +85,7 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-        expect = str(TypeMismatchInStatement(ast))
+        expect = ""
         self.assertTrue(TestChecker.test(input,expect,408))
 
     def test_init_4(self):
@@ -95,13 +95,8 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-<<<<<<< HEAD
         expect = str(Undeclared(Function(),"foo"))
         self.assertTrue(TestChecker.test(input,expect,409))
-=======
-        expect = str(TypeMismatchInStatement(ast))
-        self.assertTrue(TestChecker.test(input,expect,408))
->>>>>>> 20e9a7a512675d9d005d1d6aa1bfb762c11c2019
 
     def test_init_5(self):
         """Not same dimen"""
@@ -110,7 +105,6 @@ class CheckSuite(unittest.TestCase):
                    Body: 
                         foo();
                    EndBody."""
-<<<<<<< HEAD
         expect = str(Undeclared(Function(),"foo"))
         self.assertTrue(TestChecker.test(input,expect,410))
     
@@ -268,10 +262,6 @@ class CheckSuite(unittest.TestCase):
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
         self.assertTrue(TestChecker.test(input,expect,420))
-=======
-        expect = str(TypeMismatchInStatement(ast))
-        self.assertTrue(TestChecker.test(input,expect,409))
->>>>>>> 20e9a7a512675d9d005d1d6aa1bfb762c11c2019
 
     def test_func_decl_10(self):
         """
