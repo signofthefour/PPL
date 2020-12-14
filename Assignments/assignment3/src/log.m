@@ -307,7 +307,7 @@ Testcase#421.txt
         Return 1;
         EndBody.
 ************SOL**********
-
+Type Mismatch In Statement: FuncDecl(Id(foo)[VarDecl(Id(x))],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
 ===========================
 
 ===========================
@@ -326,7 +326,7 @@ Testcase#422.txt
         Return 1;
         EndBody.
 ************SOL**********
-
+Type Mismatch In Statement: FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(a),[])],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
 ===========================
 
 ===========================
@@ -345,5 +345,5 @@ Testcase#423.txt
         Return 1;
         EndBody.
 ************SOL**********
-
+Type Mismatch In Statement: FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(a),[])],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
 ===========================
