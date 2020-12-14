@@ -2,6 +2,7 @@
 """
  * @author nhphung
 """
+from Assignments.assignment3.initial.src.main.bkit.utils.AST import CallExpr
 from abc import ABC, abstractmethod, ABCMeta
 from dataclasses import dataclass
 from typing import List, Tuple
@@ -128,7 +129,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         [self.visit(idx, tempEnvi) for idx  in ast.param]
         return tempEnvi
 
-
     def check(self):
         return self.visit(self.ast,self.global_envi)
 
@@ -180,7 +180,12 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         funcEnvi = self.buildEnvi(tempEnvi, envi)
         #run statement
         [self.visit(idx, funcEnvi) for idx in ast.body[1]]
-        #update type 
+        #check Return:
+        self.getSymbol(ast.name.name, funcEnvi)
+        for stmt in ast.body[1]:
+            if type(stmt) is Return:
+                restype = self.visit(stmt)
+        #update type
         self.updateOutEnvi(funcEnvi, envi, tempEnvi)
 
     def visitBinaryOp(self, ast, envi):
@@ -283,16 +288,52 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitCallExpr(self, ast, envi):
         # method:Id
         # param:List[Expr]
+        # method:Id
+        # param:List[Expr]
+        # Check if function not exist
+        funcName = ast.method.name
         funcList = [idx.name for idx in envi if type(idx.mtype) is MType]
-        if ast.method.name not in funcList:
-            raise Undeclared(Function(), ast.method.name)
-        #check type of function
-        funcSym = self.getSymbol(ast.method.name, envi)
+        if funcName not in funcList:
+            raise Undeclared(Function(), funcName)
+        for decl in envi:
+            if decl.name == funcName and type(decl.mtype) != MType:
+                raise Undeclared(Function(), funcName)
         #check parameter
-        paraList = funcSym.mtype.intype[:]
-        arguList = [self.visit(idx, envi) for idx in ast.param]
-        if len(paraList) != len(arguList):
-            raise TypeMismatchInExpression(ast)
+        paraList = funcSym.mtype.intype
+        if len(paraList) != len(ast.param):
+            raise TypeMismatchInStatement(ast)
+
+        for idx in range(len(ast.param)):
+            para = self.visit(idx)
+            if type(para) is UnInfer or type(paraList[idx]) is UnInfer:
+                raise TypeCannotBeInferred(ast)
+            elif type(para) is Unknown and type(paraList[idx]) is Unknown:
+                raise TypeCannotBeInferred(ast)
+            elif type(para) is Unknown and type(ast.param[idx]) is CallExpr and type(paraList[idx]) is ArrayType:
+                if paraList[idx].dimen and type(paraList[idx].eletype) != Unknown:
+                    self.updateType(self.getName(ast.param[idx]), envi, paraList[idx])
+                else: 
+                    raise TypeCannotBeInferred(ast)
+            elif type(paraList[idx]) is Unknown and type(para) not in [Unknown, ArrayType]:
+                paraList[idx] = para
+            elif type(para) is Unknown and type(paraList[idx]) not in [Unknown, ArrayType]:
+                para = paraList[idx]
+                self.updateType(self.getName(ast.param[idx]), envi, para)
+            elif type(paraList[idx]) is ArrayType and type(para) is ArrayType:
+                if paraList[idx].dimen != para.dimen:
+                    raise TypeMismatchInStatement(ast)
+                else:
+                    if type(paraList[idx].eletype) is Unknown and type(para.eletype) is Unknown:
+                        raise TypeCannotBeInferred(ast)
+                    elif type(paraList[idx].eletype) is Unknown:
+                        paraList[idx].eletype =  para.eletype
+                    elif type(para.eletype)  is Unknown:
+                        para.eletype = paraList[idx].eletype
+                    elif type(paraList[idx].eletype) != type(para.eletype):
+                        raise TypeMismatchInStatement(ast)
+            elif type(paraList[idx]) !=  type(para):
+                raise TypeMismatchInStatement(ast)
+
     
     def visitId(self, ast, envi):
         #name : str
@@ -303,7 +344,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         else:
             return self.getType(self.getSymbol(name, envi), True)
 
-    
     def visitArrayCell(self, ast, envi):
         # arr:Expr
         # idx:List[Expr]
@@ -341,10 +381,38 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeCannotBeInferred(ast)
         elif type(lhs) is VoidType or type(rhs) is VoidType:
             raise TypeMismatchInStatement(ast)
-        elif type(lhs) is Unknown and isinstance(ast.lhs, CallExpr) and type(rhs) is ArrayType:
+        elif type(lhs) is Unknown and type(ast.lhs) is CallExpr and type(rhs) is ArrayType:
             if rhs.dimen and type(rhs.eletype) != Unknown:
-                return 
-        
+                self.updateType(self.getName(ast.lhs), envi, rhs)
+            else:
+                raise TypeCannotBeInferred(ast)
+        elif type(rhs) is Unknown and type(ast.rhs) is CallExpr and type(lhs) is ArrayType:
+            if lhs.dimen and type(lhs.eletype) != Unknown:
+                self.updateType(self.getName(ast.rhs), envi, lhs)
+            else:
+                raise TypeCannotBeInferred(ast)
+        elif type(lhs) is Unknown and type(rhs) not in [Unknown, ArrayType]:
+            lhs = rhs
+            self.updateType(self.getName(ast.lhs), envi, rhs)  
+        elif type(rhs) is Unknown and type(lhs) not in [Unknown, ArrayType]:
+            rhs = lhs
+            self.updateType(self.getName(ast.rhs), envi, lhs)
+        elif (type(lhs) is ArrayType and type(rhs) is ArrayType):
+            if lhs.dimen == rhs.dimen:
+                if type(lhs.eletype) is Unknown and type(rhs.eletype) is Unknown:
+                    raise TypeCannotBeInferred(ast)
+                elif type(lhs.eletype) is Unknown:
+                    lhs = rhs
+                    self.updateType(self.getName(ast.lhs), envi, rhs)
+                elif type(rhs.eletype) is Unknown:
+                    rhs = lhs
+                    self.updateType(self.getName(ast.rhs), envi, lhs)
+                elif type(lhs.eletype) != type(rhs.eletype):
+                    raise TypeMismatchInStatement(ast)
+            else:
+                raise TypeMismatchInStatement(ast)
+        elif type(lhs) != type(rhs):
+            raise TypeMismatchInStatement(ast)
     def visitIf(self, ast, envi):   
         # ifthenStmt:List[Tuple[Expr,List[VarDecl],List[Stmt]]]
         # elseStmt:Tuple[List[VarDecl],List[Stmt]] # for Else branch, empty list if no Else
@@ -418,7 +486,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
 
     def visitReturn(self, ast, envi):
-        return None
+        #expr:Expr
+        return self.visit(ast.expr, envi) if ast.expr else VoidType()
     
     def visitDowhile(self, ast, envi):
         # sl:Tuple[List[VarDecl],List[Stmt]]
@@ -456,9 +525,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         # method:Id
         # param:List[Expr]
         # Check if function not exist
+        funcName = ast.method.name
         funcList = [idx.name for idx in envi if type(idx.mtype) is MType]
-        if ast.method.name not in funcList:
-            raise Undeclared(Function(), ast.method.name)
+        if funcName not in funcList:
+            raise Undeclared(Function(), funcName)
+        for decl in envi:
+            if decl.name == funcName and type(decl.mtype) != MType:
+                raise Undeclared(Function(), funcName)
         #check type of function
         funcSym = self.getSymbol(ast.method.name, envi)
         if type(funcSym.mtype.restype) is Unknown:
@@ -466,18 +539,42 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if type(funcSym.mtype.restype) != VoidType:
             raise TypeMismatchInStatement(ast)
         #check parameter
-        arguList = [self.visit(idx, envi) for idx in ast.param]
-        paraList = funcSym.mtype.intype[:]
-
-        if len(paraList) != len(arguList):
+        paraList = funcSym.mtype.intype
+        if len(paraList) != len(ast.param):
             raise TypeMismatchInStatement(ast)
-        for idx in range(len(paraList)):
-            if type(arguList[idx]) is UnInfer or type(paraList[idx]) is UnInfer:
+
+        for idx in range(len(ast.param)):
+            para = self.visit(idx)
+            if type(para) is UnInfer or type(paraList[idx]) is UnInfer:
                 raise TypeCannotBeInferred(ast)
-            elif type(arguList[idx]) is Unknown and type(paraList[idx]) is Unknown:
+            elif type(para) is Unknown and type(paraList[idx]) is Unknown:
                 raise TypeCannotBeInferred(ast)
-        return
-    
+            elif type(para) is Unknown and type(ast.param[idx]) is CallExpr and type(paraList[idx]) is ArrayType:
+                if paraList[idx].dimen and type(paraList[idx].eletype) != Unknown:
+                    self.updateType(self.getName(ast.param[idx]), envi, paraList[idx])
+                else: 
+                    raise TypeCannotBeInferred(ast)
+            elif type(paraList[idx]) is Unknown and type(para) not in [Unknown, ArrayType]:
+                paraList[idx] = para
+            elif type(para) is Unknown and type(paraList[idx]) not in [Unknown, ArrayType]:
+                para = paraList[idx]
+                self.updateType(self.getName(ast.param[idx]), envi, para)
+            elif type(paraList[idx]) is ArrayType and type(para) is ArrayType:
+                if paraList[idx].dimen != para.dimen:
+                    raise TypeMismatchInStatement(ast)
+                else:
+                    if type(paraList[idx].eletype) is Unknown and type(para.eletype) is Unknown:
+                        raise TypeCannotBeInferred(ast)
+                    elif type(paraList[idx].eletype) is Unknown:
+                        paraList[idx].eletype =  para.eletype
+                    elif type(para.eletype)  is Unknown:
+                        para.eletype = paraList[idx].eletype
+                    elif type(paraList[idx].eletype) != type(para.eletype):
+                        raise TypeMismatchInStatement(ast)
+            elif type(paraList[idx]) !=  type(para):
+                raise TypeMismatchInStatement(ast)
+
+            
     def visitIntLiteral(self, ast, envi):
         # value: int
         return IntType()
@@ -496,6 +593,4 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitArrayLiteral(self, ast, envi):
         # value:List[Literal]
-        dim = []
         return [self.visit(idx) for idx in ast.value] if ast.value else Unknown()
-            

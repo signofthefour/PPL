@@ -528,9 +528,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     # expr:Expr
     def visitReturn(self, ast, o):
         # Enclose function at end of env
-        if type(o[-1]) != MType:
-            funcRetType = 
-            return
+
         funcRetType = o[-1].mtype.restype
         if ast.expr:
             retType = self.visit(ast.expr, o)
@@ -608,7 +606,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             self.updateTypeInEnv(funcName, VoidType(), o)
         elif type(retType) != VoidType:
             raise TypeMismatchInStatement(ast)
-        lstArg = [self.visit(ele, o) for ele in ast.param]
         lstParam = (self.lookup(funcName, o, lambda x: x.name).mtype.intype)[:]
 
         if len(ast.param) != len(lstParam):
@@ -643,7 +640,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                         raise TypeMismatchInStatement(ast)
                 else:
                     raise TypeMismatchInStatement(ast)
-                
+                    
             elif type(arg) != type(lstParam[i]):
                 raise TypeMismatchInStatement(ast)
             self.updateParamInEnv(funcName, lstParam, o)
