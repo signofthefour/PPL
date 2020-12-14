@@ -1,0 +1,6 @@
+Var: a,b,c;
+            Function: main
+            Parameter: a
+            Body:
+            Var:x = 1, y;
+            EndBody.
