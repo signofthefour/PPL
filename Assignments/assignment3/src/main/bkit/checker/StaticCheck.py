@@ -149,7 +149,12 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         scope_env = reduce(lambda env, x: [self.visit(x, env)] + env, ast.body[0], param)
         cur_env = scope_env + env
 
-        res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]
+        res_type_list = []
+        for stmt in ast.body[1]:
+            try:
+                res_type_list += [self.visit(stmt, cur_env)]
+            except TypeCannotBeInferred:
+                raise TypeCannotBeInferred(stmt)
         res_type = VoidType()
         for (idx, typ) in enumerate(res_type_list):
             if typ is not None:
@@ -434,7 +439,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                     operand.mtype.restype = BoolType()
                 otype = operand.mtype.restype
 
-            if isinstance(otype, BoolType):
+            if not isinstance(otype, BoolType):
                 raise TypeMismatchInExpression(ast)
             return Symbol('', BoolType())
 
@@ -564,6 +569,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
         # MTYPE = MTYPE
         if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, MType):
+            # if isinstance(rhs.mtype.restype, VoidType) or isinstance(lhs.mtype.restype, VoidType):
+            #     raise TypeMismatchInExpression(ast)
             if isinstance(rhs.mtype.restype, Unknown):
                 rhs.mtype.restype = lhs.mtype
             if isinstance(lhs.mtype.restype, Unknown):
@@ -575,6 +582,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
         # ARRAY = MTYPE
         if isinstance(lhs.mtype, ArrayType) and isinstance(rhs.mtype, MType):
+            if isinstance(rhs.mtype.restype, VoidType):
+                raise TypeMismatchInExpression(ast)
             if isinstance(rhs.mtype.restype, Unknown):
                 rhs.mtype.restype = lhs.mtype.eletype
             if isinstance(lhs.mtype.eletype, Unknown):
@@ -586,6 +595,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
         # PRIM = MTYPE
         if isinstance(lhs.mtype, (Prim, Unknown)) and isinstance(rhs.mtype, MType):
+            if isinstance(rhs.mtype.restype, VoidType):
+                raise TypeMismatchInExpression(ast)
             if isinstance(rhs.mtype.restype, Unknown):
                 rhs.mtype.restype = lhs.mtype
             if isinstance(lhs.mtype, Unknown):
@@ -597,6 +608,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
         # MTYPE = ARRAY
         if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, ArrayType):
+            if isinstance(lhs.mtype.restype, VoidType):
+                raise TypeMismatchInExpression(ast)
             if isinstance(lhs.mtype.restype, Unknown):
                 lhs.mtype.restype = rhs.mtype.eletype
             if isinstance(rhs.mtype.eletype):
@@ -630,6 +643,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         
         # MTYPE = PRIM
         if isinstance(lhs.mtype, MType) and isinstance(rhs.mtype, (Prim, Unknown)):
+            if isinstance(lhs.mtype.restype, VoidType):
+                raise TypeMismatchInExpression(ast)
             if isinstance(lhs.mtype.restype, Unknown):
                 lhs.mtype.restype = rhs.mtype
             if isinstance(rhs.mtype, Unknown):

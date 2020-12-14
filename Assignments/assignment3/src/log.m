@@ -486,7 +486,7 @@ Testcase#432.txt
                 EndBody.
             
 ************SOL**********
-Type Cannot Be Inferred: CallExpr(Id(foo),[Id(x)])
+Type Cannot Be Inferred: Assign(Id(y),BinaryOp(+,Id(a),CallExpr(Id(foo),[Id(x)])))
 ===========================
 
 ===========================
@@ -523,7 +523,7 @@ Testcase#434.txt
 
             
 ************SOL**********
-Type Cannot Be Inferred: CallExpr(Id(foo),[Id(x)])
+Type Cannot Be Inferred: If(CallExpr(Id(foo),[Id(x)]),[],[Assign(Id(x),IntLiteral(1))])
 ===========================
 
 ===========================
@@ -563,7 +563,7 @@ Testcase#436.txt
 
             
 ************SOL**********
-Type Cannot Be Inferred: CallExpr(Id(foo),[Id(x)])
+Type Cannot Be Inferred: Assign(Id(x),BinaryOp(+,IntLiteral(1),CallExpr(Id(foo),[Id(x)])))
 ===========================
 
 ===========================
@@ -655,7 +655,7 @@ Testcase#441.txt
                 EndBody.
             
 ************SOL**********
-Type Cannot Be Inferred: CallExpr(Id(foo),[Id(x)])
+Type Cannot Be Inferred: While(CallExpr(Id(foo),[Id(x)]),[],[Assign(Id(x),IntLiteral(1))])
 ===========================
 
 ===========================
@@ -779,7 +779,7 @@ Testcase#448.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Expression: UnaryOp(!,BooleanLiteral(true))
+Type Mismatch In Statement: For(Id(x),UnaryOp(!,BooleanLiteral(true)),BinaryOp(>,Id(x),IntLiteral(1)),BinaryOp(+,IntLiteral(0),IntLiteral(1)),[],[])
 ===========================
 
 ===========================
@@ -877,7 +877,7 @@ Testcase#454.txt
                 EndBody.
             
 ************SOL**********
-
+Type Mismatch In Expression: Assign(Id(x),CallExpr(Id(foo),[]))
 ===========================
 
 ===========================
@@ -951,7 +951,7 @@ Testcase#458.txt
         EndBody.
                    
 ************SOL**********
-
+Type Mismatch In Expression: Assign(Id(x),CallExpr(Id(foo),[IntLiteral(5),IntLiteral(99)]))
 ===========================
 
 ===========================
@@ -1559,7 +1559,7 @@ Testcase#491.txt
         EndBody.
             
 ************SOL**********
-Type Mismatch In Expression: UnaryOp(!,Id(e))
+Type Mismatch In Expression: UnaryOp(!,Id(d))
 ===========================
 
 ===========================

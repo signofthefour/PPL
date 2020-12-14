@@ -56,8 +56,6 @@
 456
 457
 458
-2
-FuncDecl(Id(foo)[VarDecl(Id(x1)),VarDecl(Id(x2))],([][Return()]))
 459
 460
 461
@@ -106,7 +104,7 @@ FuncDecl(Id(foo)[VarDecl(Id(x))],([][Assign(Id(x),IntLiteral(2))]))
 500
 489
 Tests run  101
-Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 751, in test_453\n    self.assertTrue(TestChecker.test(input,expect,453))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 139, in checkStatic\n    asttree = ASTGeneration().visit(tree)\n  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit\n    return tree.accept(self)\n  File "../target/main/bkit/parser/BKITParser.py", line 429, in accept\n    return visitor.visitProgram(self)\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in visitProgram\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in <lambda>\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in visitFunction_declare\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in <lambda>\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 88, in visitStmt\n    return self.visitAssign_stmt(ctx.assign_stmt())\n  File "./main/bkit/astgen/ASTGeneration.py", line 141, in visitAssign_stmt\n    lhs = Id(ctx.ID().getText()) if ctx.ID() else self.visit( ctx.array_cell())\n  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit\n    return tree.accept(self)\n  File "../target/main/bkit/parser/BKITParser.py", line 2102, in accept\n    return visitor.visitArray_cell(self)\n  File "./main/bkit/astgen/ASTGeneration.py", line 147, in visitArray_cell\n    arr = self.visitExpr7(ctx.expr7())\n  File "./main/bkit/astgen/ASTGeneration.py", line 227, in visitExpr7\n    return self.visitExpr8(ctx.expr8())\n  File "./main/bkit/astgen/ASTGeneration.py", line 234, in visitExpr8\n    return self.visitExpr(ctx.expr())\n  File "./main/bkit/astgen/ASTGeneration.py", line 176, in visitExpr\n    return self.visitExpr1(ctx.expr1(0))\n  File "./main/bkit/astgen/ASTGeneration.py", line 181, in visitExpr1\n    if ctx.getChildCount() > 2:\nAttributeError: \'NoneType\' object has no attribute \'getChildCount\'\n'), (<CheckSuite.CheckSuite testMethod=test_case_90>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 1539, in test_case_90\n    self.assertTrue(TestChecker.test(input, expect, 489))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 147, in checkStatic\n    res = checker.check()\n  File "./main/bkit/checker/StaticCheck.py", line 67, in check\n    return self.visit(self.ast,self.global_envi)\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 55, in accept\n    return v.visitProgram(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 83, in visitProgram\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/checker/StaticCheck.py", line 83, in <listcomp>\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 84, in accept\n    return v.visitFuncDecl(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 152, in visitFuncDecl\n    res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/checker/StaticCheck.py", line 152, in <listcomp>\n    res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 267, in accept\n    return v.visitDowhile(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 822, in visitDowhile\n    res_list = [self.visit(x, cur_env) for x in ast.sl[1]]\n  File "./main/bkit/checker/StaticCheck.py", line 822, in <listcomp>\n    res_list = [self.visit(x, cur_env) for x in ast.sl[1]]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 290, in accept\n    return v.visitCallStmt(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 913, in visitCallStmt\n    if isinstance(func.mtype.intype[idx].mtype, (Unknown, Prim)):\nAttributeError: \'StringType\' object has no attribute \'mtype\'\n')]
+Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 751, in test_453\n    self.assertTrue(TestChecker.test(input,expect,453))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 139, in checkStatic\n    asttree = ASTGeneration().visit(tree)\n  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit\n    return tree.accept(self)\n  File "../target/main/bkit/parser/BKITParser.py", line 429, in accept\n    return visitor.visitProgram(self)\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in visitProgram\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 12, in <lambda>\n    funcs_decls = list(reduce(lambda y,x: y + [self.visitFunction_declare(x)], [item for item in ctx.function_declare()], []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in visitFunction_declare\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 21, in <lambda>\n    stmt = list(reduce(lambda y, x: y + [self.visitStmt(x)], ctx.stmt(), []))\n  File "./main/bkit/astgen/ASTGeneration.py", line 88, in visitStmt\n    return self.visitAssign_stmt(ctx.assign_stmt())\n  File "./main/bkit/astgen/ASTGeneration.py", line 141, in visitAssign_stmt\n    lhs = Id(ctx.ID().getText()) if ctx.ID() else self.visit( ctx.array_cell())\n  File "/home/nguyendat/.local/lib/python3.8/site-packages/antlr4/tree/Tree.py", line 34, in visit\n    return tree.accept(self)\n  File "../target/main/bkit/parser/BKITParser.py", line 2102, in accept\n    return visitor.visitArray_cell(self)\n  File "./main/bkit/astgen/ASTGeneration.py", line 147, in visitArray_cell\n    arr = self.visitExpr7(ctx.expr7())\n  File "./main/bkit/astgen/ASTGeneration.py", line 227, in visitExpr7\n    return self.visitExpr8(ctx.expr8())\n  File "./main/bkit/astgen/ASTGeneration.py", line 234, in visitExpr8\n    return self.visitExpr(ctx.expr())\n  File "./main/bkit/astgen/ASTGeneration.py", line 176, in visitExpr\n    return self.visitExpr1(ctx.expr1(0))\n  File "./main/bkit/astgen/ASTGeneration.py", line 181, in visitExpr1\n    if ctx.getChildCount() > 2:\nAttributeError: \'NoneType\' object has no attribute \'getChildCount\'\n'), (<CheckSuite.CheckSuite testMethod=test_case_90>, 'Traceback (most recent call last):\n  File "./test/CheckSuite.py", line 1539, in test_case_90\n    self.assertTrue(TestChecker.test(input, expect, 489))\n  File "./test/TestUtils.py", line 128, in test\n    return TestChecker.checkStatic(input,expect,num)\n  File "./test/TestUtils.py", line 147, in checkStatic\n    res = checker.check()\n  File "./main/bkit/checker/StaticCheck.py", line 67, in check\n    return self.visit(self.ast,self.global_envi)\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 55, in accept\n    return v.visitProgram(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 83, in visitProgram\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/checker/StaticCheck.py", line 83, in <listcomp>\n    [self.visit(x,self.env) for x in ast.decl]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 84, in accept\n    return v.visitFuncDecl(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 155, in visitFuncDecl\n    res_type_list += [self.visit(stmt, cur_env)]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 267, in accept\n    return v.visitDowhile(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 837, in visitDowhile\n    res_list = [self.visit(x, cur_env) for x in ast.sl[1]]\n  File "./main/bkit/checker/StaticCheck.py", line 837, in <listcomp>\n    res_list = [self.visit(x, cur_env) for x in ast.sl[1]]\n  File "./main/bkit/utils/Visitor.py", line 7, in visit\n    return ast.accept(self,param)\n  File "./main/bkit/utils/AST.py", line 290, in accept\n    return v.visitCallStmt(self, param)\n  File "./main/bkit/checker/StaticCheck.py", line 928, in visitCallStmt\n    if isinstance(func.mtype.intype[idx].mtype, (Unknown, Prim)):\nAttributeError: \'StringType\' object has no attribute \'mtype\'\n')]
 [(<CheckSuite.CheckSuite testMethod=test_420>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 256, in test_420\n'
@@ -117,20 +115,10 @@ Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent c
   '  File "./test/CheckSuite.py", line 284, in test_422\n'
   '    self.assertTrue(TestChecker.test(input,expect,422))\n'
   'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_432>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 420, in test_432\n'
-  '    self.assertTrue(TestChecker.test(input,expect,432))\n'
-  'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_434>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 453, in test_434\n'
   '    self.assertTrue(TestChecker.test(input,expect,434))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_436>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 489, in test_436\n'
-  '    self.assertTrue(TestChecker.test(input,expect,436))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_437>,
   'Traceback (most recent call last):\n'
@@ -141,11 +129,6 @@ Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent c
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 550, in test_440\n'
   '    self.assertTrue(TestChecker.test(input,expect,440))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_441>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 571, in test_441\n'
-  '    self.assertTrue(TestChecker.test(input,expect,441))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_442>,
   'Traceback (most recent call last):\n'
@@ -161,11 +144,6 @@ Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent c
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 668, in test_447\n'
   '    self.assertTrue(TestChecker.test(input,expect,447))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_448>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 681, in test_448\n'
-  '    self.assertTrue(TestChecker.test(input,expect,448))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_454>,
   'Traceback (most recent call last):\n'
@@ -242,18 +220,13 @@ Errors  [(<CheckSuite.CheckSuite testMethod=test_453>, 'Traceback (most recent c
   '  File "./test/CheckSuite.py", line 1348, in test_490\n'
   '    self.assertTrue(TestChecker.test(input,expect,490))\n'
   'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_491>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 1372, in test_491\n'
-  '    self.assertTrue(TestChecker.test(input,expect,491))\n'
-  'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_495>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 1444, in test_495\n'
   '    self.assertTrue(TestChecker.test(input,expect,495))\n'
   'AssertionError: False is not true\n')]
 Test output
- ...................F.F.........F.F.FF..FFF...FFF....EFFFFFF.....F.F...........F.FF..FF.F.FF...F.....E
+ ...................F.F...........F..F..F.F...FF.....EFFFFFF.....F.F...........F.FF..FF.F.F....F.....E
 ======================================================================
 ERROR: test_453 (CheckSuite.CheckSuite)
 Created automatically
@@ -321,23 +294,21 @@ Traceback (most recent call last):
     return ast.accept(self,param)
   File "./main/bkit/utils/AST.py", line 84, in accept
     return v.visitFuncDecl(self, param)
-  File "./main/bkit/checker/StaticCheck.py", line 152, in visitFuncDecl
-    res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]
-  File "./main/bkit/checker/StaticCheck.py", line 152, in <listcomp>
-    res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]
+  File "./main/bkit/checker/StaticCheck.py", line 155, in visitFuncDecl
+    res_type_list += [self.visit(stmt, cur_env)]
   File "./main/bkit/utils/Visitor.py", line 7, in visit
     return ast.accept(self,param)
   File "./main/bkit/utils/AST.py", line 267, in accept
     return v.visitDowhile(self, param)
-  File "./main/bkit/checker/StaticCheck.py", line 822, in visitDowhile
+  File "./main/bkit/checker/StaticCheck.py", line 837, in visitDowhile
     res_list = [self.visit(x, cur_env) for x in ast.sl[1]]
-  File "./main/bkit/checker/StaticCheck.py", line 822, in <listcomp>
+  File "./main/bkit/checker/StaticCheck.py", line 837, in <listcomp>
     res_list = [self.visit(x, cur_env) for x in ast.sl[1]]
   File "./main/bkit/utils/Visitor.py", line 7, in visit
     return ast.accept(self,param)
   File "./main/bkit/utils/AST.py", line 290, in accept
     return v.visitCallStmt(self, param)
-  File "./main/bkit/checker/StaticCheck.py", line 913, in visitCallStmt
+  File "./main/bkit/checker/StaticCheck.py", line 928, in visitCallStmt
     if isinstance(func.mtype.intype[idx].mtype, (Unknown, Prim)):
 AttributeError: 'StringType' object has no attribute 'mtype'
 
@@ -360,30 +331,12 @@ Traceback (most recent call last):
 AssertionError: False is not true
 
 ======================================================================
-FAIL: test_432 (CheckSuite.CheckSuite)
-Created automatically
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 420, in test_432
-    self.assertTrue(TestChecker.test(input,expect,432))
-AssertionError: False is not true
-
-======================================================================
 FAIL: test_434 (CheckSuite.CheckSuite)
 Created automatically
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 453, in test_434
     self.assertTrue(TestChecker.test(input,expect,434))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_436 (CheckSuite.CheckSuite)
-Created automatically
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 489, in test_436
-    self.assertTrue(TestChecker.test(input,expect,436))
 AssertionError: False is not true
 
 ======================================================================
@@ -402,15 +355,6 @@ Created automatically
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 550, in test_440
     self.assertTrue(TestChecker.test(input,expect,440))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_441 (CheckSuite.CheckSuite)
-Created automatically
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 571, in test_441
-    self.assertTrue(TestChecker.test(input,expect,441))
 AssertionError: False is not true
 
 ======================================================================
@@ -438,15 +382,6 @@ Created automatically
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 668, in test_447
     self.assertTrue(TestChecker.test(input,expect,447))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_448 (CheckSuite.CheckSuite)
-Created automatically
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 681, in test_448
-    self.assertTrue(TestChecker.test(input,expect,448))
 AssertionError: False is not true
 
 ======================================================================
@@ -585,15 +520,6 @@ Traceback (most recent call last):
 AssertionError: False is not true
 
 ======================================================================
-FAIL: test_491 (CheckSuite.CheckSuite)
-Created automatically
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 1372, in test_491
-    self.assertTrue(TestChecker.test(input,expect,491))
-AssertionError: False is not true
-
-======================================================================
 FAIL: test_495 (CheckSuite.CheckSuite)
 Created automatically
 ----------------------------------------------------------------------
@@ -603,7 +529,7 @@ Traceback (most recent call last):
 AssertionError: False is not true
 
 ----------------------------------------------------------------------
-Ran 101 tests in 2.543s
+Ran 101 tests in 2.195s
 
-FAILED (failures=29, errors=2)
+FAILED (failures=24, errors=2)
 
