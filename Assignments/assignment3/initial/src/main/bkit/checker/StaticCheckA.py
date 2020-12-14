@@ -393,7 +393,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if not ast.idx:
             raise TypeMismatchInExpression(ast)
         for x in ast.idx:
-            if type(self.visit(x, o)) == Unknown:
+            if type(self.visit(x, o)) == Unknown:   
                 self.updateTypeInEnv(self.getNameOfAst(x), IntType(), o)
             elif type(self.visit(x, o)) == NotInfer:
                 return NotInfer()

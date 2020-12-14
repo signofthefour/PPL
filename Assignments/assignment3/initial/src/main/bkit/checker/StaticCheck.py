@@ -63,9 +63,19 @@ Symbol("printLn",MType([],VoidType())),
 Symbol("print",MType([StringType()],VoidType())),
 Symbol("printStrLn",MType([StringType()],VoidType()))]                           
    
-    def getSymbol(self, name, mtype, envi):
+    def getType(self, sym:Symbol, arrType:bool):
+        """Return type of the param symbol""" 
+        if type(sym.mtype) is MType:
+            if type(sym.mtype.restype) is ArrayType:
+                return sym.mtype.restype if arrType else sym.mtype.restype.eletype
+        elif type(sym.mtype) is ArrayType:
+            return sym.mtype if arrType else sym.mtype.eletype
+        else:
+            return sym.mtype
+
+    def getSymbol(self, name, envi):
         for ctx in envi:
-            if ctx.name == name and type(ctx.mtype)  == mtype:
+            if ctx.name == name:
                 return ctx
         return None
     
@@ -81,7 +91,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             return ast.method.name
 
     def updateType(self, symName, envi, newType: Type):
-        #update type of a symbol in envi 
+        """update type of a symbol in envi"""
         for idx in envi:
             if idx.name == symName:
                 idx.mtype = newType
@@ -105,7 +115,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         for idx in inEnvi:
             if idx.name in outName and idx.name not in tempName and type(idx.type) != MType:
                 self.updateType(idx.name, outEnvi, idx.mtype)
-
 
     def funcTraverser(self, ast, o):
         # name: Id
@@ -270,6 +279,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 raise TypeMismatchInExpression(ast)
             else:
                 return BoolType()
+
     def visitCallExpr(self, ast, envi):
         # method:Id
         # param:List[Expr]
@@ -277,7 +287,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if ast.method.name not in funcList:
             raise Undeclared(Function(), ast.method.name)
         #check type of function
-        funcSym = self.getSymbol(ast.method.name, MType, envi)
+        funcSym = self.getSymbol(ast.method.name, envi)
         #check parameter
         paraList = funcSym.mtype.intype[:]
         arguList = [self.visit(idx, envi) for idx in ast.param]
@@ -291,7 +301,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if ast.name not in lst:
             raise Undeclared(Identifier(), name)
         else:
-            
+            return self.getType(self.getSymbol(name, envi), True)
 
     
     def visitArrayCell(self, ast, envi):
@@ -316,8 +326,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 else: 
                     raise TypeMismatchInExpression(ast)
             elif type(arrType) != ArrayType:
-                raise TypeMismatchInExpression(ast)
-            
+                raise TypeMismatchInExpression(ast)        
             else:
                 return arrType.eletype 
 
@@ -400,7 +409,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if ast.method.name not in funcList:
             raise Undeclared(Function(), ast.method.name)
         #check type of function
-        funcSym = self.getSymbol(ast.method.name, MType, envi)
+        funcSym = self.getSymbol(ast.method.name, envi)
         if type(funcSym.mtype.restype) is Unknown:
             funcSym.mtype.restype = VoidType()
         if type(funcSym.mtype.restype) != VoidType:
@@ -439,3 +448,4 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return [self.visit(idx) for idx in ast.value] if ast.value else Unknown()
         
 
+    
