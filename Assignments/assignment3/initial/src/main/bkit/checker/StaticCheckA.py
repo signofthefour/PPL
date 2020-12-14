@@ -234,6 +234,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     # param: List[VarDecl]
     # body: Tuple[List[VarDecl],List[Stmt]]
     def visitFuncDecl(self, ast, o):
+        outerEnv = o[:]
         funcName = ast.name.name
         lstParam = reduce(lambda env, ele: env + [self.visit(ele, env)]  \
         if not self.matchNameInEnv('all', ele.variable.name, env) \
@@ -245,7 +246,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         innerEnv = reduce(lambda env, ele: env + [self.visit(ele, env)], ast.body[0], lstParam)
         funcEnv = self.createNewEnv(o, innerEnv)
         # Move enclose function to end of env
-        funcEnv.append(funcEnv.pop(funcEnv.index(self.lookup(funcName, funcEnv, lambda x: x.name))))
+        if type(self.lookup(funcName, funcEnv, lambda x: x.name)) == MType:
+            encloseFunction = self.lookup(funcName, funcEnv, lambda x: x.name)
+            funcEnv.append(funcEnv.pop(funcEnv.index(encloseFunction)))
+        else:
+            encloseFunction = self.lookup(funcName, outerEnv, lambda x: x.name)
+            funcEnv.append(encloseFunction)
+        
         [self.visit(x, funcEnv) for x in ast.body[1]]
         # self.updateOldEnv(lstParam, [], funcEnv) # Update param with func env
         # lstParamType = [x.mtype for x in lstParam]
@@ -393,7 +400,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         if not ast.idx:
             raise TypeMismatchInExpression(ast)
         for x in ast.idx:
-            if type(self.visit(x, o)) == Unknown:   
+            if type(self.visit(x, o)) == Unknown:
                 self.updateTypeInEnv(self.getNameOfAst(x), IntType(), o)
             elif type(self.visit(x, o)) == NotInfer:
                 return NotInfer()
@@ -521,6 +528,9 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     # expr:Expr
     def visitReturn(self, ast, o):
         # Enclose function at end of env
+        if type(o[-1]) != MType:
+            funcRetType = 
+            return
         funcRetType = o[-1].mtype.restype
         if ast.expr:
             retType = self.visit(ast.expr, o)

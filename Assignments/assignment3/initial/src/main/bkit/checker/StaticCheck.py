@@ -348,9 +348,29 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitIf(self, ast, envi):   
         # ifthenStmt:List[Tuple[Expr,List[VarDecl],List[Stmt]]]
         # elseStmt:Tuple[List[VarDecl],List[Stmt]] # for Else branch, empty list if no Else
+        for stmt in ast.ifthenStmt:
+            exp = self.visit(stmt[0])
+            if type(exp) is UnInfer:
+                raise TypeCannotBeInferred(ast)
+            #Check and infer type of the expr
+            elif type(exp) is Unknown:
+                self.updateType(self.getName(ast.stmt[0]), envi, BoolType)
+            exp = self.visit(stmt[0])
+            if type(exp) != BoolType:
+                raise  TypeMismatchInStatement(ast)
+            #Run statemnets in scope
+            tempEnvi = []
+            [self.visit(idx, tempEnvi) for idx in ast.stmt[1]]
+            inEnvi = self.buildEnvi(tempEnvi, envi)
+            [self.visit(idx, inEnvi) for idx in ast.stmt[2]]
+            self.updateOutEnvi(inEnvi, envi, tempEnvi) 
+        if ast.esleStmt:
+            tempEnvi = []
+            [self.visit(idx, tempEnvi) for idx in ast.esleStmt[0]]
+            inEnvi = self.buildEnvi(tempEnvi, envi)
+            [self.visit(idx, inEnvi) for idx in ast.esleStmt[1]]
+            self.updateOutEnvi(inEnvi, envi, tempEnvi)
 
-        return None
-    
     def visitFor(self, ast, envi):
         # idx1: Id
         # expr1:Expr
@@ -358,13 +378,45 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         # expr3:Expr
         # loop: Tuple[List[VarDecl],List[Stmt]]
         scalar = self.visit(ast.idx1)
-    
+        exp1   = self.visit(ast.expr1)
+        exp2   = self.visit(ast.expr2)
+        exp3   = self.visit(ast.expr3)r
+        if UnInfer in [type(scalar), type(exp1), type(exp2), type(exp3)]:
+            raise TypeCannotBeInferred(ast)
+        #Infer and check type of idx1 and exp1
+        if type(scalar) is Unknown:
+            self.updateType(ast.idx1.name, envi,IntType())
+        if type (exp1) is Unknown:
+            self.updateType(self.getName(ast.expr1), envi, IntType())
+        scalar = self.visit(ast.idx1)
+        exp1   = self.visit(ast.expr1)
+        if type(scalar)  != IntType or type(exp1) != IntType:
+            raise TypeMismatchInStatement(ast)
+        #Infer and check type of exp2
+        if type(exp2) is Unknown:
+            self.updateType(self.getName(ast.expr2), envi, BoolType())
+        exp2   = self.visit(ast.expr2)
+        if type(exp2) != BoolType:
+            raise TypeMismatchInStatement(ast)
+        #Infer and check type of exp3
+        if type(exp3) is Unknown:
+            self.updateType(self.getName(ast.expr3), envi, IntType())
+        exp3   = self.visit(ast.expr3)
+        if type(exp2) != IntType:
+            raise TypeMismatchInStatement(ast)
+        #run statement in scope
+        tempEnvi = []
+        [self.visit(idx, tempEnvi) for idx in ast.loop[0]]
+        inEnvi = self.buildEnvi(tempEnvi, envi)
+        [self.visit(idx, inEnvi) for idx in ast.loop[1]]
+        self.updateOutEnvi(inEnvi, envi, tempEnvi)     
+
     def visitContinue(self, ast, envi):
         return None
     
     def visitBreak(self, ast, envi):
         return None
-    
+
     def visitReturn(self, ast, envi):
         return None
     
@@ -382,7 +434,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeCannotBeInferred(ast.exp)
         elif type(expr) is not BoolType:
             raise TypeMismatchInExpression(ast.exp)
-        
         self.updateOutEnvi(inEnvi, envi, tempEnvi)
 
     def visitWhile(self, ast, envi):
@@ -445,7 +496,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitArrayLiteral(self, ast, envi):
         # value:List[Literal]
+        dim = []
         return [self.visit(idx) for idx in ast.value] if ast.value else Unknown()
-        
-
-    
+            
