@@ -1,8 +1,4 @@
- Var: x="string",y[1][2]={{1,2}};
-        Function: foo
-        Body:
-        Return;
-        EndBody.
+ Var: x="string",y[1][2]={1,1.2};
         Function: main
                    Body: 
                         foo();

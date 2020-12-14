@@ -6,7 +6,6 @@
         Return 1;
         EndBody.
         Function: main
-        Body:
-        x = 1. +. 2.;
-        foo(x);
-        EndBody.
+                   Body: 
+                        foo();
+                   EndBody.

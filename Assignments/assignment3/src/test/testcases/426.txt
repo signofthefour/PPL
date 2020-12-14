@@ -2,10 +2,10 @@
         Function: main
         Body:
         Var: x = 1;
-        x = 1 + foo(x);
+        x = 1 + foo(x,foo(x, True));
         EndBody.
         Function: foo
-        Parameter: x
+        Parameter: x,y
         Body:
         x = 1 + 2;
         Return 1;

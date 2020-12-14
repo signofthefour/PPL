@@ -87,7 +87,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         Visit each global var top-down
         first layer in stack
         """
-        print(ast)
         symbol = self.visit(ast.variable, c)
         if symbol is None:
             symbol = Symbol(ast.variable.name, None)
@@ -96,8 +95,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         symbol.mtype = Unknown()
         dimen = list(ast.varDimen)
         init_type = self.visit(ast.varInit, []) if ast.varInit else Symbol('', Unknown())
-        if not isinstance(dimen, list):
-            print(type(dimen))
         if len(dimen):
             if not isinstance(init_type.mtype, (ArrayType, Unknown)):
                 """
@@ -133,30 +130,34 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             param = reduce(lambda env, x: [self.visit(x, env)] +  env, ast.param, [])
         except Redeclared as e:
             raise Redeclared(Parameter(), e.n)
+        if len(symbol.mtype.intype) != len(param):
+            raise TypeMismatchInExpression(ast)
+        if len(symbol.mtype.intype):
+            if symbol.mtype.intype[0]:
+                print(len(param))
+                print(ast)
+                # Was inferred (was inferred in somewhere before visit)
+                for idx in range(len(param)):
+                    if isinstance(symbol.mtype.intype[idx].mtype, MType):
+                        param[idx].mtype = symbol.mtype.intype[idx].mtype.restype 
+                    else:
+                        param[idx].mtype = symbol.mtype.intype[idx].mtype
 
         scope_env = reduce(lambda env, x: [self.visit(x, env)] + env, ast.body[0], param)
         cur_env = scope_env + env
 
-        res_type_list = [self.visit(x, cur_env) for x in ast.body[1]][::-1]
+        res_type_list = [self.visit(x, cur_env) for x in ast.body[1]]
         res_type = VoidType()
-        for typ in res_type_list:
+        for (idx, typ) in enumerate(res_type_list):
             if typ is not None:
-                res_type = typ
-                break
-        symbol.mtype.restype = res_type
+                if not symbol.mtype.restype:
+                    symbol.mtype.restype = typ
+                if type(symbol.mtype.restype) != type(typ):
+                    raise TypeMismatchInStatement(ast.body[1])
+        
         param_list = cur_env[len(scope_env) - len(param): len(scope_env)]
-
-        for idx in len(symbol.mtype.intype):
-            if symbol.mtype.intype[idx] == None:
-                symbol.mtype.intype[idx] = param_list[idx]
-            else:
-                if isinstance()
-                if isinstance(symbol.mtype.intype[idx], MType):
-                    if isinstance(param_list[idx], Prim):
-                        if type(param_list[idx].mtype) != type(symbol.mtype.intype[idx].mtype.restype):
-                            raise TypeMismatchInStatement(ast)
-                        if 
-        symbol.mtype = MType(param_list, res_type)
+        
+        symbol.mtype.intype = param_list
         # print('sym_name: {}, sym_type: {}'.format(symbol.name, symbol.mtype))
 
     def visitArrayCell(self, ast, env):
@@ -442,52 +443,74 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             assignment (can be infer from assign statement)
         """
         func = self.visit(ast.method, env)
-        if func is None or not isinstance(func.mtype,  (MType, type(None))):
+        if func is None or not isinstance(func.mtype, MType):
             raise Undeclared(Function(), ast.method.name)
-        if func.mtype.restype is None:
-            print(ast)
-            args = [self.visit(arg, env) for arg in ast.param]
-            args_type = []
-            for arg in args:
-                if isinstance(arg.mtype, (Prim, Unknown)):
-                    if isinstance(arg.mtype, Unknown):
-                        raise TypeCannotBeInferred(ast)
-                    args_type.append(arg.mtype)
-                if isinstance(arg.mtype, ArrayType):
-                    if isinstance(arg.mtype.eletype, Unknown):
-                        raise TypeCannotBeInferred(ast)
-                    args_type.append(arg.mtype.eletype)
-                if isinstance(arg.mtype, MType):
-                    if isinstance(arg.mtype.restype, Unknown):
-                        raise TypeCannotBeInferred(ast)
-                    if isinstance(arg.mtype.restype, VoidType):
-                        raise TypeMismatchInExpression(ast)
-                    args_type.append(arg.mtype.restype)
-            func.mtype = MType(args, Unknown())
-            return func
-
         if len(func.mtype.intype) != len(ast.param):
             raise TypeMismatchInStatement(ast)
-        
         args = [self.visit(arg, env) for arg in ast.param]
-        for arg in args:
-            if isinstance(arg.mtype, (Prim, Unknown)):
-                if isinstance(arg.mtype, Unknown):
+        for (idx, arg) in enumerate(ast.param):
+            arg_sym = self.visit(arg, env) # arg_type: Symbol
+            arg_type = Unknown()
+            is_arr = False
+            if isinstance(arg_sym.mtype, (Prim, Unknown)):
+                arg_type = arg_sym.mtype
+            if isinstance(arg_sym.mtype, MType):
+                arg_type = arg_sym.mtype.restype
+            if isinstance(arg_sym.mtype, ArrayType):
+                arg_type = arg_sym.mtype.eletype
+                is_arr = True
+            if isinstance(arg_type, Unknown):
+                if func.mtype.intype[idx] == None:
                     raise TypeCannotBeInferred(ast)
-                args_type.append(arg.mtype)
-            if isinstance(arg.mtype, ArrayType):
-                if isinstance(arg.mtype.eletype, Unknown):
-                    raise TypeCannotBeInferred(ast)
-                args_type.append(arg.mtype.eletype)
-            if isinstance(arg.mtype, MType):
-                if isinstance(arg.mtype.restype, Unknown):
-                    raise TypeCannotBeInferred(ast)
-                if isinstance(arg.mtype.restype, VoidType):
-                    raise TypeMismatchInExpression(ast)
-
-        match_type = list(map(lambda x, y: is_same_type(x, y), args, func.mtype.intype))
-        if any([not match for match in match_type]):
-            raise TypeMismatchInStatement(ast)
+                if isinstance(func.mtype.intype[idx].mtype, Prim):
+                    if isinstance(func.mtype.intype[idx].mtype, Unknown):
+                        raise TypeCannotBeInferred(ast)
+                    arg_type = func.mtype.intype[idx].mtype
+                if isinstance(func.mtype.intype[idx].mtype, MType):
+                    if isinstance(func.mtype.intype[idx].mtype.restype, Unknown):
+                        raise TypeCannotBeInferred(ast)
+                    arg_type = func.mtype.intype[idx].mtype.restype
+                if isinstance(func.mtype.intype[idx].mtype, ArrayType):
+                    if not is_arr:
+                        raise TypeMismatchInExpression(ast)
+                    if isinstance(func.mtype.intype[idx].mtype.eletype, Unknown):
+                        raise TypeCannotBeInferred(ast)
+                    arg_type = func.mtype.intype[idx].mtype.eletype
+                    
+            else: # arg_type is known
+                # print(func.mtype.intype[idx])
+                # print(arg_sym)
+                if func.mtype.intype[idx] == None:
+                    func.mtype.intype[idx] = arg_sym
+                if isinstance(func.mtype.intype[idx].mtype, (Unknown,Prim)):
+                    if isinstance(func.mtype.intype[idx].mtype, Unknown):
+                        func.mtype.intype[idx].mtype = arg_type
+                    if type(func.mtype.intype[idx].mtype) != type(arg_type):
+                        raise TypeMismatchInExpression(ast)
+                if isinstance(func.mtype.intype[idx].mtype, MType):
+                    if isinstance(func.mtype.intype[idx].mtype.restype, Unknown):
+                        func.mtype.intype[idx].mtype.restype = arg_type
+                    if type(func.mtype.intype[idx].mtype.restype) != type(arg_type):
+                        raise TypeMismatchInExpression(ast)
+                if isinstance(func.mtype.intype[idx].mtype, ArrayType):
+                    if not is_arr:
+                        raise TypeMismatchInExpression(ast)
+                    if isinstance(func.mtype.intype[idx].mtype.eletype, Unknown):
+                        func.mtype.intype[idx].mtype.eletype = arg_type
+                    if type(func.mtype.intype[idx].mtype.eletype) != type(arg_type):
+                        raise TypeMismatchInExpression(ast)
+                    if type(func.mtype.intype[idx]) != type(arg_sym):
+                        # array type not match
+                        raise TypeMismatchInExpression(ast)
+                
+            if isinstance(arg_sym.mtype, (Prim, Unknown)):
+                arg_sym.mtype =  arg_type
+            if isinstance(arg_sym.mtype, MType):
+                arg_sym.mtype.restype = arg_type
+            if isinstance(arg_sym.mtype, ArrayType):
+                arg_sym.mtype.eletype = arg_type
+        if func.mtype.restype == None:
+            func.mtype.restype = Unknown()
         return func
         
     def visitIntLiteral(self, ast, env):
@@ -515,7 +538,8 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             curr_dimen = [len(type_of_arr)]
             last_dimen = type_of_arr[0].mtype.dimen if isinstance(type_of_arr[0].mtype, ArrayType) else []
             dimen = curr_dimen + last_dimen
-            return Symbol('',ArrayType(dimen, type(type_of_arr[0])))
+            typ = type_of_arr[0].mtype.eletype if isinstance(type_of_arr[0].mtype, ArrayType) else type_of_arr[0].mtype
+            return Symbol('',ArrayType(dimen, typ))
         else:
             raise InvalidArrayLiteral(ast)
 
@@ -947,7 +971,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             return False
         else:
             if isinstance(a.mtype, ArrayType):
-                if a.mtype.dimen != b.mtype.dimen or a.mtype.eletype != b.mtype.eletype:
+                if len(a.mtype.dimen) != len(b.mtype.dimen) or a.mtype.eletype != b.mtype.eletype:
                     return False
             if isinstance(a.mtype, MType):
                 if a.mtype.intype != b.mtype.intype or a.mtype.restype != b.mtype.restype:
@@ -971,3 +995,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         stack-like
         """
         return [var] + scope
+        """
+        Rang comment them de co du 1000 dong
+        """

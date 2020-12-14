@@ -1,93 +1,59 @@
+426
+427
+2
+FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(y))],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
+428
 402
 404
 401
 405
-410
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-420
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-CallExpr(Id(foo),[Id(x)])
-421
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x),IntLiteral(1))
-CallExpr(Id(foo),[Id(x)])
-VarDecl(Id(x))
-422
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x),IntLiteral(1))
-CallExpr(Id(foo),[Id(x),Id(y)])
-VarDecl(Id(x))
-VarDecl(Id(a),[1,2])
-423
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x),IntLiteral(1))
-CallExpr(Id(foo),[Id(x),Id(y)])
-VarDecl(Id(x))
-VarDecl(Id(a),[1,3])
-412
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-VarDecl(Id(y))
-VarDecl(Id(x),[1,2])
-413
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-414
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-415
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-416
-VarDecl(Id(x),FloatLiteral(1.2))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-417
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-418
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-419
-VarDecl(Id(x),IntLiteral(1))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-VarDecl(Id(x))
-406
-VarDecl(Id(x))
-VarDecl(Id(y),ArrayLiteral())
-407
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
-408
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),ArrayLiteral(IntLiteral(2)))))
-408
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(ArrayLiteral(IntLiteral(1)),ArrayLiteral(IntLiteral(2)))))
-409
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(IntLiteral(1),FloatLiteral(1.2)))
 411
-VarDecl(Id(x),StringLiteral(string))
-VarDecl(Id(y),[1,2],ArrayLiteral(ArrayLiteral(IntLiteral(1),IntLiteral(2))))
+421
+422
+1
+FuncDecl(Id(foo)[VarDecl(Id(x))],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
+423
+2
+FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(a),[])],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
+424
+2
+FuncDecl(Id(foo)[VarDecl(Id(x)),VarDecl(Id(a),[])],([][Assign(Id(x),BinaryOp(+,IntLiteral(1),IntLiteral(2))),Return(IntLiteral(1))]))
+413
+414
+415
+416
+417
+418
+419
+420
+406
+407
+408
+409
+410
+412
+429
+425
 400
-VarDecl(Id(x))
-VarDecl(Id(y),IntLiteral(1))
 403
-Tests run  25
+Tests run  30
 Errors  []
-[(<CheckSuite.CheckSuite testMethod=test_diff_numofparam_expr>,
+[(<CheckSuite.CheckSuite testMethod=test_call_expr>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 378, in test_call_expr\n'
+  '    self.assertTrue(TestChecker.test(input,expect,426))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_call_expr_1>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 397, in test_call_expr_1\n'
+  '    self.assertTrue(TestChecker.test(input,expect,427))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_call_expr_2>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 418, in test_call_expr_2\n'
+  '    self.assertTrue(TestChecker.test(input,expect,428))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_diff_numofparam_expr>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 34, in test_diff_numofparam_expr\n'
   '    self.assertTrue(TestChecker.test(input,expect,402))\n'
@@ -101,67 +67,67 @@ Errors  []
  (<CheckSuite.CheckSuite testMethod=test_func_decl>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 123, in test_func_decl\n'
-  '    self.assertTrue(TestChecker.test(input,expect,410))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,411))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_10>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 283, in test_func_decl_10\n'
-  '    self.assertTrue(TestChecker.test(input,expect,420))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,421))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_11>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 302, in test_func_decl_11\n'
-  '    self.assertTrue(TestChecker.test(input,expect,421))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,422))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_12>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 321, in test_func_decl_12\n'
-  '    self.assertTrue(TestChecker.test(input,expect,422))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,423))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_13>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 340, in test_func_decl_13\n'
-  '    self.assertTrue(TestChecker.test(input,expect,423))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,424))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_2>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 142, in test_func_decl_2\n'
-  '    self.assertTrue(TestChecker.test(input,expect,412))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,413))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_3>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 156, in test_func_decl_3\n'
-  '    self.assertTrue(TestChecker.test(input,expect,413))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,414))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_4>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 172, in test_func_decl_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,414))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,415))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_5>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 191, in test_func_decl_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,415))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,416))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_6>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 210, in test_func_decl_6\n'
-  '    self.assertTrue(TestChecker.test(input,expect,416))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,417))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_7>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 228, in test_func_decl_7\n'
-  '    self.assertTrue(TestChecker.test(input,expect,417))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,418))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_8>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 246, in test_func_decl_8\n'
-  '    self.assertTrue(TestChecker.test(input,expect,418))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,419))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_func_decl_9>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 264, in test_func_decl_9\n'
-  '    self.assertTrue(TestChecker.test(input,expect,419))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,420))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_init_1>,
   'Traceback (most recent call last):\n'
@@ -176,20 +142,57 @@ Errors  []
  (<CheckSuite.CheckSuite testMethod=test_init_4>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 99, in test_init_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,408))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,409))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_init_5>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 109, in test_init_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,409))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,410))\n'
   'AssertionError: False is not true\n'),
  (<CheckSuite.CheckSuite testMethod=test_no_entry_point>,
   'Traceback (most recent call last):\n'
   '  File "./test/CheckSuite.py", line 132, in test_no_entry_point\n'
-  '    self.assertTrue(TestChecker.test(input,expect,411))\n'
+  '    self.assertTrue(TestChecker.test(input,expect,412))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_redecl_global>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 440, in test_redecl_global\n'
+  '    self.assertTrue(TestChecker.test(input,expect,429))\n'
+  'AssertionError: False is not true\n'),
+ (<CheckSuite.CheckSuite testMethod=test_undecl_var>,
+  'Traceback (most recent call last):\n'
+  '  File "./test/CheckSuite.py", line 359, in test_undecl_var\n'
+  '    self.assertTrue(TestChecker.test(input,expect,425))\n'
   'AssertionError: False is not true\n')]
 Test output
- FF..FFFFFFFFFFFFFF.FFFF..
+ FFFFF..FFFFFFFFFFFFFF.FFFFFF..
+======================================================================
+FAIL: test_call_expr (CheckSuite.CheckSuite)
+Var decl in function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 378, in test_call_expr
+    self.assertTrue(TestChecker.test(input,expect,426))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_call_expr_1 (CheckSuite.CheckSuite)
+Var decl in function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 397, in test_call_expr_1
+    self.assertTrue(TestChecker.test(input,expect,427))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_call_expr_2 (CheckSuite.CheckSuite)
+Var decl in function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 418, in test_call_expr_2
+    self.assertTrue(TestChecker.test(input,expect,428))
+AssertionError: False is not true
+
 ======================================================================
 FAIL: test_diff_numofparam_expr (CheckSuite.CheckSuite)
 More complex program
@@ -214,7 +217,7 @@ Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 123, in test_func_decl
-    self.assertTrue(TestChecker.test(input,expect,410))
+    self.assertTrue(TestChecker.test(input,expect,411))
 AssertionError: False is not true
 
 ======================================================================
@@ -223,7 +226,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 283, in test_func_decl_10
-    self.assertTrue(TestChecker.test(input,expect,420))
+    self.assertTrue(TestChecker.test(input,expect,421))
 AssertionError: False is not true
 
 ======================================================================
@@ -232,7 +235,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 302, in test_func_decl_11
-    self.assertTrue(TestChecker.test(input,expect,421))
+    self.assertTrue(TestChecker.test(input,expect,422))
 AssertionError: False is not true
 
 ======================================================================
@@ -241,7 +244,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 321, in test_func_decl_12
-    self.assertTrue(TestChecker.test(input,expect,422))
+    self.assertTrue(TestChecker.test(input,expect,423))
 AssertionError: False is not true
 
 ======================================================================
@@ -250,7 +253,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 340, in test_func_decl_13
-    self.assertTrue(TestChecker.test(input,expect,423))
+    self.assertTrue(TestChecker.test(input,expect,424))
 AssertionError: False is not true
 
 ======================================================================
@@ -258,7 +261,7 @@ FAIL: test_func_decl_2 (CheckSuite.CheckSuite)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 142, in test_func_decl_2
-    self.assertTrue(TestChecker.test(input,expect,412))
+    self.assertTrue(TestChecker.test(input,expect,413))
 AssertionError: False is not true
 
 ======================================================================
@@ -267,7 +270,7 @@ Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 156, in test_func_decl_3
-    self.assertTrue(TestChecker.test(input,expect,413))
+    self.assertTrue(TestChecker.test(input,expect,414))
 AssertionError: False is not true
 
 ======================================================================
@@ -276,7 +279,7 @@ Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 172, in test_func_decl_4
-    self.assertTrue(TestChecker.test(input,expect,414))
+    self.assertTrue(TestChecker.test(input,expect,415))
 AssertionError: False is not true
 
 ======================================================================
@@ -285,7 +288,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 191, in test_func_decl_5
-    self.assertTrue(TestChecker.test(input,expect,415))
+    self.assertTrue(TestChecker.test(input,expect,416))
 AssertionError: False is not true
 
 ======================================================================
@@ -294,7 +297,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 210, in test_func_decl_6
-    self.assertTrue(TestChecker.test(input,expect,416))
+    self.assertTrue(TestChecker.test(input,expect,417))
 AssertionError: False is not true
 
 ======================================================================
@@ -303,7 +306,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 228, in test_func_decl_7
-    self.assertTrue(TestChecker.test(input,expect,417))
+    self.assertTrue(TestChecker.test(input,expect,418))
 AssertionError: False is not true
 
 ======================================================================
@@ -312,7 +315,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 246, in test_func_decl_8
-    self.assertTrue(TestChecker.test(input,expect,418))
+    self.assertTrue(TestChecker.test(input,expect,419))
 AssertionError: False is not true
 
 ======================================================================
@@ -321,7 +324,7 @@ Var decl in function
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 264, in test_func_decl_9
-    self.assertTrue(TestChecker.test(input,expect,419))
+    self.assertTrue(TestChecker.test(input,expect,420))
 AssertionError: False is not true
 
 ======================================================================
@@ -348,7 +351,7 @@ Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 99, in test_init_4
-    self.assertTrue(TestChecker.test(input,expect,408))
+    self.assertTrue(TestChecker.test(input,expect,409))
 AssertionError: False is not true
 
 ======================================================================
@@ -357,7 +360,7 @@ Not same dimen
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 109, in test_init_5
-    self.assertTrue(TestChecker.test(input,expect,409))
+    self.assertTrue(TestChecker.test(input,expect,410))
 AssertionError: False is not true
 
 ======================================================================
@@ -365,11 +368,29 @@ FAIL: test_no_entry_point (CheckSuite.CheckSuite)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "./test/CheckSuite.py", line 132, in test_no_entry_point
-    self.assertTrue(TestChecker.test(input,expect,411))
+    self.assertTrue(TestChecker.test(input,expect,412))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_redecl_global (CheckSuite.CheckSuite)
+Var decl in function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 440, in test_redecl_global
+    self.assertTrue(TestChecker.test(input,expect,429))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_undecl_var (CheckSuite.CheckSuite)
+Var decl in function
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./test/CheckSuite.py", line 359, in test_undecl_var
+    self.assertTrue(TestChecker.test(input,expect,425))
 AssertionError: False is not true
 
 ----------------------------------------------------------------------
-Ran 25 tests in 0.507s
+Ran 30 tests in 0.730s
 
-FAILED (failures=20)
+FAILED (failures=25)
 

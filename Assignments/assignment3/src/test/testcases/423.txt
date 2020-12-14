@@ -5,7 +5,7 @@
         x = 1 + foo(x,y);
         EndBody.
         Function: foo
-        Parameter: x,a[1][3]
+        Parameter: x,a[1][2]
         Body:
         x = 1 + 2;
         Return 1;

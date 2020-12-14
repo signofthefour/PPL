@@ -96,7 +96,7 @@ class CheckSuite(unittest.TestCase):
                         foo();
                    EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,408))
+        self.assertTrue(TestChecker.test(input,expect,409))
 
     def test_init_5(self):
         """Not same dimen"""
@@ -106,7 +106,7 @@ class CheckSuite(unittest.TestCase):
                         foo();
                    EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,409))
+        self.assertTrue(TestChecker.test(input,expect,410))
     
     def test_func_decl(self):
         """Not same dimen"""
@@ -120,7 +120,7 @@ class CheckSuite(unittest.TestCase):
                         foo();
                    EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,410))
+        self.assertTrue(TestChecker.test(input,expect,411))
     
     def test_no_entry_point(self):
         input = """ Var: x="string",y[1][2]={{1,2}};
@@ -129,7 +129,7 @@ class CheckSuite(unittest.TestCase):
         Return;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,411))
+        self.assertTrue(TestChecker.test(input,expect,412))
     
     def test_func_decl_2(self):
         input = """ Var: x="string",y[1][2]={{1,2}};
@@ -139,7 +139,7 @@ class CheckSuite(unittest.TestCase):
         Return;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,412))
+        self.assertTrue(TestChecker.test(input,expect,413))
     
     def test_func_decl_3(self):
         """Not same dimen"""
@@ -153,7 +153,7 @@ class CheckSuite(unittest.TestCase):
                         foo();
                    EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,413))
+        self.assertTrue(TestChecker.test(input,expect,414))
 
     def test_func_decl_4(self):
         """Not same dimen"""
@@ -169,7 +169,7 @@ class CheckSuite(unittest.TestCase):
                         foo();
                    EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,414))
+        self.assertTrue(TestChecker.test(input,expect,415))
     
     def test_func_decl_5(self):
         """
@@ -188,7 +188,7 @@ class CheckSuite(unittest.TestCase):
         foo(x);
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,415))
+        self.assertTrue(TestChecker.test(input,expect,416))
 
     def test_func_decl_6(self):
         """
@@ -207,7 +207,7 @@ class CheckSuite(unittest.TestCase):
         foo(x);
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,416))
+        self.assertTrue(TestChecker.test(input,expect,417))
 
     def test_func_decl_7(self):
         """
@@ -225,7 +225,7 @@ class CheckSuite(unittest.TestCase):
         foo(x);
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,417))
+        self.assertTrue(TestChecker.test(input,expect,418))
     
     def test_func_decl_8(self):
         """
@@ -243,7 +243,7 @@ class CheckSuite(unittest.TestCase):
         foo(x);
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,418))
+        self.assertTrue(TestChecker.test(input,expect,419))
     
     def test_func_decl_9(self):
         """
@@ -261,7 +261,7 @@ class CheckSuite(unittest.TestCase):
         foo(x);
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,419))
+        self.assertTrue(TestChecker.test(input,expect,420))
 
     def test_func_decl_10(self):
         """
@@ -280,7 +280,7 @@ class CheckSuite(unittest.TestCase):
         Return 1;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,420))
+        self.assertTrue(TestChecker.test(input,expect,421))
     
     def test_func_decl_11(self):
         """
@@ -299,7 +299,7 @@ class CheckSuite(unittest.TestCase):
         Return 1;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,421))
+        self.assertTrue(TestChecker.test(input,expect,422))
     
     def test_func_decl_12(self):
         """
@@ -318,7 +318,7 @@ class CheckSuite(unittest.TestCase):
         Return 1;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,422))
+        self.assertTrue(TestChecker.test(input,expect,423))
     
     def test_func_decl_13(self):
         """
@@ -337,5 +337,104 @@ class CheckSuite(unittest.TestCase):
         Return 1;
         EndBody."""
         expect = str(Undeclared(Function(),"foo"))
-        self.assertTrue(TestChecker.test(input,expect,423))
+        self.assertTrue(TestChecker.test(input,expect,424))
     
+    def test_undecl_var(self):
+        """
+        Var decl in function
+        """
+        input = """ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,y,z);
+        EndBody.
+        Function: foo
+        Parameter: x,a[1][3]
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody."""
+        expect = str(Undeclared(Function(),"foo"))
+        self.assertTrue(TestChecker.test(input,expect,425))
+    
+    def test_call_expr(self):
+        """
+        Var decl in function
+        """
+        input = """ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,foo(x, True));
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody."""
+        expect = str(Undeclared(Function(),"foo"))
+        self.assertTrue(TestChecker.test(input,expect,426))
+    
+    def test_call_expr_1(self):
+        """
+        Var decl in function
+        """
+        input = """ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,foo(x, 1));
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody."""
+        expect = str(Undeclared(Function(),"foo"))
+        self.assertTrue(TestChecker.test(input,expect,427))
+    
+    def test_call_expr_2(self):
+        """
+        Var decl in function
+        """
+        input = """ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody."""
+        expect = str(Undeclared(Function(),"foo"))
+        self.assertTrue(TestChecker.test(input,expect,428))
+    
+    def test_redecl_global(self):
+        """
+        Var decl in function
+        """
+        input = """ Var: x=1,y[1][2]={{1,2}};
+        Var: read;
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody."""
+        expect = str(Undeclared(Function(),"foo"))
+        self.assertTrue(TestChecker.test(input,expect,429))

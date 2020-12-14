@@ -1,4 +1,4 @@
- Var: x=1.2,y[1][2]={{1,2}};
+ Var: x="string",y[1][2]={{1,2}};
         Function: foo
         Parameter: x
         Body:
