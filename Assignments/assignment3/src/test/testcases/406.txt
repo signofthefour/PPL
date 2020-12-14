@@ -1,5 +1,12 @@
- Var: x,y={};
+
         Function: main
-                   Body: 
-                        foo();
-                   EndBody.
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Body:
+        EndBody.
+                   

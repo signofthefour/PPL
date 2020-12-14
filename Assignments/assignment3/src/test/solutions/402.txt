@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallExpr(Id(read),[IntLiteral(4)])
+Undeclared Identifier: x

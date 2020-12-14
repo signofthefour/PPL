@@ -1,14 +1,8 @@
- Var: x=1,y[1][2]={{1,2}};
-        Function: main
-        Parameter: main
-        Body:
-            Var: foo;
-            foo = foo + main();
-            Return 1;
-        EndBody.
-        Function: foo
-        Parameter: x,y
-        Body:
-        x = 1 + 2;
-        Return 1;
-        EndBody.
+
+                
+                Function: main
+                Parameter: x
+                Body:
+                    Var:x;
+                EndBody.
+            

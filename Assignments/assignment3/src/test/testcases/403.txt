@@ -1,1 +1,9 @@
-Program([FuncDecl(Id(main)[],([][CallExpr(Id(foo),[])]))])
+
+
+                Function: main
+                Parameter:x
+                Body:
+                    x=1;
+                    x=1.6;
+                EndBody.
+            

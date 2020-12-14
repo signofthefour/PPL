@@ -1,12 +1,10 @@
- Var: x=1,y[1][2]={{1,2}};
-        Function: main
-        Body:
-        Var: x = 1;
-        x = 1 + foo(x,y);
-        EndBody.
-        Function: foo
-        Parameter: x,a[1][2]
-        Body:
-        x = 1 + 2;
-        Return 1;
-        EndBody.
+             
+                Function: main
+                Body:
+                    Var:a[5]= {1,2,3,4,5};
+                    Var:b[5];
+                    Var:c;
+                    c = b[5] +. 1;
+                    a=b; 
+                EndBody.
+            

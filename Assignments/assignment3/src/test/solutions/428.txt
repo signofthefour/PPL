@@ -1,1 +1,1 @@
-Undeclared Function: main
+Redeclared Variable: x
