@@ -286,12 +286,20 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     
     def visitId(self, ast, envi):
         #name : str
-        return ast.name
+        name = ast.name
+        lst = [idx.name for idx in envi]
+        if ast.name not in lst:
+            raise Undeclared(Identifier(), name)
+        else:
+            
+
     
     def visitArrayCell(self, ast, envi):
         # arr:Expr
         # idx:List[Expr]
-        if ast.idx:
+        if not ast.idx:
+            raise TypeMismatchInExpression(ast)
+        else:
             for exp in ast.idx:
                 value = self.visit(exp, envi)
                 if type(value) is UnInfer:
@@ -301,10 +309,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
                 value = self.visit(exp, envi)
                 if type(exp) != IntType:
                     raise TypeMismatchInExpression(ast)
+            arrType = self.visit(ast.arr)
+            if type(arrType) is Unknown or type(arrType) is UnInfer:
+                if isinstance(ast.arr, CallExpr):
+                    return UnInfer()
+                else: 
+                    raise TypeMismatchInExpression(ast)
+            elif type(arrType) != ArrayType:
+                raise TypeMismatchInExpression(ast)
+            
+            else:
+                return arrType.eletype 
 
-        else:
-            raise TypeMismatchInExpression(ast)
-    
     def visitAssign(self, ast, envi):
         # lhs: LHS
         # rhs: Expr
@@ -332,7 +348,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         # expr2:Expr
         # expr3:Expr
         # loop: Tuple[List[VarDecl],List[Stmt]]
-        return None
+        scalar = self.visit(ast.idx1)
     
     def visitContinue(self, ast, envi):
         return None
@@ -346,7 +362,19 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitDowhile(self, ast, envi):
         # sl:Tuple[List[VarDecl],List[Stmt]]
         # exp: Expr
-        return None
+        tempEnvi = []
+        [self.visit(idx, tempEnvi) for idx in ast.sl[0]]
+        inEnvi = self.buildEnvi(tempEnvi, envi)
+        [self.visit(idx, inEnvi) for idx in ast.sl[1]]
+        expr = self.visit(ast.exp, envi)
+        if type(expr) is Unknown:
+            self.updateType(ast.exp.name, envi, BoolType())
+        elif type(expr) is UnInfer:
+            raise TypeCannotBeInferred(ast.exp)
+        elif type(expr) is not BoolType:
+            raise TypeMismatchInExpression(ast.exp)
+        
+        self.updateOutEnvi(inEnvi, envi, tempEnvi)
 
     def visitWhile(self, ast, envi):
         # exp: Expr
@@ -408,7 +436,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitArrayLiteral(self, ast, envi):
         # value:List[Literal]
-
         return [self.visit(idx) for idx in ast.value] if ast.value else Unknown()
         
 
