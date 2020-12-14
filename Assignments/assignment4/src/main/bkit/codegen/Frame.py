@@ -83,7 +83,11 @@ class Frame():
         start = self.getNewLabel()
         end = self.getNewLabel()
         self.startLabel.append(start)
+<<<<<<< HEAD
         self.endLabel.append(end)1
+=======
+        self.endLabel.append(end)
+>>>>>>> 20e9a7a512675d9d005d1d6aa1bfb762c11c2019
         self.indexLocal.append(self.currIndex)
         if isProc:
             self.maxOpStackSize = 0

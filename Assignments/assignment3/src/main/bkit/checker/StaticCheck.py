@@ -59,8 +59,216 @@ Symbol("string_of_bool",MType([BoolType()],StringType())),
 Symbol("read",MType([],StringType())),
 Symbol("printLn",MType([],VoidType())),
 Symbol("printStr",MType([StringType()],VoidType())),
-Symbol("printStrLn",MType([StringType()],VoidType()))]                           
-   
+Symbol("printStrLn",MType([StringType()],VoidType()))]
+
+    class ControlFlow:
+        def __init__(self, ast):
+            self.flow = []
+
+        def add(self, summary:Summary):
+            self.flow.append(summary)
+
+        def type_inference(self):
+            pass
+    
+    class Summary(AST):
+        @abstractmethod
+        def infer(self):
+            pass
+        @abstractmethod
+        def propagate(self):
+            pass
+        @abstractmethod
+        def receive(self):
+            pass
+    @dataclass
+    class Type(Summary):
+        # mean type of this is <TYPE>
+        symbol: Symbol
+        kind: Kind # for raising
+        ast: AST
+
+        def infer(self, scope_stack1):
+            for symbol in global_scope:
+                if symbol.name == symbol.name:
+                    raise Redeclared(Kind, symbol.name)
+            self.propagate(symbol, inner_most_scope, global_scope)
+
+        def propagate(self, inner_most_scope, global_scope):
+            for summary in inner_most_scope:
+                    summary.receive(Symbol, same_scope=True)
+
+        def receive(self, _symbol, same_scope=False):
+            if same_scope == True:
+                if symbol.name ==  _symbol.name:
+                    raise Redeclared(kind, name)
+                else: return
+            if symbol.name ==  _symbol.name:
+                if symbol.mtype == Unknown():
+                    symbol.mtype = _symbol.mtype
+                else:
+                    raise TypeMismatchInStatement(None)
+
+    @dataclass
+    class Scope(Summary):
+        scope_type: str # 'Function', 'For', 'If', 'Do'
+        symbol: Symbol
+        scope_summarise: List[Summary] # Without first param
+        in_type: List[Summary] # in param of scope
+        ast: AST
+
+        def infer(self, inner_most_scope, global_scope):
+            for symbol in global_scope:
+                if name == symbol.name:
+                    raise Redeclared(kind, name)
+            self.propagate(name, inner_most_scope, global_scope)
+            symbol.mtype = return_type.mtype
+
+        def propagate(self, inner_most_scope, global_scope):
+            # inner most scope means current scope in this situation
+            # for summary in inner_most_scope:
+            #     summary.receive(name, self, same_scope=True)
+            # for summary in global_scope
+            pass
+        
+        def receive(self, _name, scope, same_scope=False):
+            if same_scope:
+                if _name ==  name:
+                    raise Redeclared(kind, name)
+                else:
+                    return 
+
+    @dataclass
+    class Operation(Summary):
+        # mean: in this operation, we need name as Symbol
+        # when infer type, this need a param named ecpected
+        name: str
+        in_type: List[Summary]
+        ret: Symbol
+        ast: AST
+
+        def infer(self):
+            pass
+            # # RELATIONAL
+            # ## Int
+            # if ast.op in ['==', '!=', '<', '>', '>=', '<=']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = IntType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = IntType()
+
+            #     if isinstance(l, IntType) and isinstance(r, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            # ## Float
+            # if ast.op in ['=/=', '<.', '>.', '>=.', '<=.']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = FloatType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = FloatType()
+                
+            #     if isinstance(l, FloatType) and isinstance(r, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            
+            # # BOOLEAN
+            # if ast.op in ['&&' , '||']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = BoolType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = BoolType()
+
+            #     if isinstance(l, BoolType) and isinstance(r, BoolType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+            
+            # # ARITHMETIC
+            # ## Int
+            # if ast.op in ['-' , '+', '*', '\\']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = IntType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = IntType()
+
+            #     if isinstance(l, IntType) and isinstance(r, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return IntType()
+            
+            # ## Float
+            # if ast.op in ['-.' , '+.', '*.', '\\.']:
+            #     l = self.visit(ast.left, env)
+            #     if isinstance(l, Symbol) and isinstance(l.type, Unknown):
+            #         l.type = FloatType()
+            #     r = self.visit(ast.right, env)
+            #     if isinstance(r, Symbol) and isinstance(r.type, Unknown):
+            #         r.type = FloatType()
+
+            #     if isinstance(l, FloatType) and isinstance(r, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return FloatType()
+            
+            # if ast.op in ['-']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = IntType()
+
+            #     if isinstance(operand, IntType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return IntType()
+            # ## Float
+            # if ast.op in ['-.']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = FloatType()
+
+            #     if isinstance(operand, FloatType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return FloatType()
+
+            # # BOOLEAN
+            # if ast.op in ['!']:
+            #     operand = self.visit(ast.body, env)
+            #     if isinstance(operand, Symbol) and isinstance(operand.type, Unknown):
+            #         operand.type = BoolType()
+
+            #     if isinstance(operand, BoolType):
+            #         raise TypeMismatchInExpr(ast)
+            #     return BoolType()
+
+    @dataclass
+    class Equivalent(Summary):
+        # between two Symbol mean x = y mean equivalent type
+        # mean two thing that do not know type in current context, need more summaries.
+        name: str
+        lhs: List[Summary]
+        rhs: List[Summary]
+        ast: AST
+    
+    @dataclass
+    class Call(Summary):
+        # Special for BKIT because of function type can be infer before use
+        # 
+        name: str
+        in_type: List[Summary]
+        return_type: Symbol
+        ast: AST
+    
+    @dataclass
+    class FuncReturn(Summary):
+        # Get the return type of the function with rule that it do
+        # not change the return type in program
+        name: str
+        return_type: Summary
+
+  
     def check(self):
         return self.visit(self.ast,self.global_envi)
     
@@ -85,7 +293,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
     def visitVarDecl(self, ast, c):
         """
         Visit each global var top-down
-        first layer in stack
         """
         symbol = self.visit(ast.variable, c)
         if symbol is None:
@@ -162,7 +369,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
     def visitArrayCell(self, ast, env):
         """
-        For an array indexing E[E1]...[En], 
+        For an array indexing E[E1]...[En], -
             E must be in array type with n dimensions and E1...En must be integer.
         Input: All arraycell must be declared in vardecl, so there no redeclared
         """
@@ -543,7 +750,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         else:
             raise InvalidArrayLiteral(ast)
 
-    def visitAssign(self, ast, env):
+    def visitAssign(self, ast):
         """
         lhs = rhs
         <Symbol> = <Symbol>
@@ -709,7 +916,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             env = else_env[len(scope):]
         return return_type
 
-    def visitFor(self, ast, env):
+    def visitFor(self, ast):
         """
         Check if all has the same type as spec
         """
@@ -844,7 +1051,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return None
         
 
-    def visitWhile(self, ast, env):
+    def visitWhile(self, ast):
         """
         Same with Dowhile?
         """
