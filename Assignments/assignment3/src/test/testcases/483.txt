@@ -1,14 +1,15 @@
-
-                
-                Function: main 
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
         Body:
-            If True Then
-                Var: a;
-                Var: x;
-                Var: y;
-                x = 1;
-                y = 2;
-                z = 3;
-            EndIf.
+        Var:a[2] = {1,2}, b[2] = {2.,3.};
+        main(a[2]);
+        main(b);
+        Return y;
         EndBody.
-            
+        Function: main
+        Parameter: x
+        Body:
+        Return x;
+        EndBody.
+        

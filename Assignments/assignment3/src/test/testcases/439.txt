@@ -1,8 +1,11 @@
-
+ Var: x=1,y[1][2] = {{1,2}};
         Function: main
         Body:
-        Var: i , x;
+            Var: foo;
+            Var: i , x;
             For (i = 1, i <= x*x,i*i+.1.5)
             Do x=x+1;
             EndFor.
+            Return 1;
         EndBody.
+        

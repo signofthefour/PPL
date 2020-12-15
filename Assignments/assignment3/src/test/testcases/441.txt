@@ -1,16 +1,16 @@
-
-                Function: main
-                Body:
-                    Var: x;
-                    While (foo(x))
-                    Do
-                        x=1;
-                    EndWhile.
-                EndBody.
-                
-                Function: foo
-                Parameter: x
-                Body:
-
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            Var: i , x;
+            For (i = 1, i <= x*x,i*i+1)
+            Do x=x+1;
+            For (i = 1, i <= x*x,i*i+1)
+            Do x=x+1;
+            Return True;
+            EndFor.
+            Return 1.1;
+            EndFor.
+            Return 1;
+        EndBody.
+        

@@ -1,1 +1,1 @@
-Type Mismatch In Statement: Assign(Id(x),FloatLiteral(2.0))
+TypeMismatchInStatement(Assign(Id("a"),IntLiteral(1)))

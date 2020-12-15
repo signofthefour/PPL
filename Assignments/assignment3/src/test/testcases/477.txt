@@ -1,12 +1,18 @@
-
-                Function: main
-                Parameter: x, a, b, c
-                Body:
-                    If(x == ((False||True) && (a > b + c))) Then
-                        a = b - c;
-                    Else
-                        a = b + c;
-                        x = True;
-                    EndIf.
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        Var:a,b,c,d;
+        a = b || (c >. d);
+        c = c - d;
+        Return y;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        Var: a[1][2];
+        foo(x)[x+3][2]=1;
+        a[1][1] = 2;
+        Return a;
+        EndBody.
+        

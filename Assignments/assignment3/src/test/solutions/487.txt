@@ -1,1 +1,1 @@
-Type Mismatch In Statement: Assign(Id(a),FloatLiteral(1.0))
+TypeMismatchInStatement(Assign(ArrayCell(Id("x"),[IntLiteral(1)]),BooleanLiteral(True)))

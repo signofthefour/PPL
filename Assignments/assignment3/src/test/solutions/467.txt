@@ -1,1 +1,1 @@
-Function Not Return: main
+TypeMismatchInStatement(If([(Id("a"),[],[]),(BooleanLiteral(True),[],[Assign(Id("a"),IntLiteral(12))])],[]))

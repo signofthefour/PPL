@@ -1,12 +1,16 @@
-
-        Function: main 
-        Parameter: n
-        Body: 
-            Var:x;
-            While x>1 Do
-                If x==1 Then Return;
-                EndIf.
-            EndWhile.
-            Return True;
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:a[2] = {1,2}, b[2] = {2,2};
+        main(a);
+        main(b[2]);
+        Return a;
         EndBody.
-            
+        Function: main
+        Parameter: x
+        Body:
+        x = 1;
+        Return x;
+        EndBody.
+        

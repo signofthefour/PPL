@@ -1,9 +1,13 @@
-
-                Function: main
-                Body:
-                    Var: x=1,y;
-                    While (x)
-                    Do
-                    EndWhile.
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Parameter: x, y
+        Body:
+        Var: a = 1;
+        y = a + foo(x);
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return 1;
+        EndBody.
+        

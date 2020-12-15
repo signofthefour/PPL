@@ -1,1 +1,1 @@
-Undeclared Identifier: z
+TypeMismatchInStatement(CallStmt(Id("main"),[Id("b")]))

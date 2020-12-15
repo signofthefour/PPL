@@ -1,12 +1,20 @@
-
-        Var: x;
-        Function: main 
-            Parameter: x[5]
-            Body:
-                x = {1.,2.,3.,4.,5.};
-            EndBody.
+ Var: x=1,y[1][2] = {{1,2}};
         Function: foo
-            Body:
-                x = 2;
-            EndBody.
+        Parameter: x, y[1][2]
+        Body:
+        Var:z;
+        Var: a=4;
+        Var: b=21;
+        Var: c=6;
+        Var: d="True";
+            z= !True;
+            a = (b==c) && !bool_of_string(c);
+        Return a;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        x[1] = x[1] + 1;
+        Return;
+        EndBody.
         

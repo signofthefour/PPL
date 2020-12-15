@@ -1,11 +1,15 @@
-
-                Function: foo
-                Body:
-                EndBody.
-                Function: main
-                Body:
-                    Var:x;
-                    foo();
-                    x = foo();
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Parameter: x, y
+        Body:
+        Var: a = 1;
+        x = 1;
+        y = a + foo(x, foo(x, 1));
+        Return;
+        EndBody.
+        Function: foo
+        Parameter: x, y
+        Body:
+        Return 1.1;
+        EndBody.
+        

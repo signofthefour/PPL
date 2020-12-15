@@ -1,1 +1,1 @@
-Undeclared Identifier: a
+TypeMismatchInStatement(Assign(Id("a"),BinaryOp("""&&""",BinaryOp("""==""",Id("b"),Id("c")),UnaryOp("""!""",CallExpr(Id("bool_of_string"),[Id("d")])))))

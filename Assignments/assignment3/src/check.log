@@ -1,3 +1,54 @@
+500
+502
+501
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+451
+452
+453
+454
+455
+456
+457
 426
 427
 428
@@ -5,6 +56,9 @@
 404
 401
 405
+439
+440
+441
 411
 421
 422
@@ -34,461 +88,25 @@
 437
 438
 430
+442
+443
+444
+445
+446
+447
+448
+449
+450
 425
 400
 403
-Tests run  39
+Tests run  102
 Errors  []
-[(<CheckSuite.CheckSuite testMethod=test_call_expr>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 378, in test_call_expr\n'
-  '    self.assertTrue(TestChecker.test(input,expect,426))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_call_expr_1>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 397, in test_call_expr_1\n'
-  '    self.assertTrue(TestChecker.test(input,expect,427))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_call_expr_2>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 418, in test_call_expr_2\n'
-  '    self.assertTrue(TestChecker.test(input,expect,428))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 123, in test_func_decl\n'
-  '    self.assertTrue(TestChecker.test(input,expect,411))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_10>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 283, in test_func_decl_10\n'
-  '    self.assertTrue(TestChecker.test(input,expect,421))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_11>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 302, in test_func_decl_11\n'
-  '    self.assertTrue(TestChecker.test(input,expect,422))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_12>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 321, in test_func_decl_12\n'
-  '    self.assertTrue(TestChecker.test(input,expect,423))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_13>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 340, in test_func_decl_13\n'
-  '    self.assertTrue(TestChecker.test(input,expect,424))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_2>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 142, in test_func_decl_2\n'
-  '    self.assertTrue(TestChecker.test(input,expect,413))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_3>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 156, in test_func_decl_3\n'
-  '    self.assertTrue(TestChecker.test(input,expect,414))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_4>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 172, in test_func_decl_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,415))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_5>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 191, in test_func_decl_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,416))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_6>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 210, in test_func_decl_6\n'
-  '    self.assertTrue(TestChecker.test(input,expect,417))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_7>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 228, in test_func_decl_7\n'
-  '    self.assertTrue(TestChecker.test(input,expect,418))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_8>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 246, in test_func_decl_8\n'
-  '    self.assertTrue(TestChecker.test(input,expect,419))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_func_decl_9>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 264, in test_func_decl_9\n'
-  '    self.assertTrue(TestChecker.test(input,expect,420))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_1>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 69, in test_init_1\n'
-  '    self.assertTrue(TestChecker.test(input,expect,406))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_3>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 89, in test_init_3\n'
-  '    self.assertTrue(TestChecker.test(input,expect,408))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_4>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 99, in test_init_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,409))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_init_5>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 109, in test_init_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,410))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_no_entry_point>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 132, in test_no_entry_point\n'
-  '    self.assertTrue(TestChecker.test(input,expect,412))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_redecl_global>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 440, in test_redecl_global\n'
-  '    self.assertTrue(TestChecker.test(input,expect,429))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_global>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 505, in test_return_global\n'
-  '    self.assertTrue(TestChecker.test(input,expect,432))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_in_while>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 485, in test_return_in_while\n'
-  '    self.assertTrue(TestChecker.test(input,expect,431))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 530, in test_return_index_expr\n'
-  '    self.assertTrue(TestChecker.test(input,expect,433))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr_1>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 555, in test_return_index_expr_1\n'
-  '    self.assertTrue(TestChecker.test(input,expect,434))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr_2>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 580, in test_return_index_expr_2\n'
-  '    self.assertTrue(TestChecker.test(input,expect,435))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr_3>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 605, in test_return_index_expr_3\n'
-  '    self.assertTrue(TestChecker.test(input,expect,436))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr_4>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 630, in test_return_index_expr_4\n'
-  '    self.assertTrue(TestChecker.test(input,expect,437))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_index_expr_5>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 656, in test_return_index_expr_5\n'
-  '    self.assertTrue(TestChecker.test(input,expect,438))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_return_infunc>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 461, in test_return_infunc\n'
-  '    self.assertTrue(TestChecker.test(input,expect,430))\n'
-  'AssertionError: False is not true\n'),
- (<CheckSuite.CheckSuite testMethod=test_undecl_var>,
-  'Traceback (most recent call last):\n'
-  '  File "./test/CheckSuite.py", line 359, in test_undecl_var\n'
-  '    self.assertTrue(TestChecker.test(input,expect,425))\n'
-  'AssertionError: False is not true\n')]
+[]
 Test output
- FFF....FFFFFFFFFFFFFF.FFFFFFFFFFFFFFF..
-======================================================================
-FAIL: test_call_expr (CheckSuite.CheckSuite)
-Var decl in function
+ ......................................................................................................
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 378, in test_call_expr
-    self.assertTrue(TestChecker.test(input,expect,426))
-AssertionError: False is not true
+Ran 102 tests in 2.386s
 
-======================================================================
-FAIL: test_call_expr_1 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 397, in test_call_expr_1
-    self.assertTrue(TestChecker.test(input,expect,427))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_call_expr_2 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 418, in test_call_expr_2
-    self.assertTrue(TestChecker.test(input,expect,428))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 123, in test_func_decl
-    self.assertTrue(TestChecker.test(input,expect,411))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_10 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 283, in test_func_decl_10
-    self.assertTrue(TestChecker.test(input,expect,421))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_11 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 302, in test_func_decl_11
-    self.assertTrue(TestChecker.test(input,expect,422))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_12 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 321, in test_func_decl_12
-    self.assertTrue(TestChecker.test(input,expect,423))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_13 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 340, in test_func_decl_13
-    self.assertTrue(TestChecker.test(input,expect,424))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_2 (CheckSuite.CheckSuite)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 142, in test_func_decl_2
-    self.assertTrue(TestChecker.test(input,expect,413))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_3 (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 156, in test_func_decl_3
-    self.assertTrue(TestChecker.test(input,expect,414))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_4 (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 172, in test_func_decl_4
-    self.assertTrue(TestChecker.test(input,expect,415))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_5 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 191, in test_func_decl_5
-    self.assertTrue(TestChecker.test(input,expect,416))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_6 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 210, in test_func_decl_6
-    self.assertTrue(TestChecker.test(input,expect,417))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_7 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 228, in test_func_decl_7
-    self.assertTrue(TestChecker.test(input,expect,418))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_8 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 246, in test_func_decl_8
-    self.assertTrue(TestChecker.test(input,expect,419))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_func_decl_9 (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 264, in test_func_decl_9
-    self.assertTrue(TestChecker.test(input,expect,420))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_init_1 (CheckSuite.CheckSuite)
-Simple program: main
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 69, in test_init_1
-    self.assertTrue(TestChecker.test(input,expect,406))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_init_3 (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 89, in test_init_3
-    self.assertTrue(TestChecker.test(input,expect,408))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_init_4 (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 99, in test_init_4
-    self.assertTrue(TestChecker.test(input,expect,409))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_init_5 (CheckSuite.CheckSuite)
-Not same dimen
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 109, in test_init_5
-    self.assertTrue(TestChecker.test(input,expect,410))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_no_entry_point (CheckSuite.CheckSuite)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 132, in test_no_entry_point
-    self.assertTrue(TestChecker.test(input,expect,412))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_redecl_global (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 440, in test_redecl_global
-    self.assertTrue(TestChecker.test(input,expect,429))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_global (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 505, in test_return_global
-    self.assertTrue(TestChecker.test(input,expect,432))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_in_while (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 485, in test_return_in_while
-    self.assertTrue(TestChecker.test(input,expect,431))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 530, in test_return_index_expr
-    self.assertTrue(TestChecker.test(input,expect,433))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr_1 (CheckSuite.CheckSuite)
-From index op ifer type of function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 555, in test_return_index_expr_1
-    self.assertTrue(TestChecker.test(input,expect,434))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr_2 (CheckSuite.CheckSuite)
-From index op ifer type of function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 580, in test_return_index_expr_2
-    self.assertTrue(TestChecker.test(input,expect,435))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr_3 (CheckSuite.CheckSuite)
-From index op ifer type of function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 605, in test_return_index_expr_3
-    self.assertTrue(TestChecker.test(input,expect,436))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr_4 (CheckSuite.CheckSuite)
-From index op ifer type of function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 630, in test_return_index_expr_4
-    self.assertTrue(TestChecker.test(input,expect,437))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_index_expr_5 (CheckSuite.CheckSuite)
-From index op ifer type of function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 656, in test_return_index_expr_5
-    self.assertTrue(TestChecker.test(input,expect,438))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_return_infunc (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 461, in test_return_infunc
-    self.assertTrue(TestChecker.test(input,expect,430))
-AssertionError: False is not true
-
-======================================================================
-FAIL: test_undecl_var (CheckSuite.CheckSuite)
-Var decl in function
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./test/CheckSuite.py", line 359, in test_undecl_var
-    self.assertTrue(TestChecker.test(input,expect,425))
-AssertionError: False is not true
-
-----------------------------------------------------------------------
-Ran 39 tests in 1.088s
-
-FAILED (failures=32)
+OK
 

@@ -1,1 +1,1 @@
-Undeclared Identifier: a
+TypeCannotBeInferred(Return(Id("y")))

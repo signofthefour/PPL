@@ -1,15 +1,16 @@
-
-        Var: x, a[10], b[5];
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:a[2] = {1,2}, b[2] = {2,2};
+        main(a);
+        main(b[2]);
+        Return a;
+        EndBody.
         Function: main
         Parameter: x
         Body:
-            Do
-                printStrLn(b[2]);
-            While f()[2] EndDo.
-        EndBody.
-        Function: f
-        Body:
-            b[1] = "dasd";
-            Return a;
+        x[1] = 1;
+        Return;
         EndBody.
         

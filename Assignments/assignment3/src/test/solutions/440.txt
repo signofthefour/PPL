@@ -1,1 +1,1 @@
-Function Not Return: main
+TypeMismatchInStatement(Return(IntLiteral(1)))

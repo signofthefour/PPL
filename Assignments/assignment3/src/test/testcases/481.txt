@@ -1,13 +1,14 @@
-
-                Function: foo
-                Parameter: x[2]
-                Body:
-                EndBody.
-                Function: main
-                Body:
-                    Var: z[2] = {1,2};
-                    Var: w[2] = {3,4};
-                    Var: x;
-                    foo(z);
-                    foo(w[2]);
-                EndBody.            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:a[2] = {1,2}, b[2] = {2,3};
+        main(a);
+        Return y;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        Return x;
+        EndBody.
+        

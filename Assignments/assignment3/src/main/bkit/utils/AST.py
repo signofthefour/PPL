@@ -38,7 +38,7 @@ class Id(LHS):
     name : str
 
     def __str__(self):
-        return  "Id(" + self.name + ")" 
+        return  "Id(\"" + self.name + "\")" 
 
     def accept(self, v, param):
         return v.visitId(self, param)
@@ -61,8 +61,8 @@ class VarDecl(Decl):
     varInit  : Literal   # null if no initial
 
     def __str__(self):
-        initial = (","+str(self.varInit)) if self.varInit else ""
-        dimen = (","+printlist(self.varDimen)) if self.varDimen else ""
+        initial = (","+str(self.varInit)) if self.varInit else ",None"
+        dimen = (","+printlist(self.varDimen)) if self.varDimen else ",[]"
         return "VarDecl(" + str(self.variable) + dimen + initial + ")"
        
 
@@ -76,8 +76,8 @@ class FuncDecl(Decl):
     body: Tuple[List[VarDecl],List[Stmt]]
 
     def __str__(self):
-        return "FuncDecl(" + str(self.name) + \
-                printlist(self.param)+ ",(" + printlist(self.body[0]) + \
+        return "FuncDecl(" + str(self.name) + ',' + \
+                printlist(self.param)+ ",(" + printlist(self.body[0]) + ',' + \
                 printlist(self.body[1]) + "))"
     
     def accept(self, v, param):
@@ -101,7 +101,9 @@ class BinaryOp(Expr):
     right:Expr
 
     def __str__(self):
-        return "BinaryOp(" + self.op + "," + str(self.left) + "," + str(self.right) + ")"
+        if self.op == '\\':
+            self.op = str(self.op).replace("\\", "\\\\")
+        return "BinaryOp(\"\"\"" + str(self.op) + "\"\"\"," + str(self.left) + "," + str(self.right) + ")"
 
     def accept(self, v, param):
         return v.visitBinaryOp(self, param)
@@ -111,7 +113,7 @@ class UnaryOp(Expr):
     body:Expr
 
     def __str__(self):
-        return "UnaryOp(" + self.op + "," + str(self.body) + ")"
+        return "UnaryOp(\"\"\"" + str(self.op) + "\"\"\"," + str(self.body) + ")"
 
     def accept(self, v, param):
         return v.visitUnaryOp(self, param)
@@ -153,7 +155,8 @@ class StringLiteral(Literal):
     value:str
 
     def __str__(self):
-        return "StringLiteral(" + self.value + ")"
+        self.value = self.value.replace('\"', "\\\"")
+        return "StringLiteral(\"\"\"" + self.value + "\"\"\")"
 
     def accept(self, v, param):
         return v.visitStringLiteral(self, param)
@@ -162,7 +165,7 @@ class BooleanLiteral(Literal):
     value:bool
 
     def __str__(self):
-        return "BooleanLiteral(" + str(self.value).lower() + ")"
+        return "BooleanLiteral(" + str(self.value) + ")"
 
     def accept(self, v, param):
         return v.visitBooleanLiteral(self, param)
@@ -171,7 +174,7 @@ class ArrayLiteral(Literal):
     value:List[Literal]
 
     def __str__(self):
-        return printlist(self.value,start="ArrayLiteral(",ending=")")
+        return printlist(self.value,start="ArrayLiteral([",ending="])")
 
     def accept(self, v, param):
         return v.visitArrayLiteral(self, param)
@@ -190,9 +193,8 @@ class Assign(Stmt):
 def printListStmt(stmt):
 	return printlist(stmt[0]) + "," + printlist(stmt[1])
 
-
 def printIfThenStmt(stmt):
-	return str(stmt[0])+","+printListStmt((stmt[1],stmt[2]))
+    	return '(' + str(stmt[0])+","+printListStmt((stmt[1],stmt[2])) + ')'
 
 
 @dataclass
@@ -205,9 +207,9 @@ class If(Stmt):
     elseStmt:Tuple[List[VarDecl],List[Stmt]] # for Else branch, empty list if no Else
 
     def __str__(self):
-        ifstmt = printlist(self.ifthenStmt,printIfThenStmt,"If(",")ElseIf(",")")
-        elsestmt = ("Else("+printListStmt(self.elseStmt)+")") if self.elseStmt else ""
-        return ifstmt + elsestmt
+        ifstmt = printlist(self.ifthenStmt,printIfThenStmt)
+        elsestmt = '(' + printListStmt(self.elseStmt) + ')' if self.elseStmt else "[]"
+        return 'If(' + ifstmt + ',' + elsestmt + ')'
 
     def accept(self, v, param):
         return v.visitIf(self, param)
@@ -223,10 +225,10 @@ class For(Stmt):
     def __str__(self):
         return "For(" + \
         	str(self.idx1)+","+ \
-        	str(self.expr1) + "," + \
+        	str(self.expr1) + ","+ \
         	str(self.expr2) + "," + \
-        	str(self.expr3) + "," + \
-        	printListStmt(self.loop) + ")"
+        	str(self.expr3) + ",(" + \
+        	printListStmt(self.loop) + "))"
 
     def accept(self, v, param):
         return v.visitFor(self, param)
@@ -250,7 +252,7 @@ class Return(Stmt):
     expr:Expr # None if no expression
 
     def __str__(self):
-        return "Return(" + ("" if (self.expr is None) else str(self.expr)) + ")"
+        return "Return(" + ("None" if (self.expr is None) else str(self.expr)) + ")"
 
     def accept(self, v, param):
         return v.visitReturn(self, param)
@@ -261,7 +263,7 @@ class Dowhile(Stmt):
     exp: Expr
 
     def __str__(self):
-        return "Dowhile(" + printListStmt(self.sl) + "," + str(self.exp) + ")"
+        return "Dowhile((" + printListStmt(self.sl) + ")," + str(self.exp) + ")"
 
     def accept(self, v, param):
         return v.visitDowhile(self, param)
@@ -273,7 +275,7 @@ class While(Stmt):
     
 
     def __str__(self):
-        return "While(" + str(self.exp) + "," + printListStmt(self.sl)+ ")"
+        return "While(" + str(self.exp) + ",(" + printListStmt(self.sl)+ "))"
 
     def accept(self, v, param):
         return v.visitWhile(self, param)

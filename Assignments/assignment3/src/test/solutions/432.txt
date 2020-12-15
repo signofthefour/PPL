@@ -1,1 +1,1 @@
-Type Cannot Be Inferred: Return(Id(y))
+TypeCannotBeInferred(Return(Id("y")))

@@ -1,7 +1,20 @@
-
-                Var: a[3]={"Mot","2","Three"};
-                Function: main
-                Body:
-                    a[1] = a[1] + a[2];
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        Var: a = True;
+        If a Then
+        ElseIf True Then
+        a = False;
+        EndIf.
+        Return y;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        Var: a[1][2];
+        foo(x)[x+3][2]=1;
+        a[1][1] = 2;
+        Return a;
+        EndBody.
+        

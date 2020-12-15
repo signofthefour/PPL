@@ -1,7 +1,20 @@
-
-                Function: main 
-                Parameter: a,b,c
-                Body: 
-                    a= (a==b)!= c +3;
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:z;
+        Var: a=4;
+        Var: b=21;
+        Var: c=6;
+        Var: d="Hello";
+            z= !True;
+            a = (b==c) && !d;
+        Return a;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        x[1] = x[1] + 1;
+        Return;
+        EndBody.
+        

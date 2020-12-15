@@ -1,1 +1,1 @@
-Type Mismatch In Expression: ArrayCell(Id(abc),[IntLiteral(1)])
+TypeMismatchInStatement(Assign(Id("y"),Id("c")))

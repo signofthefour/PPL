@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallStmt(Id(main),[IntLiteral(2)])
+TypeMismatchInExpression(BinaryOp("""&&""",StringLiteral("""nothing"""),BooleanLiteral(True)))

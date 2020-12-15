@@ -1,8 +1,14 @@
-
-                Function: main
-                Body:
-                    Var: x;
-                    Return x;
-                EndBody.
-
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Parameter: x
+        Body:
+        Var: a[1][2];
+        a[1+1][0.5+.1.5] = 1;
+        Return a;
+        EndBody.
+        Function: foo
+        Parameter: x, y
+        Body:
+        Return 1.1;
+        EndBody.
+        

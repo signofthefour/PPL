@@ -1,1 +1,1 @@
-Function Not Return: main
+FunctionNotReturn("main")

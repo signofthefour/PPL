@@ -1,1 +1,1 @@
-Type Mismatch In Statement: Assign(Id(x),BinaryOp(+.,FloatLiteral(1.0),FloatLiteral(2.0)))
+TypeMismatchInStatement(Assign(Id("x"),BinaryOp("""+.""",FloatLiteral(1.0),FloatLiteral(2.0))))

@@ -1,1 +1,1 @@
-Type Mismatch In Expression: BinaryOp(+,FloatLiteral(1.0),FloatLiteral(2.0))
+TypeMismatchInExpression(BinaryOp("""+""",FloatLiteral(1.0),FloatLiteral(2.0)))

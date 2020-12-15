@@ -1,1 +1,1 @@
-Type Cannot Be Inferred: Dowhile([],[Return(CallExpr(Id(main),[Id(x),Id(y)]))],BooleanLiteral(true))
+TypeMismatchInStatement(Return(Id("x")))

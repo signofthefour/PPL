@@ -1,13 +1,20 @@
-
-               Function: main 
-                Parameter: n
-                Body: 
-                    If n == 0 Then
-                        If n!=0 Then
-                            If n!=0 Then
-                                a=5;
-                            EndIf.
-                        EndIf.
-                    EndIf.
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:z;
+        Var: a=4;
+        Var: b=21;
+        Var: c=6;
+        Var: d="True";
+            z= !True;
+            a = (b==c) && !bool_of_string(d);
+        Return a;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        x[1] = x[1] + 1;
+        Return;
+        EndBody.
+        

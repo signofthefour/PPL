@@ -1,1 +1,1 @@
-Function Not Return: foo
+TypeMismatchInExpression(BinaryOp("""+""",IntLiteral(1),CallExpr(Id("main"),[Id("x"),Id("y")])))

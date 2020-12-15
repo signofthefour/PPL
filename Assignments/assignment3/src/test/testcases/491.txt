@@ -1,19 +1,20 @@
-
-        Function: main 
-        Parameter:a
-        Body: 
-            a=1;
-            foo(a,3*7, a+ 5,"string",True);
-        EndBody.
-        Function: foo 
-        Parameter: a,b,c,d,e
-        Body: 
-            Var:z;
-            a=4;
-            b=21;
-            c=6;
-            d="Hello";
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:z;
+        Var: a=4;
+        Var: b=21;
+        Var: c=6;
+        Var: d="Hello";
             z= !e;
             a = (b==c) && !d;
+        Return a;
         EndBody.
-            
+        Function: main
+        Parameter: x
+        Body:
+        x[1] = x[1] + 1;
+        Return;
+        EndBody.
+        

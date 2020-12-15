@@ -1,1 +1,1 @@
-Function Not Return: foo
+TypeMismatchInStatement(Return(FloatLiteral(1.1)))

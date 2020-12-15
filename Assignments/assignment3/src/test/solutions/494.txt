@@ -1,1 +1,1 @@
-Function Not Return: main
+TypeMismatchInExpression(CallExpr(Id("bool_of_string"),[Id("c")]))

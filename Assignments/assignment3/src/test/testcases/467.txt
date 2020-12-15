@@ -1,9 +1,20 @@
-
-                Function: main
-                Body:
-                    If True Then
-                    ElseIf True Then
-                        Var: a;
-                    EndIf.
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        Var: a = 1;
+        If a Then
+                ElseIf True Then
+                    a = 12;
+                EndIf.
+        Return y;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        Var: a[1][2];
+        foo(x)[x+3][2]=1;
+        a[1][1] = 2;
+        Return a;
+        EndBody.
+        

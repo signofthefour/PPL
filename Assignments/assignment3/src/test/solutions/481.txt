@@ -1,1 +1,1 @@
-Function Not Return: foo
+TypeCannotBeInferred(Return(Id("y")))

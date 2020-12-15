@@ -1,8 +1,17 @@
-
-                
-                Function: main
-                Body:
-                    Var:a,b,c,d;
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        Var:a,b,c,d;
                     a = a + b || c - d;
-                EndBody.
-            
+        Return y;
+        EndBody.
+        Function: main
+        Parameter: x
+        Body:
+        Var: a[1][2];
+        foo(x)[x+3][2]=1;
+        a[1][1] = 2;
+        Return a;
+        EndBody.
+        

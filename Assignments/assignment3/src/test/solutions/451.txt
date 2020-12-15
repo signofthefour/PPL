@@ -1,1 +1,1 @@
-Type Mismatch In Statement: While(Id(x),[],[])
+TypeCannotBeInferred(Assign(Id("y"),BinaryOp("""+""",Id("a"),CallExpr(Id("foo"),[Id("x")]))))

@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallStmt(Id(main),[FloatLiteral(0.5)])
+TypeMismatchInExpression(BinaryOp("""-""",Id("c"),Id("b")))

@@ -1,10 +1,15 @@
-
-                Function: main
-                Body:
-                    foo();
-                EndBody.
-                Function: foo
-                Body:
-                    Return 1;
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Parameter: x
+        Body:
+        Var: a = 1;
+        x = 1;
+        y[1] = a;
+        Return;
+        EndBody.
+        Function: foo
+        Parameter: x, y
+        Body:
+        Return 1.1;
+        EndBody.
+        

@@ -1,10 +1,12 @@
-                
-                Function: main
-                Body:
-                    Var: x;
-                    For (x=1, x>1 , x+1) Do
-                        Var:y;
-                    EndFor.
-                EndBody.
-
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            Var: i , x;
+            For (i = 1, i <= x*x,i*i+1)
+            Do x=x+1;
+            Return 1.1;
+            EndFor.
+            Return 1;
+        EndBody.
+        

@@ -1,11 +1,20 @@
-
-Function: main
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: foo
+        Parameter: x, y[1][2]
+        Body:
+        Var:z;
+        Var: a;
+        Var: b=21;
+        Var: c=6;
+        Var: d="True";
+            z= !True;
+            a = (b>c) && !bool_of_string(d);
+        Return "nothing" && True;
+        EndBody.
+        Function: main
         Parameter: x
         Body:
-            If True Then
-                Var: x = 1;
-                main(1.5);
-            EndIf.
-            main(2);
+        x = x && 1;
+        Return;
         EndBody.
-            
+        

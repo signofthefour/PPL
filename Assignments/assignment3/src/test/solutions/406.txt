@@ -1,1 +1,1 @@
-Type Mismatch In Statement: VarDecl(Id(y),ArrayLiteral())
+TypeMismatchInStatement(VarDecl(Id("y"),[],ArrayLiteral([])))
