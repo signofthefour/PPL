@@ -1,9 +1,12 @@
-
-                Var:x;
-                Function: main
-                Body:
-                    Var:x;
-                    Var:main;
-                    Var:x[5]={1,2,3,4,5};
-                EndBody.
-            
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,foo(x, True));
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.

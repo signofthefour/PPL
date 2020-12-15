@@ -1,1 +1,1 @@
-Type Mismatch In Statement: [Return(expr=IntLiteral(value=1))]
+Function Not Return: main

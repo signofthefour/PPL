@@ -1,1 +1,0 @@
-Type Mismatch In Statement: [While(exp=BinaryOp(op='>', left=Id(name='x'), right=IntLiteral(value=1)), sl=([], [If(ifthenStmt=[(BinaryOp(op='==', left=Id(name='x'), right=IntLiteral(value=1)), [], [Return(expr=None)])], elseStmt=())])), Return(expr=BooleanLiteral(value=True))]

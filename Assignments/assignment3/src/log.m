@@ -14,186 +14,16 @@ Undeclared Function: foo
 ===========================
 Testcase#401.txt
 ***********TEST*******
-
-            
-            
+Function: main  
+                   Body:
+                        printStrLn();
+                    EndBody.
 ************SOL**********
-No Entry Point
+Type Mismatch In Statement: CallStmt(Id(printStrLn),[])
 ===========================
 
 ===========================
 Testcase#402.txt
-***********TEST*******
-
-
-                Function: main
-                Body:
-                    x=1;
-                EndBody.    
-            
-************SOL**********
-Undeclared Identifier: x
-===========================
-
-===========================
-Testcase#403.txt
-***********TEST*******
-
-
-                Function: main
-                Parameter:x
-                Body:
-                    x=1;
-                    x=1.6;
-                EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: Assign(Id(x),FloatLiteral(1.6))
-===========================
-
-===========================
-Testcase#404.txt
-***********TEST*******
-
-                Function: foo
-                Parameter: x
-                Body:
-                EndBody.
-                Function: main
-                Body:
-                    Var: x, y = 0.5;
-                    x = 1. +. foo(1);
-                    y = foo(2.5) -. 1.;
-                EndBody.
-            
-************SOL**********
-Type Mismatch In Expression: CallExpr(Id(foo),[FloatLiteral(2.5)])
-===========================
-
-===========================
-Testcase#405.txt
-***********TEST*******
-
-                Function: foo
-                Parameter: x
-                Body:
-                Return;
-                EndBody.
-                Function: main
-                Body:
-                    Var: x, y = 0.5;
-                    foo(x);
-                EndBody.
-            
-************SOL**********
-Type Cannot Be Inferred: CallStmt(Id(foo),[Id(x)])
-===========================
-
-===========================
-Testcase#406.txt
-***********TEST*******
-
-        Function: main
-        Parameter: main
-        Body:
-            Var: foo;
-            foo = foo + main();
-            Return 1;
-        EndBody.
-        Function: foo
-        Body:
-        EndBody.
-                   
-************SOL**********
-Undeclared Function: main
-===========================
-
-===========================
-Testcase#407.txt
-***********TEST*******
-
-            Function: main 
-            Parameter: x,y
-            Body:
-                x = 1; 
-                main( 1.1, 0); 
-            EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: CallStmt(Id(main),[FloatLiteral(1.1),IntLiteral(0)])
-===========================
-
-===========================
-Testcase#408.txt
-***********TEST*******
-
-            Function: foo 
-            Parameter: x,y
-            Body:
-            EndBody.
-            Function: main
-            Parameter: x,y
-            Body:
-                foo(1,2);  
-                foo(1. , 2.); 
-            EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: CallStmt(Id(foo),[FloatLiteral(1.0),FloatLiteral(2.0)])
-===========================
-
-===========================
-Testcase#409.txt
-***********TEST*******
-
-            Function: main
-            Parameter: x,y
-            Body:
-                y=0.5;
-                For(x=1,x==1,x+1) Do
-                EndFor.
-                For(y=1,1==1,y +. 1.2) Do
-                EndFor.
-            EndBody.    
-            
-************SOL**********
-Type Mismatch In Statement: For(Id(y),IntLiteral(1),BinaryOp(==,IntLiteral(1),IntLiteral(1)),BinaryOp(+.,Id(y),FloatLiteral(1.2)),[],[])
-===========================
-
-===========================
-Testcase#410.txt
-***********TEST*******
-
-            Function: main 
-            Parameter: x
-            Body:
-                Var: y = 1; 
-                x = 1.0; 
-                main(y); 
-            EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: CallStmt(Id(main),[Id(y)])
-===========================
-
-===========================
-Testcase#411.txt
-***********TEST*******
-
-            Function: main 
-            Parameter: x
-            Body:
-                Var: y = 1; 
-                main(y); 
-                x = 1.0; 
-            EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: Assign(Id(x),FloatLiteral(1.0))
-===========================
-
-===========================
-Testcase#412.txt
 ***********TEST*******
 Function: main 
                     Body:
@@ -204,34 +34,7 @@ Type Mismatch In Expression: CallExpr(Id(read),[IntLiteral(4)])
 ===========================
 
 ===========================
-Testcase#413.txt
-***********TEST*******
-Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[CallExpr(Id(read),[IntLiteral(4)])])]))])
-************SOL**********
-Type Mismatch In Expression: CallExpr(Id(read),[IntLiteral(4)])
-===========================
-
-===========================
-Testcase#414.txt
-***********TEST*******
-Function: main  
-                   Body:
-                        printStrLn();
-                    EndBody.
-************SOL**********
-Type Mismatch In Statement: CallStmt(Id(printStrLn),[])
-===========================
-
-===========================
-Testcase#415.txt
-***********TEST*******
-Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[])]))])
-************SOL**********
-Type Mismatch In Statement: CallStmt(Id(printStrLn),[])
-===========================
-
-===========================
-Testcase#416.txt
+Testcase#403.txt
 ***********TEST*******
 Program([FuncDecl(Id(main)[],([][CallExpr(Id(foo),[])]))])
 ************SOL**********
@@ -239,368 +42,638 @@ Undeclared Function: foo
 ===========================
 
 ===========================
-Testcase#417.txt
+Testcase#404.txt
 ***********TEST*******
-
-                
-                Function: main
-                Parameter: x,y,z,t,k
-                Body:
-                    y= x + y \ z * t;
-                    x= k % t;
-                    y= x == z;
-                EndBody.
-            
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[CallExpr(Id(read),[IntLiteral(4)])])]))])
 ************SOL**********
-Type Mismatch In Statement: Assign(Id(y),BinaryOp(==,Id(x),Id(z)))
+Type Mismatch In Expression: CallExpr(Id(read),[IntLiteral(4)])
 ===========================
 
 ===========================
-Testcase#418.txt
+Testcase#405.txt
 ***********TEST*******
- 
-        Function: main 
-        Parameter: global_var
-        Body:
-            global_var = 25+6-.2.5%3\100 ; 
-        EndBody.
-        
+Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[])]))])
 ************SOL**********
-Type Mismatch In Expression: BinaryOp(%,FloatLiteral(2.5),IntLiteral(3))
+Type Mismatch In Statement: CallStmt(Id(printStrLn),[])
 ===========================
 
 ===========================
-Testcase#419.txt
+Testcase#406.txt
 ***********TEST*******
-
-                Var: a[1][2]= {{1,2}};
-                Function: main
-                Parameter: x
-                Body:
-                    a[1][2] = x;
-                    x[1] = 1;
-                EndBody.
-            
+ Var: x,y={};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
-Type Mismatch In Expression: ArrayCell(Id(x),[IntLiteral(1)])
+Type Mismatch In Statement: VarDecl(Id(y),ArrayLiteral())
 ===========================
 
 ===========================
-Testcase#420.txt
+Testcase#407.txt
 ***********TEST*******
-                
-                Function: main
-                Body:
-                    Var:a[5]= {1,2,3,4,5};
-                    Var:b[5];
-                    a=b;
-                    a[5]=b;
-                EndBody.
-            
-************SOL**********
-
-===========================
-
-===========================
-Testcase#421.txt
-***********TEST*******
-
-                
-                Function: main
-                Body:
-                    Var:a[5]= {1,2,3,4,5};
-                    Var:b[5];
-                    b={1.,2.,3.,4.,5.};
-                    a=b;
-                EndBody.
-            
-************SOL**********
-Type Mismatch In Statement: Assign(Id(a),Id(b))
-===========================
-
-===========================
-Testcase#422.txt
-***********TEST*******
-               
-                Function: main
-                Body:
-                    Var:a[5]= {1,2,3,4,5};
-                    Var:b[4]= {1,2,3,4};
-                    a=b;
-                EndBody.
-            
-************SOL**********
-
-===========================
-
-===========================
-Testcase#423.txt
-***********TEST*******
-             
-                Function: main
-                Body:
-                    Var:a[5]= {1,2,3,4,5};
-                    Var:b[5];
-                    Var:c;
-                    c = b[5] +. 1;
-                    a=b; 
-                EndBody.
-            
-************SOL**********
-Type Mismatch In Expression: BinaryOp(+.,ArrayCell(Id(b),[IntLiteral(5)]),IntLiteral(1))
-===========================
-
-===========================
-Testcase#424.txt
-***********TEST*******
-                
-                Function: main
-                Body:
-                    Var:a[5],b[5];
-                    a=b;
-                EndBody.
-            
-************SOL**********
-Type Cannot Be Inferred: Assign(Id(a),Id(b))
-===========================
-
-===========================
-Testcase#425.txt
-***********TEST*******
-                
-                Var: x[5]={1,2};
-                Var: x=1;
-                Function: main
-                Body:
-                EndBody.            
-        
-************SOL**********
-Redeclared Variable: x
-===========================
-
-===========================
-Testcase#426.txt
-***********TEST*******
-
-                Var:x;
-                Function: main
-                Body:
-                    Var:x;
-                    Var:main;
-                    Var:x[5]={1,2,3,4,5};
-                EndBody.
-            
-************SOL**********
-Redeclared Variable: x
-===========================
-
-===========================
-Testcase#427.txt
-***********TEST*******
-
-                Function: main
-                Body:
-                EndBody.
-                Function: main
-                Parameter: x
-                Body:
-
-                EndBody.
-            
-************SOL**********
-Redeclared Function: main
-===========================
-
-===========================
-Testcase#428.txt
-***********TEST*******
-
-                
-                Function: main
-                Parameter: x
-                Body:
-                    Var:x;
-                EndBody.
-            
-************SOL**********
-Redeclared Variable: x
-===========================
-
-===========================
-Testcase#429.txt
-***********TEST*******
-
-                
-                Function: main
-                Parameter: x,x
-                Body:
-
-                EndBody.
-            
-************SOL**********
-Redeclared Parameter: x
-===========================
-
-===========================
-Testcase#430.txt
-***********TEST*******
-
-                Var:x;
-                Function: main
-                Parameter: x
-                Body:
-                    x=foo;
-                EndBody.
-            
-************SOL**********
-Undeclared Identifier: foo
-===========================
-
-===========================
-Testcase#431.txt
-***********TEST*******
-               
-                Function: main
-                Body:
-                    foo();
-                EndBody.
-            
+ Var: x="string",y[1][2]={{1,2}};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
 Undeclared Function: foo
 ===========================
 
 ===========================
-Testcase#432.txt
+Testcase#408.txt
 ***********TEST*******
-
-                Function: main
-                Parameter: x,y,a
-                Body:
-                    y = a +foo(x);
-                EndBody.
-
-                Function: foo
-                Parameter: x
-                Body:
-
-                EndBody.
-            
+ Var: x="string",y[1][2]={{1,{2}}};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
-Type Cannot Be Inferred: Assign(Id(y),BinaryOp(+,Id(a),CallExpr(Id(foo),[Id(x)])))
+Invalid Array Literal: ArrayLiteral(IntLiteral(1),ArrayLiteral(IntLiteral(2)))
 ===========================
 
 ===========================
-Testcase#433.txt
+Testcase#409.txt
 ***********TEST*******
-
-                
-                Function: main
-                Body:
-                    Var: x,y;
-                    x=y;
-                EndBody.
-            
+ Var: x="string",y[1][2]={{{1},{2}}};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
-Type Cannot Be Inferred: Assign(Id(x),Id(y))
+Invalid Array Literal: ArrayLiteral(ArrayLiteral(IntLiteral(1)),ArrayLiteral(IntLiteral(2)))
 ===========================
 
 ===========================
-Testcase#434.txt
+Testcase#410.txt
 ***********TEST*******
-
-                
-                Function: main
-                Body:
-                    Var:x;
-                    If (foo(x)) Then
-                        x=1;
-                    EndIf.
-                EndBody.
-                Function: foo
-                Parameter: x
-                Body:
-                EndBody.
-
-            
+ Var: x="string",y[1][2]={1,1.2};
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
-Type Cannot Be Inferred: If(CallExpr(Id(foo),[Id(x)]),[],[Assign(Id(x),IntLiteral(1))])
+Invalid Array Literal: ArrayLiteral(IntLiteral(1),FloatLiteral(1.2))
 ===========================
 
 ===========================
-Testcase#435.txt
+Testcase#411.txt
 ***********TEST*******
-
-                Function: foo
-                Parameter: x,y
-                Body:
-                EndBody.
-
-                Function: main
-                Body:
-                    Var:x=1,y;
-                    foo(x,y);
-                EndBody.
-            
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Body:
+        Return;
+        EndBody.
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
 ************SOL**********
-Type Cannot Be Inferred: CallStmt(Id(foo),[Id(x),Id(y)])
+Function Not Return: main
 ===========================
 
 ===========================
-Testcase#436.txt
+Testcase#412.txt
 ***********TEST*******
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Body:
+        Return;
+        EndBody.
+************SOL**********
+No Entry Point
+===========================
 
-                
-                Function: main
-                Body:
-                    Var:x;
-                    x = 1 + foo(x);
-                EndBody.               
-                Function: foo
-                Parameter: x
-                Body:
+===========================
+Testcase#413.txt
+***********TEST*******
+ Var: x="string",y[1][2]={{1,2}};
+        Function: main
+        Parameter: x, y,x[1][2]
+        Body:
+        Return;
+        EndBody.
+************SOL**********
+Redeclared Parameter: x
+===========================
 
-                EndBody.
+===========================
+Testcase#414.txt
+***********TEST*******
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Body:
+        Return 1;
+        EndBody.
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
+************SOL**********
+Type Mismatch In Statement: CallStmt(Id(foo),[])
+===========================
 
-            
+===========================
+Testcase#415.txt
+***********TEST*******
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
+************SOL**********
+Type Mismatch In Statement: CallStmt(Id(foo),[])
+===========================
+
+===========================
+Testcase#416.txt
+***********TEST*******
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+        Function: main
+        Body:
+        x = 1. +. 2.;
+        foo(x);
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Assign(Id(x),BinaryOp(+.,FloatLiteral(1.0),FloatLiteral(2.0)))
+===========================
+
+===========================
+Testcase#417.txt
+***********TEST*******
+ Var: x=1.2,y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+        Function: main
+        Body:
+        x = 1. +. 2.;
+        foo(x);
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: CallStmt(Id(foo),[Id(x)])
+===========================
+
+===========================
+Testcase#418.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return;
+        EndBody.
+        Function: main
+        Body:
+        foo(x);
+        EndBody.
+************SOL**********
+Function Not Return: main
+===========================
+
+===========================
+Testcase#419.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1. + 2.;
+        Return;
+        EndBody.
+        Function: main
+        Body:
+        foo(x);
+        EndBody.
+************SOL**********
+Type Mismatch In Expression: BinaryOp(+,FloatLiteral(1.0),FloatLiteral(2.0))
+===========================
+
+===========================
+Testcase#420.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1. +. 2.;
+        Return;
+        EndBody.
+        Function: main
+        Body:
+        foo(x);
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: CallStmt(Id(foo),[Id(x)])
+===========================
+
+===========================
+Testcase#421.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x;
+        x = 1 + foo(x);
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
 ************SOL**********
 Type Cannot Be Inferred: Assign(Id(x),BinaryOp(+,IntLiteral(1),CallExpr(Id(foo),[Id(x)])))
 ===========================
 
 ===========================
-Testcase#437.txt
+Testcase#422.txt
 ***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x);
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Function Not Return: main
+===========================
 
-                
-Function: main
-Body:
-    Var:x;
-    If x Then
-        Var:y;
-    EndIf.
-EndBody.
-            
+===========================
+Testcase#423.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,y);
+        EndBody.
+        Function: foo
+        Parameter: x,a[1][2]
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Function Not Return: main
+===========================
+
+===========================
+Testcase#424.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,y);
+        EndBody.
+        Function: foo
+        Parameter: x,a[1][3]
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Function Not Return: main
+===========================
+
+===========================
+Testcase#425.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,y,z);
+        EndBody.
+        Function: foo
+        Parameter: x,a[1][3]
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Type Mismatch In Expression: CallExpr(Id(foo),[Id(x),Id(y),Id(z)])
+===========================
+
+===========================
+Testcase#426.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,foo(x, True));
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Type Mismatch In Expression: BinaryOp(+,IntLiteral(1),CallExpr(Id(foo),[Id(x),CallExpr(Id(foo),[Id(x),BooleanLiteral(true)])]))
+===========================
+
+===========================
+Testcase#427.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+        Var: x = 1;
+        x = 1 + foo(x,foo(x, 1));
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Function Not Return: main
+===========================
+
+===========================
+Testcase#428.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Undeclared Function: main
+===========================
+
+===========================
+Testcase#429.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Var: read;
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.
+************SOL**********
+Redeclared Variable: read
+===========================
+
+===========================
+Testcase#430.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        Return 1.1;
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Return(FloatLiteral(1.1))
+===========================
+
+===========================
+Testcase#431.txt
+***********TEST*******
+ Var: x=1,y[1][2]={{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        While (y)
+        Do
+        Return 1.1;
+        EndWhile.
+        Return 1;
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Return(IntLiteral(1))
+===========================
+
+===========================
+Testcase#432.txt
+***********TEST*******
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        x = 1 + 2;
+        Return y;
+        EndBody.
+************SOL**********
+Type Cannot Be Inferred: Return(Id(y))
+===========================
+
+===========================
+Testcase#433.txt
+***********TEST*******
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3) + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
 ************SOL**********
 
+===========================
+
+===========================
+Testcase#434.txt
+***********TEST*******
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3) + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return 1;
+        EndBody.
+************SOL**********
+
+===========================
+
+===========================
+Testcase#435.txt
+***********TEST*******
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3) + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return 1.1;
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Return(FloatLiteral(1.1))
+===========================
+
+===========================
+Testcase#436.txt
+***********TEST*******
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3)[1][3] + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return y;
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Return(Id(y))
+===========================
+
+===========================
+Testcase#437.txt
+***********TEST*******
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3)[1][3] + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return y;
+        EndBody.
+************SOL**********
+Type Mismatch In Statement: Return(Id(y))
 ===========================
 
 ===========================
 Testcase#438.txt
 ***********TEST*******
-
-                
-                Function: main
-                Body:
-                    Var:x;
-                    If x Then
-                        x=1;
-                    Else
-                        Var:y,z;
-                        y=x;
-                    EndIf.
-                EndBody.
-            
+ Var: x=1,y[1][2] = {{1,2}};
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return y;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3)[1][3] + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        
 ************SOL**********
-Type Mismatch In Statement: Assign(Id(x),IntLiteral(1))
+
 ===========================
 
 ===========================
@@ -632,7 +705,7 @@ Testcase#440.txt
 
             
 ************SOL**********
-
+Function Not Return: main
 ===========================
 
 ===========================
@@ -673,7 +746,7 @@ Testcase#442.txt
                 EndBody.
             
 ************SOL**********
-
+Function Not Return: main
 ===========================
 
 ===========================
@@ -730,7 +803,7 @@ Testcase#445.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Expression: CallExpr(Id(foo),[IntLiteral(1),IntLiteral(2)])
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -748,7 +821,7 @@ Testcase#446.txt
                 EndBody.
             
 ************SOL**********
-
+Function Not Return: main
 ===========================
 
 ===========================
@@ -855,11 +928,11 @@ Testcase#453.txt
                 Body:
                     Var:x;
                     foo();
-                    foo() = x+1;
+                    foo()[1] = x+1;
                 EndBody.
             
 ************SOL**********
-
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -877,7 +950,7 @@ Testcase#454.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Expression: Assign(Id(x),CallExpr(Id(foo),[]))
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -894,7 +967,7 @@ Testcase#455.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: [Return(expr=IntLiteral(value=1))]
+Function Not Return: main
 ===========================
 
 ===========================
@@ -912,7 +985,7 @@ Testcase#456.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: [Return(expr=FloatLiteral(value=1.5))]
+Function Not Return: main
 ===========================
 
 ===========================
@@ -930,7 +1003,7 @@ Testcase#457.txt
                 EndBody.
             
 ************SOL**********
-
+Type Mismatch In Statement: Return(FloatLiteral(1.5))
 ===========================
 
 ===========================
@@ -966,7 +1039,7 @@ Testcase#459.txt
 
             
 ************SOL**********
-
+Type Cannot Be Inferred: Return(Id(x))
 ===========================
 
 ===========================
@@ -1043,7 +1116,7 @@ Testcase#463.txt
                 EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: CallStmt(Id(fact),[Id(x)])
+Type Mismatch In Statement: If(BinaryOp(==,Id(n),IntLiteral(0)),[],[Return(IntLiteral(1))])Else([],[Return(BinaryOp(*,Id(n),CallExpr(Id(fact),[BinaryOp(-,Id(n),IntLiteral(1))])))])
 ===========================
 
 ===========================
@@ -1115,7 +1188,7 @@ Testcase#467.txt
                 EndBody.
             
 ************SOL**********
-
+Function Not Return: main
 ===========================
 
 ===========================
@@ -1326,7 +1399,7 @@ Testcase#479.txt
                     foo(w);
                 EndBody.            
 ************SOL**********
-Type Mismatch In Statement: CallStmt(Id(foo),[Id(z)])
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -1348,7 +1421,7 @@ Testcase#480.txt
                     abc[1] = 1.5;   
                 EndBody.         
 ************SOL**********
-Type Mismatch In Statement: Assign(ArrayCell(Id(abc),[IntLiteral(1)]),FloatLiteral(1.5))
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -1368,7 +1441,7 @@ Testcase#481.txt
                     foo(w[2]);
                 EndBody.            
 ************SOL**********
-Type Mismatch In Statement: CallStmt(Id(foo),[Id(z)])
+Function Not Return: foo
 ===========================
 
 ===========================
@@ -1439,7 +1512,7 @@ Testcase#485.txt
         EndBody.
                    
 ************SOL**********
-
+Type Cannot Be Inferred: If(BooleanLiteral(true),[],[While(BooleanLiteral(true),[],[Return(Id(x))])])
 ===========================
 
 ===========================
@@ -1458,7 +1531,7 @@ Testcase#486.txt
         EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: [While(exp=BinaryOp(op='>', left=Id(name='x'), right=IntLiteral(value=1)), sl=([], [If(ifthenStmt=[(BinaryOp(op='==', left=Id(name='x'), right=IntLiteral(value=1)), [], [Return(expr=None)])], elseStmt=())])), Return(expr=BooleanLiteral(value=True))]
+
 ===========================
 
 ===========================
@@ -1497,7 +1570,7 @@ Testcase#488.txt
         EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: [Dowhile(sl=([], [Return(expr=CallExpr(method=Id(name='main'), param=[Id(name='x'), Id(name='y')]))]), exp=BooleanLiteral(value=True))]
+Type Cannot Be Inferred: Dowhile([],[Return(CallExpr(Id(main),[Id(x),Id(y)]))],BooleanLiteral(true))
 ===========================
 
 ===========================
@@ -1519,7 +1592,7 @@ Testcase#489.txt
         EndBody.
         
 ************SOL**********
-
+Type Mismatch In Expression: ArrayCell(CallExpr(Id(f),[]),[IntLiteral(2)])
 ===========================
 
 ===========================
@@ -1533,7 +1606,7 @@ Testcase#490.txt
         EndBody.
             
 ************SOL**********
-Type Mismatch In Statement: [Return(expr=CallExpr(method=Id(name='main'), param=[BinaryOp(op='+', left=Id(name='x'), right=IntLiteral(value=3)), BinaryOp(op='+.', left=Id(name='y'), right=FloatLiteral(value=10.2))]))]
+Type Cannot Be Inferred: Return(CallExpr(Id(main),[BinaryOp(+,Id(x),IntLiteral(3)),BinaryOp(+.,Id(y),FloatLiteral(10.2))]))
 ===========================
 
 ===========================
@@ -1559,7 +1632,7 @@ Testcase#491.txt
         EndBody.
             
 ************SOL**********
-Type Mismatch In Expression: UnaryOp(!,Id(d))
+Function Not Return: main
 ===========================
 
 ===========================
@@ -1612,7 +1685,7 @@ Testcase#494.txt
             EndBody.
         
 ************SOL**********
-
+Function Not Return: main
 ===========================
 
 ===========================
@@ -1639,7 +1712,7 @@ Testcase#495.txt
             EndBody.
             
 ************SOL**********
-
+Type Mismatch In Statement: CallStmt(Id(print),[Id(m)])
 ===========================
 
 ===========================

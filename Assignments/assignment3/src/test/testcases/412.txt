@@ -1,4 +1,5 @@
-Function: main 
-                    Body:
-                        printStrLn(read(4));
-                    EndBody.
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Body:
+        Return;
+        EndBody.

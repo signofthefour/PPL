@@ -1,1 +1,1 @@
-Type Mismatch In Expression: Assign(Id(x),CallExpr(Id(foo),[]))
+Function Not Return: foo

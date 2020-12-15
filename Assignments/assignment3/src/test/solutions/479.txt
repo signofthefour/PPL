@@ -1,1 +1,1 @@
-Type Mismatch In Statement: CallStmt(Id(foo),[Id(z)])
+Function Not Return: foo

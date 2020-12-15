@@ -1,1 +1,6 @@
-Program([FuncDecl(Id(main)[],([][CallStmt(Id(printStrLn),[CallExpr(Id(read),[IntLiteral(4)])])]))])
+ Var: x="string",y[1][2]={{1,2}};
+        Function: main
+        Parameter: x, y,x[1][2]
+        Body:
+        Return;
+        EndBody.

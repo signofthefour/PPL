@@ -1,1 +1,1 @@
-Type Mismatch In Statement: [Return(expr=CallExpr(method=Id(name='main'), param=[BinaryOp(op='+', left=Id(name='x'), right=IntLiteral(value=3)), BinaryOp(op='+.', left=Id(name='y'), right=FloatLiteral(value=10.2))]))]
+Type Cannot Be Inferred: Return(CallExpr(Id(main),[BinaryOp(+,Id(x),IntLiteral(3)),BinaryOp(+.,Id(y),FloatLiteral(10.2))]))

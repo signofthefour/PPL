@@ -1,15 +1,18 @@
-
-                
-                Function: main
-                Body:
-                    Var:x;
-                    If (foo(x)) Then
-                        x=1;
-                    EndIf.
-                EndBody.
-                Function: foo
-                Parameter: x
-                Body:
-                EndBody.
-
-            
+ Var: x=1,y[1][2];
+        Function: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo1
+        Parameter: x, b[1]
+        Body:
+        b[foo(3) + 2] = b[y[1][1]] + 4;
+        Return y;
+        EndBody.
+        Function: foo
+        Parameter: x
+        Body:
+        Return 1;
+        EndBody.

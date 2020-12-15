@@ -64,6 +64,13 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
   
     def check(self):
+        normalize_global = []
+        for symbol in self.global_envi:
+            intype = []
+            if len(symbol.mtype.intype):
+                for idx in range(len(symbol.mtype.intype)):
+                    intype.append(Symbol('', symbol.mtype.intype[idx]))
+            symbol.mtype.intype = intype
         return self.visit(self.ast,self.global_envi)
     
 
@@ -135,8 +142,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeMismatchInExpression(ast)
         if len(symbol.mtype.intype):
             if symbol.mtype.intype[0]:
-                print(len(param))
-                print(ast)
                 # Was inferred (was inferred in somewhere before visit)
                 for idx in range(len(param)):
                     if isinstance(symbol.mtype.intype[idx].mtype, MType):
@@ -152,16 +157,17 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         res_type_list = []
         for stmt in ast.body[1]:
             try:
-                res_type_list += [self.visit(stmt, cur_env)]
+                typ = self.visit(stmt, cur_env)
+                if typ is not None:
+                    if not symbol.mtype.restype:
+                        symbol.mtype.restype = typ.mtype
+                    if type(symbol.mtype.restype) != type(typ.mtype):
+                        raise TypeMismatchInStatement(stmt)
+                res_type_list += [typ]
             except TypeCannotBeInferred:
                 raise TypeCannotBeInferred(stmt)
-        res_type = VoidType()
-        for (idx, typ) in enumerate(res_type_list):
-            if typ is not None:
-                if not symbol.mtype.restype:
-                    symbol.mtype.restype = typ
-                if type(symbol.mtype.restype) != type(typ):
-                    raise TypeMismatchInStatement(ast.body[1])
+        if not symbol.mtype.restype:
+            raise FunctionNotReturn(symbol.name)
         
         param_list = cur_env[len(scope_env) - len(param): len(scope_env)]
         
@@ -183,13 +189,31 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             if len(e.mtype.dimen) != len(ast.idx):
                 raise TypeMismatchInExpression(ast)
         if isinstance(e.mtype, MType):
-            if isinstance(e.mtype.restype, type(None)):
+            if isinstance(e.mtype.restype, (Unknown)):
                 e.mtype.restype = ArrayType([0]*len(ast.idx), Unknown())
-            if len(e.mtype.restype.dimen) != len(ast.idx):
+            if isinstance(e.mtype.restype, ArrayType):
+                if len(e.mtype.restype.dimen) != len(ast.idx):
+                    raise TypeMismatchInExpression(ast)
+                e.mtype.restype = e.mtype.restype.eletype
+            else:
                 raise TypeMismatchInExpression(ast)
         e_i = [self.visit(x, env) for x in ast.idx]
-        if any([not isinstance(x.mtype, IntType) for x in e_i]):
-            raise TypeMismatchInExpression(ast)
+        for e_k in e_i:
+            if isinstance(e_k.mtype, (Prim, Unknown)):
+                if isinstance(e_k.mtype, Unknown):
+                    e_k.mtype = IntType()
+                if not isinstance(e_k.mtype, IntType):
+                    raise TypeMismatchInExpression(ast)
+            if isinstance(e_k.mtype, ArrayType):
+                if isinstance(e_k.mtype.eletype, Unknown):
+                    e_k.mtype.eletype = IntType()
+                if not isinstance(e_k.mtype.eletype, IntType):
+                    raise TypeMismatchInExpression(ast)
+            if isinstance(e_k.mtype, MType):
+                if isinstance(e_k.mtype.restype, Unknown):
+                    e_k.mtype.restype = IntType()
+                if not isinstance(e_k.mtype.restype, IntType):
+                    raise TypeMismatchInExpression(ast)
         
         return e
         
@@ -711,16 +735,35 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         return_type = None
         scope = reduce(lambda y, x: [self.visit(x, y)] + y, ast.ifthenStmt[0][1], []) 
         if_env = scope + env
-        res_list = [self.visit(stmt, if_env) for stmt in ast.ifthenStmt[0][2]]
+        # res_list = [self.visit(stmt, if_env) for stmt in ast.ifthenStmt[0][2]]
+        res_type_list = []
+        for stmt in  ast.ifthenStmt[0][2]:
+            try:
+                typ = self.visit(stmt, if_env)
+                if typ is not None:
+                    res_type_list += [typ]
+                    if type(res_type_list[0].mtype) != type(typ.mtype):
+                        raise TypeMismatchInStatement(stmt)
+            except TypeCannotBeInferred:
+                raise TypeCannotBeInferred(stmt)
         env = if_env[len(scope):]
-        for res in res_list:
+        for res in res_type_list:
             if res:
                 return_type = res
         if len(ast.elseStmt):
             scope = reduce(lambda env, x: env + [self.visit(x, env)], ast.elseStmt[0], [])
             else_env = env + scope
-            res_list = [self.visit(stmt, else_env) for stmt in ast.elseStmt[1]]
-            for res in res_list:
+            # res_list = [self.visit(stmt, else_env) for stmt in ast.elseStmt[1]]
+            for stmt in  ast.elseStmt[1]:
+                try:
+                    typ = self.visit(stmt, else_env)
+                    if typ is not None:
+                        res_type_list += [typ]
+                        if type(res_type_list[0].mtype) != type(typ.mtype):
+                            raise TypeMismatchInStatement(stmt)
+                except TypeCannotBeInferred:
+                    raise TypeCannotBeInferred(stmt)
+            for res in res_type_list:
                 if res:
                     return_type = res
             env = else_env[len(scope):]
@@ -808,9 +851,19 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
         scope = reduce(lambda env, x: [self.visit(x, env)] + env, ast.loop[0], [])
         cur_env = scope + env
-        res_list = [self.visit(x, cur_env) for x in ast.loop[1]]
+        res_type_list = []
+        for stmt in ast.loop[1]:
+            try:
+                typ = self.visit(stmt, cur_env)
+                if typ is not None:
+                    res_type_list += [typ]
+                    if type(res_type_list[0].mtype) != type(typ.mtype):
+                        raise TypeMismatchInStatement(stmt)
+            except TypeCannotBeInferred:
+                raise TypeCannotBeInferred(stmt)
+
         env = cur_env[len(scope) :]
-        for res in res_list:
+        for res in res_type_list:
             if res:
                 return res
         return None
@@ -826,7 +879,25 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         TODO: check the type of this return stmt and the type of function return
         return type has the type if None we handled in FuncDecl
         """
-        return self.visit(ast.expr, env).mtype if ast.expr else VoidType()
+        if ast.expr:
+            res = self.visit(ast.expr, env)
+            if isinstance(res.mtype, (Prim, Unknown)):
+                if isinstance(res.mtype, Unknown):
+                    raise TypeCannotBeInferred(ast)
+                else:
+                    return res
+            if isinstance(res.mtype, ArrayType):
+                if isinstance(res.mtype.eletype, Unknown):
+                    raise TypeCannotBeInferred(ast)
+                else:
+                    return res
+            if isinstance(res.mtype, MType):
+                if isinstance(res.mtype.restype, Unknown):
+                    raise TypeCannotBeInferred(ast)
+                else:
+                    return res
+        else:
+            return Symbol('', VoidType())
 
     def visitDowhile(self, ast, env):
         """
@@ -834,7 +905,18 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
         """
         scope = reduce(lambda env, x: [self.visit(x, env)] + env, ast.sl[0], [])
         cur_env = scope + env
-        res_list = [self.visit(x, cur_env) for x in ast.sl[1]]
+
+        res_type_list = []
+        for stmt in ast.sl[1]:
+            try:
+                typ = self.visit(stmt, cur_env)
+                if typ is not None:
+                    res_type_list += [typ]
+                    if type(res_type_list[0].mtype) != type(typ.mtype):
+                        raise TypeMismatchInStatement(stmt)
+            except TypeCannotBeInferred:
+                raise TypeCannotBeInferred(stmt)
+
         expr = self.visit(ast.exp, env)
         expr_val = None
         if expr is None:
@@ -855,7 +937,7 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             raise TypeMismatchInStatement(ast)
         
         env = cur_env[len(scope) :]
-        for res in res_list:
+        for res in res_type_list:
             if res:
                 return res
         return None
@@ -886,10 +968,26 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
 
         scope = reduce(lambda env, x: [self.visit(x, env)] + env, ast.sl[0], [])
         cur_env = scope + env
-        res_list = [self.visit(x, cur_env) for x in ast.sl[1]]
+        # res_list = []
+        # for stmt in ast.sl[1]:
+        #     try:
+        #         res_list += [self.visit(stmt, cur_env)]
+        #     except TypeCannotBeInferred:
+        #         raise TypeCannotBeInferred(stmt)
         
+        res_type_list = []
+        for stmt in ast.sl[1]:
+            try:
+                typ = self.visit(stmt, cur_env)
+                if typ is not None:
+                    res_type_list += [typ]
+                    if type(res_type_list[0].mtype) != type(typ.mtype):
+                        raise TypeMismatchInStatement(stmt)
+            except TypeCannotBeInferred:
+                raise TypeCannotBeInferred(stmt)
+
         env = cur_env[len(scope) :]
-        for res in res_list:
+        for res in res_type_list:
             if res:
                 return res
         return None
@@ -905,7 +1003,6 @@ Symbol("printStrLn",MType([StringType()],VoidType()))]
             func.mtype.restype = VoidType()
         if not isinstance(func.mtype.restype, VoidType):
             raise TypeMismatchInStatement(ast)
-
         if len(func.mtype.intype) != len(ast.param):
             raise TypeMismatchInStatement(ast)
 

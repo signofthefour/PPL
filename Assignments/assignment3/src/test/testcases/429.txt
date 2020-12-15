@@ -1,8 +1,15 @@
-
-                
-                Function: main
-                Parameter: x,x
-                Body:
-
-                EndBody.
-            
+ Var: x=1,y[1][2]={{1,2}};
+        Var: read;
+        Function: main
+        Parameter: main
+        Body:
+            Var: foo;
+            foo = foo + main();
+            Return 1;
+        EndBody.
+        Function: foo
+        Parameter: x,y
+        Body:
+        x = 1 + 2;
+        Return 1;
+        EndBody.

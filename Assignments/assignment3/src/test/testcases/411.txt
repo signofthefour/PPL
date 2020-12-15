@@ -1,9 +1,9 @@
-
-            Function: main 
-            Parameter: x
-            Body:
-                Var: y = 1; 
-                main(y); 
-                x = 1.0; 
-            EndBody.
-            
+ Var: x="string",y[1][2]={{1,2}};
+        Function: foo
+        Body:
+        Return;
+        EndBody.
+        Function: main
+                   Body: 
+                        foo();
+                   EndBody.
