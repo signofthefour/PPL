@@ -83,11 +83,7 @@ class Frame():
         start = self.getNewLabel()
         end = self.getNewLabel()
         self.startLabel.append(start)
-<<<<<<< HEAD
-        self.endLabel.append(end)1
-=======
         self.endLabel.append(end)
->>>>>>> 20e9a7a512675d9d005d1d6aa1bfb762c11c2019
         self.indexLocal.append(self.currIndex)
         if isProc:
             self.maxOpStackSize = 0
@@ -174,7 +170,7 @@ class Frame():
     '''
     *   return the label of the innest enclosing loop to which break statement would jump
     *   @return an integer representing the break label
-    '''
+    ''' 
     def getBreakLabel(self):
         if not self.brkLabel:
             raise IllegalRuntimeException("None break label")

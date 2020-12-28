@@ -396,7 +396,7 @@ class Emitter():
         frame.pop()
         return self.jvm.emitIOR()
 
-    def emitREOP(self, op, in_, frame):
+    def emitREOP(self, op, in_, frame): 
         #op: String
         #in_: Type
         #frame: Frame
@@ -632,6 +632,11 @@ class Emitter():
         #in_: String
 
         self.buff.append(in_)
+    
+    def printAt(self, in_, idx):
+        #in_: String
+        #idx: the index count from the top of stack
+        self.buff.insert(-idx, in_)
 
     def clearBuff(self):
         self.buff.clear()
