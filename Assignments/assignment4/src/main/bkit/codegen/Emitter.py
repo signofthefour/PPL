@@ -86,6 +86,13 @@ class Emitter():
             return self.jvm.emitLDC(in_)
         else:
             raise IllegalOperandException(in_)
+    
+    ''' 
+    *    generate code to push a array onto the operand stack.
+    *    @param typ the type of the array   
+    '''
+    def emitMULTIANEWARRAY(self, typ, dimensions):
+        pass
 
     ##############################################################
 
@@ -637,6 +644,9 @@ class Emitter():
         #in_: String
         #idx: the index count from the top of stack
         self.buff.insert(-idx, in_)
+    
+    def getBuffLen(self):
+        return len(self.buff)
 
     def clearBuff(self):
         self.buff.clear()

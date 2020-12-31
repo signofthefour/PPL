@@ -1,0 +1,10 @@
+n := 5 ;
+for i := 1 to n do begin
+    n := n + 1 ;
+    i := i − 1 ;
+end
+
+#A: expr2 is protected: inf -> i is descreased by 1 of code and is increased by one of loop
+#B: index is protected: inf -> n is increased by 1 each iteration and index is also increased by 1 each iteration
+#C: no protected -> n is increased by 1 in code and index is maintained
+#D: both index and expr2 are protected: 5 times

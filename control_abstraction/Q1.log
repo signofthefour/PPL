@@ -1,0 +1,6 @@
+int mul( Node root ) {
+    int res;
+    if (root == null) return 1;
+    else (res = root.val) && (res = root.val ∗ mul ( root.left ) ∗ mul(root.right));
+    return res;
+}
