@@ -27,12 +27,16 @@ class Emitter():
         elif typeIn is cgen.ClassType:
             return "L" + inType.cname + ";"
 
-    def getFullType(inType):
+    def getFullType(self, inType):
         typeIn = type(inType)
         if typeIn is cgen.IntType:
             return "int"
+        elif typeIn is cgen.FloatType:
+            return "float"
         elif typeIn is cgen.StringType:
             return "java/lang/String"
+        elif typeIn is cgen.BoolType:
+            return "boolean"
         elif typeIn is cgen.VoidType:
             return "void"
 
@@ -91,8 +95,17 @@ class Emitter():
     *    generate code to push a array onto the operand stack.
     *    @param typ the type of the array   
     '''
-    def emitMULTIANEWARRAY(self, typ, dimensions):
-        pass
+    def emitANEWARRAY(self, in_, dimensions, frame):
+        frame.push()
+        frame.push()
+        if type(in_) is cgen.IntType or type(in_) is cgen.FloatType or type(in_) is cgen.BoolType:
+            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitNEWARRAY(self.getFullType(in_))
+        elif type(in_) is cgen.StringType:
+            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitANEWARRAY(self.getFullType(in_))
+        elif type(in_) is cgen.ArrayType or type(in_) is cgen.ClassType:
+            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitANEWARRAY(self.getJVMType(in_))
+        else:
+            raise IllegalOperandException(str(in_))
 
     ##############################################################
 
@@ -104,6 +117,10 @@ class Emitter():
         frame.pop()
         if type(in_) is cgen.IntType:
             return self.jvm.emitIALOAD()
+        elif type(in_) is cgen.FloatType:
+            return self.jvm.emitFALOAD()
+        elif type(in_) is cgen.BoolType:
+            return self.jvm.emitBALOAD()
         elif type(in_) is cgen.ArrayType or type(in_) is cgen.ClassType or type(in_) is cgen.StringType:
             return self.jvm.emitAALOAD()
         else:
@@ -119,7 +136,11 @@ class Emitter():
         frame.pop()
         if type(in_) is cgen.IntType:
             return self.jvm.emitIASTORE()
-        elif type(in_) is cgen.ArrayType or type(in_) is ClassType or type(in_) is cgen.StringType:
+        elif type(in_) is cgen.FloatType:
+            return self.jvm.emitFASTORE()
+        elif type(in_) is cgen.BoolType:
+            return self.jvm.emitBASTORE()
+        elif type(in_) is cgen.ArrayType or type(in_) is cgen.ClassType or type(in_) is cgen.StringType:
             return self.jvm.emitAASTORE()
         else:
             raise IllegalOperandException(str(in_))
@@ -149,8 +170,10 @@ class Emitter():
         #... -> ..., value
         
         frame.push()
-        if type(inType) is cgen.IntType:
+        if type(inType) is cgen.IntType or type(inType) is cgen.BoolType:
             return self.jvm.emitILOAD(index)
+        if type(inType) is cgen.FloatType:
+            return self.jvm.emitFLOAD(index)
         elif type(inType) is cgen.ArrayType or type(inType) is cgen.ClassType or type(inType) is cgen.StringType:
             return self.jvm.emitALOAD(index)
         else:
@@ -181,8 +204,10 @@ class Emitter():
         
         frame.pop()
 
-        if type(inType) is cgen.IntType:
+        if type(inType) is cgen.IntType or type(inType) is cgen.BoolType:
             return self.jvm.emitISTORE(index)
+        elif type(inType) is cgen.FloatType:
+            return self.jvm.emitFSTORE(index)
         elif type(inType) is cgen.ArrayType or type(inType) is cgen.ClassType or type(inType) is cgen.StringType:
             return self.jvm.emitASTORE(index)
         else:
@@ -629,6 +654,7 @@ class Emitter():
 
     def emitEPILOG(self):
         file = open(self.filename, "w")
+        [print(c) for c in self.buff]
         file.write(''.join(self.buff))
         file.close()
 

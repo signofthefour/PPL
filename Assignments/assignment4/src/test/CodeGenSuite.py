@@ -71,18 +71,144 @@ class CheckCodeGenSuite(unittest.TestCase):
     #     expect = "2"
     #     self.assertTrue(TestCodeGen.test(input, expect, 505))
 
-    def test_ret(self):
+    # def test_ret(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Body: 
+    #     Var: x = 1, y = 3;
+    #     y = x;
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 506))
+
+    # def test_ret(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = 1.2;
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 507))
+    
+    # def test_arr(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = {1,2};
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 508))
+
+    # def test_arr(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z[2][1]
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = {{1},{2}};
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 509))
+    
+    # def test_arr_flit(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z[2][1]
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = {{1.2},{2.3}};
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 510))
+
+    # def test_str_flit(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z[2][1]
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = {{"ab"},{"cd"}};
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 511))
+    
+    # def test_arr_blit(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z[2][1]
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z = {{"ab"},{"cd"}};
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 511))
+
+    def test_infer(self):
         input = """
         Function: main
         Body: 
         Var: x = 1;
         EndBody.
         Function: foo
+        Parameter: y, z[2][1]
         Body: 
-        Var: x = 1, y = 3;
+        Var: x = 1;
         y = x;
+        z[1][1] = 1;
         Return 1;
         EndBody.
         """
         expect = "2"
-        self.assertTrue(TestCodeGen.test(input, expect, 506))
+        self.assertTrue(TestCodeGen.test(input, expect, 512))

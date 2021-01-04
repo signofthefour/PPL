@@ -142,6 +142,7 @@ class CodeGenVisitor(BaseVisitor):
         self.emit.printout(self.emit.emitPROLOG(self.className, "java.lang.Object"))
         e = MethodEnv(None, self.env)
         c = [self.visit(decl, e) for decl in ast.decl]
+        # reduce(lambda e, decl: e.symbol + [self.visit(decl, e)], ast.decl, e)
         # self.genMain(e) 
         # generate default constructor
         self.genInit()
@@ -184,7 +185,7 @@ class CodeGenVisitor(BaseVisitor):
     """
     def visitVarDecl(self,ctx:VarDecl,o):
         var_name = ctx.variable.name
-        dimen = ctx.varDimen
+        dimen = list(ctx.varDimen)
         a = Access(o.frame, o.symbol, isLeft=False)
         if ctx.varInit:
             # handle normal declarations with the assumption of the ass4
@@ -200,25 +201,43 @@ class CodeGenVisitor(BaseVisitor):
                 self.emit.printout(self.emit.emitVAR(idx, var_name, typ, start_label, end_label, o.frame))
                 init_code += self.emit.emitWRITEVAR(var_name, typ, idx, o.frame)
                 self.initVar.append(init_code)
+                # print('Index of {} in decl is {}'.format(var_name, idx))
                 return Symbol(var_name, typ, Index(idx))
         else:
             # for param in functions
-            pass
+            idx = o.frame.getNewIndex()
+            # self.emit.printout(self.emit.emitVAR(idx, var_name, typ, start_label, end_label, o.frame))
+            if len(dimen):
+                typ = ArrayType(None, dimen)
+            else:
+                typ = None
+            return Symbol(var_name, typ, Index(idx))
     
     def visitFuncDecl(self,ctx:FuncDecl,o):
         frame = Frame(ctx.name.name, VoidType())
         subBody = SubBody(frame, o.symbol)
         frame.enterScope(True)
         begin_pos = self.emit.getBuffLen() 
-        [self.visit(p, subBody) for p in ctx.param]
-        [self.visit(p, subBody) for p in ctx.body[0]]
+        subBody.symbol = [self.visit(p, subBody) for p in ctx.param] + subBody.symbol
+        # reduce(lambda e, decl: e.symbol + [self.visit(decl, e)], ctx.param, subBody)
+        subBody.symbol = [self.visit(p, subBody) for p in ctx.body[0]] + subBody.symbol
+        # reduce(lambda e, decl: e.symbol + [self.visit(decl, e)], ctx.body[0], subBody)
         self.emit.printout(self.emit.emitLABEL(frame.getStartLabel(), frame))
         [self.emit.printout(p) for p in self.initVar]
         self.initVar = []
         [self.visit(p, subBody) for p in ctx.body[1]]
         # after visit all stmt inside the body
         # there a trick to printout the method decl
-        typ = MType([decl.typ for decl in ctx.param], subBody.getRet())
+        intype = []
+        for name in [decl.variable.name for decl in ctx.param]:
+            for sym in subBody.symbol:
+                if sym.name == name:
+                    start_label = subBody.frame.getStartLabel()
+                    end_label = subBody.frame.getEndLabel()
+                    self.emit.printAt(self.emit.emitVAR(sym.value.value, name, sym.mtype, start_label, end_label, o.frame), self.emit.getBuffLen() - begin_pos)
+                    intype.append(sym.mtype)
+                    break
+        typ = MType(intype, subBody.getRet())
         # for the Main function: it should be public static void main(String[] args)
         if ctx.name.name == 'main':
             typ = MType([ArrayType(StringType(), [1])], VoidType())
@@ -228,19 +247,31 @@ class CodeGenVisitor(BaseVisitor):
         self.emit.printout(self.emit.emitRETURN(typ.rettype, frame))
         self.emit.printout(self.emit.emitENDMETHOD(frame))
         frame.exitScope()
-        return Symbol(ctx.name, typ, CName(self.className))
+        o.symbol += [Symbol(ctx.name.name, typ, CName(self.className))]
 
     def visitAssign(self,ctx:Assign,o):
         o.isLeft = False
-        rhs_code, _ = self.visit(ctx.rhs, o)
+        rhs_code, r_type = self.visit(ctx.rhs, o)
         o.isLeft = True
-        lhs_code, _ = self.visit(ctx.lhs, o)
+        lhs_code, l_type = self.visit(ctx.lhs, o)
+        # Infer the type of unknown
+        if isinstance(ctx.lhs, Id):
+            self.inferId(ctx.lhs, r_type, o)
+            o.isLeft = True
+            lhs_code, l_type = self.visit(ctx.lhs, o)
+        if isinstance(ctx.rhs, Id):
+            self.inferId(ctx.rhs, l_type, o)
+            o.isLeft = False
+            rhs_code, r_type = self.visit(ctx.rhs, o)
+        # We must have the correct type after infered (instead of None)
         self.emit.printout(rhs_code)
         self.emit.printout(lhs_code)
 
     def visitIf(self, ctx:If, o):
         access = Access(o.frame, o.sym, False)
-        expr_code, _ = self.visit(ctx.ifthenStmt[0][0], access)
+        expr_code, typ = self.visit(ctx.ifthenStmt[0][0], access)
+        if typ == None:
+            self.inferId(ctx.ifthenStmt[0][0], BoolType(), o)
         l1 = o.frame.getNewLabel()
         l2 = o.frame.getNewLabel()
         self.emit.printout(self.emit.emitIFFALSE(l1, o.frame))
@@ -310,7 +341,6 @@ class CodeGenVisitor(BaseVisitor):
             expr_code, typ = self.visit(ctx.expr, o)
             o.frame.rettype = typ
             self.ret.append(expr_code)
-        # self.emit.printout(self.emit.emitRETURN(typ, o.frame))
         o.setRet(typ)
     
     def visitDowhile(self, ctx:Dowhile, o):
@@ -347,24 +377,46 @@ class CodeGenVisitor(BaseVisitor):
     TODOs: try some experiences
     """
     def visitArrayCell(self, ctx, o):
-        access = Access(o.frame, o.symbol, isLeft=True)
-        self.visit(ctx.arr, access)
-        exprs = [self.visit(expr, access) for expr in ctx.idx]
-        [self.emit.printout(expr[0] + self.emit.printout(self.emit.emitALOAD(ArrayType(), o.frame))) for expr in exprs]
-        self.emit.printout(self.emit)
+        access = Access(o.frame, o.symbol, isLeft=o.isLeft)
+        code, typ = self.visit(ctx.arr, access)
+        idxs_code = [self.visit(expr, access)[0] for expr in ctx.idx]
+        for idx_code in idxs_code[:-1]:
+            code += idx_code + self.emit.emitALOAD(ArrayType(typ, [1]), o.frame)
+        if o.isLeft:
+            code += idxs_code[-1] + self.emit.emitASTORE(ArrayType(typ, [1]), o.frame)
+        else:
+            code += idxs_code[-1] + self.emit.emitALOAD(ArrayType(typ, [1]), o.frame)
+        return code, typ.eleType
     
     def visitUnaryOp(self, ctx, o):
         expr, typ = self.visit(ctx.body)
         if ctx.op in ['!']:
             code = expr + self.emit.emitNOT(BoolType(), o.frame)
             return code, BoolType()
-        elif ctx.op in ['-']:
+        elif ctx.op in ['-', '-.']:
             code = expr + self.emit.emitNEGOP(typ, o.frame)
             return code, typ
     
     def visitBinaryOp(self, ctx, o):
-        l, typ = self.visit(ctx.left, o)
-        r, typ = self.visit(ctx.right, o)
+        l, ltyp = self.visit(ctx.left, o)
+        r, rtyp = self.visit(ctx.right, o)
+        if ltyp == None:
+            if ctx.op in ['+', '-', '*', '\\', '%', '==', '!=', '<', '>', '<=', '>=']:
+                self.infer(ctx.left, IntType(), o)
+            elif ctx.op in ['||', '&&']:
+                self.infer(ctx.left, BoolType(), o)
+            else:
+                self.infer(ctx.left, FloatType(), o)
+            l, ltyp = self.visit(ctx.left, o)
+        elif rtyp == None:
+            if ctx.op in ['+', '-', '*', '\\', '%', '==', '!=', '<', '>', '<=', '>=']:
+                self.infer(ctx.right, IntType(), o)
+            elif ctx.op in ['||', '&&']:
+                self.infer(ctx.right, BoolType(), o)
+            else:
+                self.infer(ctx.right, FloatType(), o)
+            r, rtyp = self.visit(ctx.right, o)
+        typ = ltyp
         code, rettyp = None, None
 
         if ctx.op in ['+', '-', '+.', '-.']:
@@ -411,40 +463,69 @@ class CodeGenVisitor(BaseVisitor):
         code = self.emit.emitPUSHICONST(ctx.value, o.frame)
         return code, IntType()
     def visitFloatLiteral(self,ctx,o):
-        code  = self.emit.emitPUSHFCONST(ctx.value, o.frame)
+        code  = self.emit.emitPUSHFCONST(str(ctx.value), o.frame)
         return code, FloatType()
     def visitStringLiteral(self, ctx, o):
-        code = self.emit.emitPUSHCONST(ctx.value, StringType(), o.frame)
+        code = self.emit.emitPUSHCONST('"' + ctx.value + '"', StringType(), o.frame)
         return code, StringType()
     def visitBooleanLiteral(self, ctx, o):
         code = self.emit.emitPUSHICONST(str(ctx.value).lower(), o.frame)
         return code, BoolType()
     def visitArrayLiteral(self, ctx, o):
-        pass
-
+        lit_code = list(map(lambda x: self.visit(x, o), ctx.value))
+        ele_type = lit_code[0][1]
+        lit_code = [ret[0] for ret in lit_code]
+        lit_code = list(map(lambda code, idx: self.emit.emitDUP(o.frame) + \
+                self.emit.emitPUSHICONST(idx, o.frame) + code + \
+                self.emit.emitASTORE(ele_type, o.frame), lit_code, range(len(lit_code))))   
+        code = self.emit.emitANEWARRAY(ele_type, len(ctx.value), o.frame)
+        code += reduce(lambda code, x: code + x, lit_code)
+        if isinstance(ele_type, ArrayType):
+            print(ele_type.dimen)
+            ele_type.dimen = [len(ctx.value)] + ele_type.dimen[0]
+        else:
+            ele_type = ArrayType(ele_type, [len(ctx.value)])
+        return code, ele_type
     def visitId(self, ctx, o):
         id_sym = None
         for _sym in o.symbol:
             if _sym.name == ctx.name:
                 id_sym = _sym
                 break
+        if id_sym.mtype == None:
+            return None, None
+        # print('name: {}, mtype: {}, index: {}'.format(id_sym.name, id_sym.mtype, id_sym.value.value))
         if o.isLeft:
             if isinstance(id_sym.value, Index):
+                print('var {} with type {}'.format(id_sym.name,id_sym.mtype))
                 code = self.emit.emitWRITEVAR(id_sym.name, id_sym.mtype, id_sym.value.value, o.frame)
-                self.emit.printout(code)
-                return 1, id_sym.mtype
+                return code, id_sym.mtype
             else:
                 code = self.emit.emitPUTSTATIC(id_sym.value.value + '.' + ctx.name, id_sym.mtype, o.frame)
-                self.emit.printout(code)
-                return 1, id_sym.mtype
+                return code, id_sym.mtype
         else:
             if isinstance(id_sym.value, Index):
                 code = self.emit.emitREADVAR(id_sym.name, id_sym.mtype, id_sym.value.value, o.frame)
-                self.emit.printout(code)
-                return 1, id_sym.mtype
+                return code, id_sym.mtype
             else:
                 code = self.emit.emitGETSTATIC(id_sym.value.value + '.' + ctx.name, id_sym.mtype, o.frame)
-                self.emit.printout(code)
-                return 1, id_sym.mtype
+                return code, id_sym.mtype
 
     
+    def inferId(self, id, expect_type, o):
+        for sym in o.symbol:
+            if id.name == sym.name:
+                if sym.mtype == None:
+                    sym.mtype = expect_type
+                break
+    
+    def inferArray(self, arr, expect_type, o):
+        code, typ = self.visit(arr, o)
+        if typ == None:
+            typ = expect_type
+    
+    def infer(self, x, expect_type, o):
+        if isinstance(x, Id):
+            self.inferId(x, expect_type, o)
+        else:
+            self.inferArray(x, expect_type, o)
