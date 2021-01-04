@@ -1,1 +1,0 @@
-Illegal Runtime: Pop empty stack

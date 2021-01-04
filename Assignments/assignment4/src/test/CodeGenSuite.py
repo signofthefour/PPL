@@ -195,20 +195,314 @@ class CheckCodeGenSuite(unittest.TestCase):
     #     expect = "2"
     #     self.assertTrue(TestCodeGen.test(input, expect, 511))
 
-    def test_infer(self):
+    # def test_infer(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: y, z[2][1][3]
+    #     Body: 
+    #     Var: x = 1;
+    #     y = x;
+    #     z[1][1][1] = 1;
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 512))
+
+    # def test_if_without_infer(self):
+    #     """Do not have else"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y Then x = 2;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 513))
+
+    # def test_if_with_else(self):
+    #     """Do have else"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y Then x = 2;
+    #     Return 1;
+    #     Else x = 3;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 514))
+
+    # def test_if_with_return(self):
+    #     """Do have return"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y Then x = 2;
+    #     Return 1;
+    #     Else x = 3;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 515))
+
+    # def test_if_with_inif(self):
+    #     """Do have elseif"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y Then x = 2;
+    #     ElseIf !y Then x =10;
+    #     Return 1;
+    #     Else x = 3;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 516))
+
+    # def test_if_with_complex_expr(self):
+    #     """Do have complex expr"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y && False Then x = 2;
+    #     ElseIf 1 < 2 Then x =10;
+    #     Return 1;
+    #     Else x = 3;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 517))
+    
+    # def test_if_with_complex_expr(self):
+    #     """Do have complex expr and infer"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     If y && z Then x = 2;
+    #     ElseIf 1 < 2 Then x =10;
+    #     Return 1;
+    #     Else x = 3;
+    #     EndIf.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 518))
+
+    # def test_simple_while(self):
+    #     """Do have simple while"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     While y Do y = False;
+    #     EndWhile.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 518))
+
+    # def test_simple_while_with_infer(self):
+    #     """Do have simple while with infer type"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     While z Do y = False;
+    #     EndWhile.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 519))
+
+    # def test_simple_while_with_infer(self):
+    #     """Do have simple while which have decl"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     While z Do 
+    #     Var: x = 1.2;
+    #     y = False;
+    #     Break;
+    #     EndWhile.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 519))
+
+    # def test_simple_while_with_infer(self):
+    #     """Do have simple while which have break"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     While z Do 
+    #     Var: x = 1.2;
+    #     y = False;
+    #     Break;
+    #     EndWhile.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 520))
+
+    # def test_simple_while_with_infer(self):
+    #     """Do have simple while which have continue"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     While z Do 
+    #     Var: x = 1.2;
+    #     y = False;
+    #     Continue;
+    #     EndWhile.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 521))
+
+    # def test_simple_for(self):
+    #     """Do have simple while which have break"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     For (x = 0, y, 1) Do
+    #     x = 2;
+    #     EndFor.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 521))
+
+    # def test_simple_dowhile(self):
+    #     """Do have simple while which have break"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     Do x = 2 While y EndDo.
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 522))
+
+    def test_simple_dowhile(self):
+        """Do have simple while which have break"""
         input = """
         Function: main
         Body: 
         Var: x = 1;
+        foo(x);
+        printStrLn("abs");
+        Return;
         EndBody.
         Function: foo
-        Parameter: y, z[2][1]
-        Body: 
-        Var: x = 1;
-        y = x;
-        z[1][1] = 1;
-        Return 1;
+        Parameter: z
+        Body:
+        Var: y = True, x = 1;
+        z = 1;
+        Return ;
         EndBody.
         """
         expect = "2"
-        self.assertTrue(TestCodeGen.test(input, expect, 512))
+        self.assertTrue(TestCodeGen.test(input, expect, 523))

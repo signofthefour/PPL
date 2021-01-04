@@ -1,0 +1,16 @@
+
+        Function: main
+        Body: 
+        Var: x = 1;
+        foo(x);
+        printStrLn("abs");
+        Return;
+        EndBody.
+        Function: foo
+        Parameter: z
+        Body:
+        Var: y = True, x = 1;
+        z = 1;
+        Return ;
+        EndBody.
+        

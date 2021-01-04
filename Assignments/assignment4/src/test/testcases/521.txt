@@ -2,13 +2,14 @@
         Function: main
         Body: 
         Var: x = 1;
+        Return;
         EndBody.
         Function: foo
-        Parameter: y, z[2][1][3]
-        Body: 
-        Var: x = 1;
-        y = x;
-        z[1][1][1] = 1;
+        Body:
+        Var: y = True, x = 1;
+        For (x = 0, y, 1) Do
+        x = 2;
+        EndFor.
         Return 1;
         EndBody.
         

@@ -1,0 +1,17 @@
+
+        Function: main
+        Body: 
+        Var: x = 1;
+        Return;
+        EndBody.
+        Function: foo
+        Body:
+        Var: y = True, x = 1;
+        If y && False Then x = 2;
+        ElseIf 1 < 2 Then x =10;
+        Return 1;
+        Else x = 3;
+        EndIf.
+        Return 1;
+        EndBody.
+        

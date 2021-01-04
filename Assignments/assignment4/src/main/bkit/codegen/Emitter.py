@@ -21,7 +21,7 @@ class Emitter():
         elif typeIn is cgen.VoidType:
             return "V"
         elif typeIn is cgen.ArrayType:
-            return "[" + self.getJVMType(inType.eleType)
+            return "["*len(inType.dimen) + self.getJVMType(inType.eleType)
         elif typeIn is cgen.MType:
             return "(" + "".join(list(map(lambda x: self.getJVMType(x), inType.partype))) + ")" + self.getJVMType(inType.rettype)
         elif typeIn is cgen.ClassType:
@@ -85,6 +85,13 @@ class Emitter():
         
         if type(typ) is cgen.IntType:
             return self.emitPUSHICONST(in_, frame)
+        elif type(typ) is cgen.BoolType:
+            if in_ == "true":
+                return self.emitPUSHICONST(1, frame)
+            elif in_ == "false":
+                return self.emitPUSHICONST(0, frame)
+            else:
+                return self.emitPUSHICONST(int(in_), frame)
         elif type(typ) is cgen.StringType:
             frame.push()
             return self.jvm.emitLDC(in_)
@@ -159,8 +166,8 @@ class Emitter():
         #fromLabel: Int
         #toLabel: Int
         #frame: Frame
-        
         return self.jvm.emitVAR(in_, varName, self.getJVMType(inType), fromLabel, toLabel)
+        # print('the emit type: {} with type {}'.format(self.getJVMType(inType), inType))
 
     def emitREADVAR(self, name, inType, index, frame):
         #name: String
@@ -342,12 +349,12 @@ class Emitter():
         label1 = frame.getNewLabel()
         label2 = frame.getNewLabel()
         result = list()
-        result.append(emitIFTRUE(label1, frame))
-        result.append(emitPUSHCONST("true", in_, frame))
-        result.append(emitGOTO(label2, frame))
-        result.append(emitLABEL(label1, frame))
-        result.append(emitPUSHCONST("false", in_, frame))
-        result.append(emitLABEL(label2, frame))
+        result.append(self.emitIFTRUE(label1, frame))
+        result.append(self.emitPUSHCONST("true", in_, frame))
+        result.append(self.emitGOTO(label2, frame))
+        result.append(self.emitLABEL(label1, frame))
+        result.append(self.emitPUSHCONST("false", in_, frame))
+        result.append(self.emitLABEL(label2, frame))
         return ''.join(result)
 
     '''

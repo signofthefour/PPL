@@ -1,0 +1,18 @@
+
+        Function: main
+        Body: 
+        Var: x = 1;
+        Return;
+        EndBody.
+        Function: foo
+        Parameter: z
+        Body:
+        Var: y = True, x = 1;
+        While z Do 
+        Var: x = 1.2;
+        y = False;
+        Break;
+        EndWhile.
+        Return 1;
+        EndBody.
+        
