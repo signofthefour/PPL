@@ -1,7 +1,7 @@
 .source MCClass.java
 .class public MCClass
 .super java.lang.Object
-.field static k I
+.field static l I
 
 .method public static main([Ljava/lang/String;)V
 .var 0 is y [I from Label0 to Label1
@@ -40,7 +40,7 @@ Label4:
 	iconst_0
 Label5:
 	ifle Label3
-	getstatic MCClass.k I
+	iload_2
 	invokestatic io.string_of_int(I)Ljava/lang/String;
 	invokestatic io.printStrLn(Ljava/lang/String;)V
 	iload_2
@@ -49,6 +49,9 @@ Label5:
 	istore_2
 	goto Label2
 Label3:
+	getstatic MCClass.l I
+	invokestatic io.string_of_int(I)Ljava/lang/String;
+	invokestatic io.printStrLn(Ljava/lang/String;)V
 	return
 Label1:
 .limit stack 5
@@ -60,8 +63,16 @@ Label1:
 Label0:
 	aload_0
 	invokespecial java/lang/Object/<init>()V
+Label1:
+	return
+.limit stack 1
+.limit locals 1
+.end method
+
+.method public static <clinit>()V
+Label0:
 	sipush 999
-	putstatic MCClass.k I
+	putstatic MCClass.l I
 Label1:
 	return
 .limit stack 1

@@ -90,8 +90,7 @@ class StaticAttribute():
         self.className = className
         self.name = name
         self.ast = ast
-    def init(self, o, codegen):
-        a = Access(o.frame, o.symbol, isLeft=False)
+    def init(self, a, codegen):
         init_code, typ = codegen.visit(self.ast.varInit, a)
         codegen.emit.printAt(codegen.emit.emitATTRIBUTE(self.name, typ, False, ''), codegen.emit.getBuffLen() - 1   )
         # codegen.emit.printout(init_code)
@@ -136,6 +135,7 @@ class CodeGenVisitor(BaseVisitor):
         self.envFuncNum = 0
         self.staticFunction = []
         self.initStatic = []
+        self.clinitStackSize = 0
 
     def visitProgram(self, ast:Program, c):
         #ast: Program
@@ -178,8 +178,9 @@ class CodeGenVisitor(BaseVisitor):
         self.emit.printout(self.emit.emitREADVAR(varname, vartype, varindex, frame))
         self.emit.printout(self.emit.emitINVOKESPECIAL(frame))
         # printout the init_code of the static field
-        e = MethodEnv(frame, self.env)
-        [static.init(e, self) for static in self.static]
+        a = Access(frame, self.env, isLeft=False)
+        [static.init(a, self) for static in self.static]
+        self.clinitStackSize = a.frame.getMaxOpStackSize()
         # _________
         self.emit.printout(self.emit.emitLABEL(endLabel, frame))
         self.emit.printout(self.emit.emitRETURN(methodtype.rettype, frame))
@@ -199,6 +200,7 @@ class CodeGenVisitor(BaseVisitor):
         # printout the init_code of the static field
         [self.emit.printout(p) for p in self.initStatic]
         self.initStatic = []
+        frame.maxOpStackSize = self.clinitStackSize
         # _________
         self.emit.printout(self.emit.emitLABEL(endLabel, frame))
         self.emit.printout(self.emit.emitRETURN(methodtype.rettype, frame))
@@ -286,7 +288,11 @@ class CodeGenVisitor(BaseVisitor):
         typ = MType(intype, subBody.getRet())
         # for the Main function: it should be public static void main(String[] args)
         if ctx.name.name == 'main':
+            start_label = subBody.frame.getStartLabel()
+            end_label = subBody.frame.getEndLabel()
+            self.emit.printAt(self.emit.emitVAR(frame.getNewIndex(), 'args', ArrayType(StringType(), [1]), start_label, end_label, o.frame), self.emit.getBuffLen() - begin_pos)
             typ = MType([ArrayType(StringType(), [1])], VoidType())
+            print('come here')
         self.emit.printAt(self.emit.emitMETHOD(ctx.name.name, typ, True, o.frame), self.emit.getBuffLen() - begin_pos)
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
         # [self.emit.printout(code) for code in self.ret]
@@ -461,6 +467,12 @@ class CodeGenVisitor(BaseVisitor):
                     expr_code, typ = self.visit(expr, access)
                 expr_codes.append([expr_code, typ])
         else:
+            name = ctx.method.name
+            partype = [None]*len(ctx.param)
+            rettype = VoidType()
+            typ = MType(partype, rettype)
+            self.staticFunction.append(Symbol(name, typ, CName(self.className)))
+            method_sym = self.staticFunction[-1]
             expr_codes = [self.visit(expr, access) for expr in ctx.param]
         [self.emit.printout(code) for code in [ret[0] for ret in expr_codes]]
         typ = None
@@ -489,12 +501,31 @@ class CodeGenVisitor(BaseVisitor):
             o.frame.push()
             return None, None
         access = Access(o.frame, o.symbol, isLeft=False)
-        expr_codes = [self.visit(expr, access) for expr in ctx.param]
+        expr_codes = []
+        if method_sym != None:
+            if any([p == None for p in method_sym.mtype.partype]):
+                # print('come here: ', method_sym.mtype.rettype)
+                return None, None
+            partype = method_sym.mtype.partype
+            # infer the args in case the function has been inferred
+            # print(list(map(lambda x,y: (x,y), ctx.param, method_sym.mtype.partype)))
+            for (idx, p) in enumerate(ctx.param):
+                code, typ = self.visit(p, access)
+                if code == None:
+                    if partype[idx] == None:
+                        partype[idx] = IntType()
+                    self.infer(p, partype[idx], access)
+                    code, typ =self.visit(p, access)
+                partype[idx] = typ
+                expr_codes.append((code,typ))
+        else:
+            expr_codes = [self.visit(expr, access) for expr in ctx.param]
         code = ""
-        if len(expr_codes) > 2:
+        if len(expr_codes) > 1:
             code = reduce(lambda x,y: x + y, [ret[0] for ret in expr_codes], "")
         elif len(expr_codes) == 1:
-            code = expr_codes[0]
+            code = expr_codes[0][0]
+        print('the code: ', code)
         typ = method_sym.mtype
         className = method_sym.value.value
         # print('name of sym: {} and name of method: {}'.format(3method_sym.name, ctx.method.name))
@@ -693,11 +724,34 @@ class CodeGenVisitor(BaseVisitor):
         self.emit.printout(code)
     
     def inferCallExpr(self, callee, expect_type, o):
-        args_and_types = [self.visit(p,o) for p in callee.param]
+        # args_and_types = [self.visit(p,o) for p in callee.param]
+        name = callee.method.name
+        method_sym = None
+        for method in self.staticFunction:
+            if method.name == name:
+                method_sym = method
+                break
+        if method_sym == None:
+            partype = [None]*len(callee.param)
+            rettype = expect_type
+            typ = MType(partype, rettype)
+            self.staticFunction.append(Symbol(name, typ, CName(self.className)))
+            method_sym = self.staticFunction[-1]
+        partype = method_sym.mtype.partype
         """
         TODOs: infer the function  that be invokeed before declared
-        e.g.: foo(1,foo(2,2))
+        e.g.: foo(foo(x))
         """
+        args_and_types = []
+        access = o
+        for (idx, p) in enumerate(callee.param):
+            code, typ = self.visit(p, access)
+            if code == None:
+                if partype[idx] == None:
+                    partype[idx] = IntType()
+                self.infer(p, partype[idx], access)
+                code, typ = self.visit(p, access)
+            partype[idx] = typ
         # access = o
         # for p in callee.param:
         #     code, typ = self.visit(p, access)
@@ -709,11 +763,6 @@ class CodeGenVisitor(BaseVisitor):
         #             self.infer(expr, expect, access)
         #             expr_code, typ = self.visit(expr, access)
         #         expr_codes.append([expr_code, typ])
-        partype = [ret[1] for ret in args_and_types]
-        rettype = expect_type
-        name = callee.method.name
-        typ = MType(partype, rettype)
-        self.staticFunction.append(Symbol(name, typ, CName(self.className)))
 
     def infer(self, x, expect_type, o):
         if isinstance(x, Id):

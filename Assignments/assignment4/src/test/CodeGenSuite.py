@@ -751,6 +751,7 @@ class CheckCodeGenSuite(unittest.TestCase):
 
     # def test_dowhile_var(self):
     #     input = """
+    #     Var: l = 999;
     #     Function: main
     #     Body: 
     #     Var: y[3] = {1,2,3}, z = 10, x = 1;
@@ -758,6 +759,7 @@ class CheckCodeGenSuite(unittest.TestCase):
     #     Var: z = 1;
     #     printStrLn(string_of_int(x));
     #     EndFor.
+    #     printStrLn(string_of_int(l));
     #     Return;
     #     EndBody.
     #     """
@@ -766,15 +768,16 @@ class CheckCodeGenSuite(unittest.TestCase):
 
     def test_static(self):
         input = """
-        Var: k = 999;
         Function: main
-        Body: 
-                printStrLn(string_of_int(foo()));
+        Body:
+        Var: x = 1;
+        printStrLn(string_of_int(foo(1, foo(x, 1))));
         Return;
         EndBody.
         Function: foo
+        Parameter: x, y
         Body:
-        Return 1;
+        Return x + y;
         EndBody.
         """
         expect = "2"
