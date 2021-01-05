@@ -1,0 +1,12 @@
+
+        Var: k = 999;
+        Function: main
+        Body: 
+        Var: y[3] = {1,2,3}, z = 10, x = 1;
+        For (x = 1, x < 10, 1) Do
+        Var: z = 1;
+        printStrLn(string_of_int(k));
+        EndFor.
+        Return;
+        EndBody.
+        

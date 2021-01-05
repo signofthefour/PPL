@@ -103,14 +103,17 @@ class Emitter():
     *    @param typ the type of the array   
     '''
     def emitANEWARRAY(self, in_, dimensions, frame):
-        frame.push()
-        frame.push()
+        # ...count -> ...arrayref
+        code = self.emitPUSHICONST(dimensions, frame)
         if type(in_) is cgen.IntType or type(in_) is cgen.FloatType or type(in_) is cgen.BoolType:
-            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitNEWARRAY(self.getFullType(in_))
+            code += self.jvm.emitNEWARRAY(self.getFullType(in_))
+            return code
         elif type(in_) is cgen.StringType:
-            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitANEWARRAY(self.getFullType(in_))
+            code += self.jvm.emitANEWARRAY(self.getFullType(in_))
+            return code
         elif type(in_) is cgen.ArrayType or type(in_) is cgen.ClassType:
-            return self.emitPUSHICONST(dimensions, frame) + self.jvm.emitANEWARRAY(self.getJVMType(in_))
+            code += self.jvm.emitANEWARRAY(self.getJVMType(in_))
+            return code
         else:
             raise IllegalOperandException(str(in_))
 

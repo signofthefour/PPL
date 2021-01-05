@@ -1,0 +1,13 @@
+
+        Function: main
+        Body: 
+        Var: y[3] = {1,2,3}, x = 10;
+        Do
+        Var: x = 1;
+        printStrLn(string_of_int(x));
+        y[1] = y[1] + 1;
+        While y[1] < 10
+        EndDo.
+        Return;
+        EndBody.
+        

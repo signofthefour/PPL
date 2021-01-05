@@ -1,0 +1,12 @@
+
+        Var: k = 999;
+        Function: main
+        Body: 
+                printStrLn(string_of_int(foo()));
+        Return;
+        EndBody.
+        Function: foo
+        Body:
+        Return 1;
+        EndBody.
+        

@@ -1,0 +1,8 @@
+
+        Function: main
+        Body: 
+        Var: x = 1, y[1][2] = {{1,2}};
+        printStrLn(string_of_int(y[0][1]));
+        Return;
+        EndBody.
+        

@@ -1,0 +1,14 @@
+
+        Function: main
+        Body: 
+        Var: x = 1, y[1][2];
+        x = foo();
+        Return;
+        EndBody.
+        Function: foo
+        Body:
+        Var: y = True, x = 1;
+        printStrLn("abs");
+        Return 1;
+        EndBody.
+        

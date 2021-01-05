@@ -486,23 +486,313 @@ class CheckCodeGenSuite(unittest.TestCase):
     #     expect = "2"
     #     self.assertTrue(TestCodeGen.test(input, expect, 522))
 
-    def test_simple_dowhile(self):
-        """Do have simple while which have break"""
+    # def test_simple_dowhile(self):
+    #     """Do have simple while which have break"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     foo(x);
+    #     printStrLn("abs");
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     z = 1;
+    #     Return ;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 523))
+
+    # def test_callee(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     foo(x);
+    #     printStrLn("abs");
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     printStrLn("abs");
+    #     Return ;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 524))
+
+
+    # def test_callee_expr(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1, y[1][2];
+    #     x = foo();
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Body:
+    #     Var: y = True, x = 1;
+    #     printStrLn("abs");
+    #     Return 1;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 525))
+
+    # def test_arr_1(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1, y[1][2] = {{1,2}};
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 526))
+
+    # def test_arr_2(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1, y[1][2] = {{1,2}};
+    #     printStrLn(string_of_int(y[0][1]));
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 527))
+
+    # def test_callee_ret(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x = 1;
+    #     foo(x);
+    #     printStrLn(string_of_int(x));
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z
+    #     Body: 
+    #     Var: x = 1;
+    #     z = 999;
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 528))
+
+    # def test_callee_ret(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     foo(x);
+    #     printStrLn(string_of_int(x[1]));
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z[3]
+    #     Body: 
+    #     Var: x = 1;
+    #     z[1] = 999;
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 529))
+
+    # def test_callee_ret(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     foo(x);
+    #     printStrLn(string_of_int(x[1]));
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z[3]
+    #     Body: 
+    #     Var: x = 1;
+    #     z[1] = 999;
+    #     x= 10;
+    #     printStrLn(string_of_int(x));
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 530))
+
+    # def test_callee_ret(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     foo(x);
+    #     printStrLn(string_of_int(x[1]));
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: z[3]
+    #     Body: 
+    #     Var: x = 1;
+    #     z[1] = 999;
+    #     x= 10 + fooo(1);
+    #     printStrLn(string_of_int(x));
+    #     Return;
+    #     EndBody.
+    #     Function: fooo
+    #     Parameter: z
+    #     Body: 
+    #     Return z;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 531))
+    # def test_if(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     If x[0] < 2 Then x[1] = 5;
+    #     ElseIf x[1] > 4 Then x[1] =10;
+    #     Return;
+    #     Else x[1] = 3;
+    #     EndIf.
+    #     printStrLn(string_of_int(x[1]));
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 532))
+
+    # def test_callee(self):
+    #     """Do param do not infer in function after"""
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     x[1] = foo(x[2], foo(1,2));
+    #     Return;
+    #     EndBody.
+    #     Function: foo
+    #     Parameter: x, y
+    #     Body:
+    #     Return x + y;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 533))
+
+    # def test_if_var(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: x[3] = {1,2,3};
+    #     If x[1] > 1 Then
+    #     Var: x = 1;
+    #     printStrLn(string_of_int(x));
+    #     EndIf.
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 534))
+
+    # def test_while_var(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: y[3] = {1,2,3}, x = 10;
+    #     While y[1] < 10 Do
+    #     Var: x = 1;
+    #     printStrLn(string_of_int(x));
+    #     y[1] = y[1] + 1;
+    #     EndWhile.
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 535))
+
+    # def test_dowhile_var(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: y[3] = {1,2,3}, x = 10;
+    #     Do
+    #     Var: x = 1;
+    #     printStrLn(string_of_int(x));
+    #     y[1] = y[1] + 1;
+    #     While y[1] < 10
+    #     EndDo.
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 536))
+
+    # def test_dowhile_var(self):
+    #     input = """
+    #     Function: main
+    #     Body: 
+    #     Var: y[3] = {1,2,3}, z = 10, x = 1;
+    #     For (x = 1, x < 10, 1) Do
+    #     Var: z = 1;
+    #     printStrLn(string_of_int(x));
+    #     EndFor.
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 537))
+
+    def test_static(self):
         input = """
+        Var: k = 999;
         Function: main
         Body: 
-        Var: x = 1;
-        foo(x);
-        printStrLn("abs");
+                printStrLn(string_of_int(foo()));
         Return;
         EndBody.
         Function: foo
-        Parameter: z
         Body:
-        Var: y = True, x = 1;
-        z = 1;
-        Return ;
+        Return 1;
         EndBody.
         """
         expect = "2"
-        self.assertTrue(TestCodeGen.test(input, expect, 523))
+        self.assertTrue(TestCodeGen.test(input, expect, 538))
+
+
+    # def test_static(self):
+    #     input = """
+    #     Var: k = 999;
+    #     Function: main
+    #     Body: 
+    #     Var: y[3] = {1,2,3}, z = 10, x = 1;
+    #     For (x = 1, x < 10, 1) Do
+    #     Var: z = 1;
+    #     printStrLn(string_of_int(k));
+    #     EndFor.
+    #     Return;
+    #     EndBody.
+    #     """
+    #     expect = "2"
+    #     self.assertTrue(TestCodeGen.test(input, expect, 538))

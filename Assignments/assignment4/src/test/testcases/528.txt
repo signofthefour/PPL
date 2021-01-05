@@ -1,0 +1,16 @@
+
+        Function: main
+        Body: 
+        Var: x = 1;
+        foo(x);
+        printStrLn(string_of_int(x));
+        Return;
+        EndBody.
+        Function: foo
+        Parameter: z
+        Body: 
+        Var: x = 1;
+        z = 999;
+        Return;
+        EndBody.
+        
